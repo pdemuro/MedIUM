@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragment.SearchFragment">
+
+    <LinearLayout
+
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="571dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/editDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:textSize="15sp"
+            android:hint="Data"
+            android:inputType="date" />
+
+        <EditText
+            android:id="@+id/editTitolo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:hint="Titolo"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editDescrizione"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:hint="Descrizione"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/sfondo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="Inserisci Sfondo" />
+
+        <Button
+            android:id="@+id/getPlace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="Scegli Posizione" />
+
+        <Button
+            android:id="@+id/buttonEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/invia"
+            android:onClick="Invia"/>
+    </LinearLayout>
+
+</RelativeLayout>
