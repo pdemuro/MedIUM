@@ -48,8 +48,11 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -201,6 +204,12 @@ public class SearchFragment extends Fragment implements LocationListener {
                 layoutCalendario.setVisibility(View.VISIBLE);
                 giorni.setVisibility(View.VISIBLE);
                 Calendario();
+            }
+        });
+        questaSettimana.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventisettimana(eventi);
             }
         });
 
@@ -508,6 +517,111 @@ public class SearchFragment extends Fragment implements LocationListener {
     @Override
     public void onProviderEnabled(String provider) {
         Toast.makeText(getContext(), "Abilita il nuovo provider" + provider, Toast.LENGTH_SHORT).show();
+    }
+
+    public void eventisettimana(ArrayList<DatabaseEvento> lista1){
+
+        final Date currentTime = Calendar.getInstance().getTime();
+        String tempo = currentTime.toString().substring(8,10);
+
+        final int lunghmese = YearMonth.now()
+                .lengthOfMonth();
+        String mese = currentTime.toString().substring(4,7);
+        int valmese = 0;
+        if(mese.equals("Jan")){
+            valmese = 1;
+        } else if(mese.equals("Feb")){
+            valmese = 2;
+        } else if(mese.equals("Mar")){
+            valmese = 3;
+        } else if(mese.equals("Apr")){
+            valmese = 4;
+        } else if(mese.equals("May")){
+            valmese = 5;
+        } else if(mese.equals("Jun")){
+            valmese = 6;
+        } else if(mese.equals("Jul")){
+            valmese = 7;
+        } else if(mese.equals("Aug")){
+            valmese = 8;
+        } else if(mese.equals("Sep")){
+            valmese = 9;
+        } else if(mese.equals("Oct")){
+            valmese = 10;
+        } else if(mese.equals("Nov")){
+            valmese = 11;
+        } else if(mese.equals("Dec")){
+            valmese = 12;
+        }
+        final int ggmese = valmese;
+        final int gsetti = Integer.parseInt(tempo);
+
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Eventi");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                eventi.clear();
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        String dataD = snapshot.child("date").getValue(String.class);
+                        String tempo2 = dataD.substring(0,2);
+                        String mese2 = dataD.substring(3,5);
+                        int valmese2 = Integer.parseInt(mese2);
+                        int gsetti2 = Integer.parseInt(tempo2);
+
+                        if(ggmese == valmese2) {
+                            if ((gsetti2 - gsetti) <= 7 && (gsetti2 - gsetti)>=0) {
+                                //ouble distanceToPlace1 = distance(latitude, longitude, latCurrent1, longCurrent1);
+
+                                DatabaseEvento databaseEvento = snapshot.getValue(DatabaseEvento.class);
+                                eventi.add(databaseEvento);
+                            }
+                        }
+                        else if((lunghmese - gsetti)< 7){
+                            if(( gsetti2 < (7- (lunghmese - gsetti)))){
+                                DatabaseEvento databaseEvento = snapshot.getValue(DatabaseEvento.class);
+                                eventi.add(databaseEvento);
+                            }
+                        }
+
+                    }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+        recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                    @Override public void onItemClick(DatabaseEvento item) {
+
+
+                        String mTitolo = item.getTitolo();
+                        String mLuogo = item.getLuogo();
+                        String mDescrizione = item.getDescrizione();
+                        String mImage = item.getImmagine();
+                        String mData= item.getDate();
+                        Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliEvento.class);
+                        intent.putExtra("title", mTitolo);
+                        intent.putExtra("description", mLuogo);
+                        intent.putExtra("descrizione", mDescrizione);
+                        intent.putExtra("image", mImage);
+                        intent.putExtra("date", mData);
+                        startActivity(intent);
+                    }
+
+
+                }));
+                adapter.notifyDataSetChanged();
+
+
     }
 
 
