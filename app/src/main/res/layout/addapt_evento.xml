@@ -59,34 +59,18 @@
 
 
 
-<ImageView
-
-    android:layout_width="45dp"
-    android:layout_height="45dp"
+<Button
+    android:layout_width="150dp"
+    android:layout_height="60dp"
     android:layout_alignRight="@id/immagine"
-    android:layout_marginTop="79dp"
+    android:layout_marginTop="65dp"
     android:layout_marginRight="30dp"
-    android:background="@drawable/circle100x100">  </ImageView>
+    android:background="@color/colorWhite"
+    android:text=""
+    android:id="@+id/stato">
 
-    <ImageView
-        android:id="@+id/like"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignRight="@id/immagine"
-        android:layout_marginTop="88dp"
-        android:layout_marginRight="38dp"
-        android:background="@drawable/ic_favorite"></ImageView>
+</Button>
 
 
-    <TextView
-        android:id="@+id/likes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/like"
-        android:layout_alignRight="@id/immagine"
-         android:layout_marginTop="-6dp"
-        android:layout_marginRight="30dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold" />
 
 </RelativeLayout>

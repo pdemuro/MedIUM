@@ -53,29 +53,6 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
                 if(user.category.equals("Utente")){
-                    bottomNavigationViewUtente = findViewById(R.id.bottom_navigation_utente);
-                    bottomNavigationViewUtente.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-                    bottomNavigationViewUtente.setVisibility(View.VISIBLE);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
-
-                    Bundle intent = getIntent().getExtras();
-                    if (intent != null){
-                        String publisher = intent.getString("publisherid");
-
-                        SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
-                        editor.putString("profileid", publisher);
-                        editor.apply();
-
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new ProfileFragment()).commit();
-                        bottomNavigationViewUtente.getMenu().getItem(2).setChecked(true);
-
-                    } else if(user.category.equals("Espositore")){
-                        bottomNavigationViewUtente.getMenu().getItem(1).setChecked(true);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new HomeFragment()).commit(); }
-                }
-                else if(user.category.equals("Espositore")){
                     bottomNavigationView = findViewById(R.id.bottom_navigation);
                     bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
                     bottomNavigationView.setVisibility(View.VISIBLE);
@@ -94,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         bottomNavigationView.getMenu().getItem(4).setChecked(true);
 
                     } else {
-                        bottomNavigationView.getMenu().getItem(2).setChecked(true);
+                        bottomNavigationView.getMenu().getItem(0).setChecked(true);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                                 new HomeFragment()).commit();
 
@@ -168,8 +145,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_home:
                     selectedFragment= new HomeFragment();
                     break;
-                case R.id.nav_map:
-                    startActivity( new Intent(MainActivity.this, MapActivity.class));
+                case R.id.nav_addpost:
+                    //startActivity( new Intent(MainActivity.this, MapActivity.class));
                     break;
                 case R.id.nav_search:
 

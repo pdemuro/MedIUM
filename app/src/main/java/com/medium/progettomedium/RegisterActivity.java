@@ -41,7 +41,6 @@ import java.io.IOException;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private Button buttonRegister;
-    private Button buttonCaricaCarta;
     private EditText editTextEmail;
     private EditText editTextPec;
     private EditText editTextData;
@@ -51,7 +50,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText editTextCap;
     private EditText editTextPassword;
     private EditText editTextConfPassword;
-    private EditText editTextCodiceAutorizzazione;
     private TextView textViewSignIn;
     private EditText editTextName,editTextCognome, editTextPhone, editTextCategory;
     private ProgressDialog progressDialog;
@@ -82,7 +80,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextName = (EditText) findViewById(R.id.editTextName);
         editTextCognome = (EditText) findViewById(R.id.editTextCognome);
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        editTextPec = (EditText) findViewById(R.id.pec);
         editTextData = (EditText) findViewById(R.id.editTextData);
         editTextIndirizzo = (EditText) findViewById(R.id.editTextIndirizzo);
         editTextCap = (EditText) findViewById(R.id.editTextCap);
@@ -92,11 +89,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextResidenza = (EditText) findViewById(R.id.editTextResidenza);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         editTextConfPassword = (EditText) findViewById(R.id.editTextConfPassword);
-        editTextCodiceAutorizzazione = (EditText) findViewById(R.id.editTextCodiceAutorizzazione);
         textViewSignIn = (TextView) findViewById(R.id.textViewSignIn);
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
-        buttonCaricaCarta = (Button) findViewById(R.id.button_carica_carta);
-        imageView = findViewById(R.id.immagine_carta_identita);
         Spinner spinner = (Spinner) findViewById(R.id.spinner1);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
@@ -109,29 +103,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
         progressDialog = new ProgressDialog(this);
-        buttonCaricaCarta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //openFileChooser();
-                CropImage.activity()
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(RegisterActivity.this);
-
-            }
-        });
         buttonRegister.setOnClickListener(this);
         textViewSignIn.setOnClickListener(this);
     }
 
     private void registerUser(){
-        String email;
-        if(tipoUtente.equals( "Utente")){
-            email = editTextEmail.getText().toString().trim();
-        }
-        else{
-            email = editTextPec.getText().toString().trim();
-        }
+        String email = editTextEmail.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String confPassword = editTextConfPassword.getText().toString().trim();
         if(TextUtils.isEmpty(email) && TextUtils.isEmpty(email)){
@@ -222,14 +199,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String cognome = editTextCognome.getText().toString().trim();
             String fullname = name + " " + cognome;
             String category = editTextCategory.getText().toString().trim();
-            String pec = editTextPec.getText().toString().trim();
+            String mail = editTextEmail.getText().toString().trim();
             String phone = editTextPhone.getText().toString().trim();
             String data = editTextData.getText().toString().trim();
             String luogo = editTextLuogo.getText().toString().trim();
             String indirizzo =  editTextIndirizzo.getText().toString().trim();
             String cap =  editTextCap.getText().toString().trim();
             String residenza = editTextResidenza.getText().toString().trim();
-            DatabaseUtente databaseUtente = new DatabaseUtente(fullname, category, pec, phone, data, luogo, residenza,indirizzo, cap );
+            String userID = firebaseAuth.getUid();
+            DatabaseUtente databaseUtente = new DatabaseUtente(fullname, mail, userID,category, phone, data, luogo, residenza,indirizzo, cap );
 
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {
@@ -272,7 +250,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 editTextEmail.setVisibility(View.VISIBLE);
                 editTextPassword.setVisibility(View.VISIBLE);
                 editTextConfPassword.setVisibility(View.VISIBLE);
-                editTextPec.setVisibility(View.GONE);
                 editTextPhone.setVisibility(View.GONE);
                 editTextCategory.setVisibility(View.GONE);
                 editTextData.setVisibility(View.GONE);
@@ -280,14 +257,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 editTextResidenza.setVisibility(View.GONE);
                 editTextIndirizzo.setVisibility(View.GONE);
                 editTextCap.setVisibility(View.GONE);
-                editTextCodiceAutorizzazione.setVisibility(View.GONE);
-                buttonCaricaCarta.setVisibility(View.GONE);
-                imageView.setVisibility(View.GONE);
                 tipoUtente = "Utente";
                 break;
             case "Organizzatore":
                 editTextEmail.setVisibility(View.GONE);
-                editTextPec.setVisibility(View.VISIBLE);
                 editTextCategory.setVisibility(View.VISIBLE);
                 editTextPassword.setVisibility(View.VISIBLE);
                 editTextConfPassword.setVisibility(View.VISIBLE);
@@ -297,90 +270,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 editTextResidenza.setVisibility(View.VISIBLE);
                 editTextIndirizzo.setVisibility(View.VISIBLE);
                 editTextCap.setVisibility(View.VISIBLE);
-                editTextCodiceAutorizzazione.setVisibility(View.GONE);
-                buttonCaricaCarta.setVisibility(View.GONE);
-                imageView.setVisibility(View.GONE);
                 tipoUtente = "Organizzatore";
                 break;
         }
 
     }
 
-    private void openFileChooser(){
-        //INTENT PER SCEGLIERE IMMAGINE
-        Intent intent = new Intent ();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Seleziona carta identità"), CHOOSE_IMAGE);
-
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        //VIENE ASSEGNATO IL LINK DELL'IMMAGINE
-        if(requestCode == CHOOSE_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null){
-            mImageUri = data.getData();
-            CropImage.activity()
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .start(this);
-        }
-        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-
-            if (resultCode == RESULT_OK) {
-                mImageUri = result.getUri();
-            }
-        }
 
 
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), mImageUri);
-            imageView.setImageBitmap(bitmap);
-            uploadImageToFirebaseStorage();
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    private void uploadImageToFirebaseStorage() {
-        //StorageReference profileImageRef = FirebaseStorage.getInstance().getReference("immaginiprofilo/"+System.currentTimeMillis()+ ".jpg");
-
-        final StorageReference profileImageRef = FirebaseStorage.getInstance().getReference("carteidentita/" + System.currentTimeMillis() + ".jpg");
-
-        //CARICAMENTO EVENTO
-        if (mImageUri != null) {
-
-            mStorage = FirebaseStorage.getInstance();
-            final FirebaseUser user = firebaseAuth.getCurrentUser();
-
-            mUploadTask = profileImageRef.putFile(mImageUri); //VIENE INSERITO IL FILE NELLO STORAGE
-            Task<Uri> urlTask = mUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-                    // Continue with the task to get the download URL
-                    return profileImageRef.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult(); //LINK SFONDO
-                        image_url = downloadUri.toString();
-                        //VENGONO CARICATI TUTTI I CAMPI DELL'EVENTO
-                    } else {
-                        // Handle failures
-                        // ...
-                    }
-                }
-            });
-
-        }
-    }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

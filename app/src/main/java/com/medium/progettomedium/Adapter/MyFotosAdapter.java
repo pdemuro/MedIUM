@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,6 +65,7 @@ public class MyFotosAdapter extends RecyclerView.Adapter<MyFotosAdapter.ImageVie
         private ImageView immagine;
         ImageView like;
         TextView likes;
+        private Button stato;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
@@ -72,7 +74,7 @@ public class MyFotosAdapter extends RecyclerView.Adapter<MyFotosAdapter.ImageVie
             data = itemView.findViewById(R.id.data);
             immagine = itemView.findViewById(R.id.immagine);
 
-            like = itemView.findViewById(R.id.like);
+            stato = itemView.findViewById(R.id.stato);
             // likes = itemView.findViewById(R.id.likes);
         }
 
@@ -87,6 +89,7 @@ public class MyFotosAdapter extends RecyclerView.Adapter<MyFotosAdapter.ImageVie
                     listener.onItemClick(evento);
                 }
             });
+            stato.setText(evento.getStato());
         }
 
     }

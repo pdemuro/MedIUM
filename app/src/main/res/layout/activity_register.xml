@@ -70,15 +70,6 @@
             android:visibility="gone" />
 
         <EditText
-            android:id="@+id/pec"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="Pec"
-            android:inputType="textEmailAddress"
-            android:visibility="gone" />
-
-        <EditText
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -148,29 +139,6 @@
             android:hint="Cap"
             android:inputType="number"
             android:visibility="gone" />
-        <EditText
-            android:id="@+id/editTextCodiceAutorizzazione"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="Codice Autorizzazione"
-            android:inputType="number"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/button_carica_carta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Carica Carta Identità" />
-
-        <ImageView
-            android:id="@+id/immagine_carta_identita"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/baseline_person_black_48dp" />
 
         <Button
             android:id="@+id/buttonRegister"

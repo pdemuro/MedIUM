@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -63,21 +64,6 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
         final FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         final String nome1= firebaseUser.getDisplayName().replaceAll("%20" ," ");
         final DatabaseEvento evento = listaEventi.get(position);
-        isLike(evento.getTitolo(),holder.like);
-        //nrLikes(holder.likes,evento.getId());
-
-        holder.like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(holder.like.getTag().equals("Like")){
-                    FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti")
-                            .child(nome1).child("Likes").child(evento.getTitolo()).setValue(true);
-                }else{
-                    FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti")
-                            .child(nome1).child("Likes").child(evento.getTitolo()).removeValue();
-                }
-            }
-        });
     }
 
     @Override
@@ -92,8 +78,7 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
         private TextView luogo;
         private TextView data;
         private ImageView immagine;
-        ImageView like;
-        TextView likes;
+        private Button stato;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -101,9 +86,8 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
             luogo = itemView.findViewById(R.id.luogo);
             data = itemView.findViewById(R.id.data);
             immagine = itemView.findViewById(R.id.immagine);
+            stato = itemView.findViewById(R.id.stato);
 
-            like = itemView.findViewById(R.id.like);
-            likes = itemView.findViewById(R.id.likes);
         }
 
         public void bind(final DatabaseEvento evento, final OnItemClickListener listener) {
@@ -117,51 +101,8 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                     listener.onItemClick(evento);
                 }
             });
+            stato.setText(evento.getStato());
         }
-    }
-
-    private void isLike(final String eventId, final ImageView imageView){
-       firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-       FirebaseUser nome = firebaseAuth.getCurrentUser();
-        final String nome1= nome.getDisplayName().replaceAll("%20" ," ");
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti")
-                .child(nome1).child("Likes");
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.child(eventId).exists()){
-                   // imageView.setImageResource(R.drawable.ic_liked);
-                   // imageView.setImageResource(R.drawable.circlered);
-                    imageView.setTag("Liked");
-
-                }else{
-                    //imageView.setImageResource(R.drawable.ic_favorite);
-                   // imageView.setImageResource(R.drawable.circle100x100);
-                    imageView.setTag("Like");
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void nrLikes(final TextView likes, String postid){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes").child(postid);
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                likes.setText(dataSnapshot.getChildrenCount()+"likes");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
 

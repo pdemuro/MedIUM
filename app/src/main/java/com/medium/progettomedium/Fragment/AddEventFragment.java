@@ -170,7 +170,7 @@ public class AddEventFragment extends Fragment implements View.OnClickListener{
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult(); //LINK SFONDO
                         //VENGONO CARICATI TUTTI I CAMPI DELL'EVENTO
-                        DatabaseEvento upload = new DatabaseEvento(id,data2, titolo, latitude, longitude, luogo.toLowerCase(), prenotazioni, downloadUri.toString(), descrizione,0.);
+                        DatabaseEvento upload = new DatabaseEvento(id,data2, titolo, latitude, longitude, luogo.toLowerCase(), prenotazioni, downloadUri.toString(), descrizione,0., "In attesa");
                         databaseReference.child("Eventi").child(titolo).setValue(upload);
                     } else {
                         // Handle failures

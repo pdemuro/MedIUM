@@ -8,15 +8,13 @@ public class DatabaseUtente {
     public String imageUrl;
     public String category;
     public String mail;
-    public String pec;
     public String phone;
     public String data;
     public String luogo;
     public String residenza;
     public String indirizzo;
     public String cap;
-    public String codiceAutorizzazione;
-    public String cartaIdentita;
+
 
     public DatabaseUtente(){
 
@@ -29,33 +27,19 @@ public class DatabaseUtente {
         this.category = category;
     }
 
-    public DatabaseUtente(String fullname, String category, String pec, String phone, String data, String luogo, String residenza, String indirizzo, String cap, String codiceAutorizzazione, String cartaIdentita) {
-        this.fullname = fullname;
-        this.imageUrl = imageUrl;
-        this.category = category;
-        this.pec = pec;
-        this.phone = phone;
-        this.data = data;
-        this.luogo = luogo;
-        this.residenza = residenza;
-        this.indirizzo = indirizzo;
-        this.cap = cap;
-        this.codiceAutorizzazione = codiceAutorizzazione;
-        this.cartaIdentita = cartaIdentita;
-    }
-
-    public DatabaseUtente(String fullname, String category, String pec, String phone, String data, String luogo, String residenza, String indirizzo, String cap) {
+    public DatabaseUtente(String fullname, String mail, String id, String category, String phone, String data, String luogo, String residenza, String indirizzo, String cap) {
         this.fullname = fullname;
         this.category = category;
-        this.pec = pec;
+        this.mail = mail;
+        this.id  = id;
         this.phone = phone;
-        this.data = data;
+        this.data  = data;
         this.luogo = luogo;
-        this.residenza = residenza;
+        this.residenza=residenza;
         this.indirizzo = indirizzo;
         this.cap = cap;
-    }
 
+    }
     public String getImageUrl() {
         return imageUrl;
     }
@@ -94,14 +78,6 @@ public class DatabaseUtente {
 
     public void setMail(String mail) {
         this.mail = mail;
-    }
-
-    public String getPec() {
-        return pec;
-    }
-
-    public void setPec(String pec) {
-        this.pec = pec;
     }
 
     public String getPhone() {
@@ -150,21 +126,5 @@ public class DatabaseUtente {
 
     public void setCap(String cap) {
         this.cap = cap;
-    }
-
-    public String getCodiceAutorizzazione() {
-        return codiceAutorizzazione;
-    }
-
-    public void setCodiceAutorizzazione(String codiceAutorizzazione) {
-        this.codiceAutorizzazione = codiceAutorizzazione;
-    }
-
-    public String getCartaIdentita() {
-        return cartaIdentita;
-    }
-
-    public void setCartaIdentita(String cartaIdentita) {
-        this.cartaIdentita = cartaIdentita;
     }
 }

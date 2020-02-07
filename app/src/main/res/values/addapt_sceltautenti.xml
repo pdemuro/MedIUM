@@ -3,7 +3,6 @@
 <resources>
     <string-array name="utenti_array">
         <item>Utente</item>
-        <item>Espositore</item>
         <item>Organizzatore</item>
 
     </string-array>
