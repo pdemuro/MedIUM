@@ -23,7 +23,6 @@ import com.medium.progettomedium.Adapter.AdaptEvento;
 import com.medium.progettomedium.EditProfileActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
-import com.medium.progettomedium.OptionsActivity;
 import com.medium.progettomedium.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -159,12 +158,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        options.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), OptionsActivity.class));
-            }
-        });
+
 
        /* my_fotos.setOnClickListener(new View.OnClickListener() {
             @Override

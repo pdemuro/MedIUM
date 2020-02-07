@@ -51,6 +51,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'com.github.yalantis:ucrop:2.2.4-native'}
+    implementation 'com.github.yalantis:ucrop:2.2.4-native'
+}
 
 apply plugin: 'com.google.gms.google-services'
