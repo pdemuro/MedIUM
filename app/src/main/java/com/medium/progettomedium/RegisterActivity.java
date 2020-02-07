@@ -51,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText editTextPassword;
     private EditText editTextConfPassword;
     private TextView textViewSignIn;
-    private EditText editTextName,editTextCognome, editTextPhone, editTextCategory;
+    private EditText editTextName,editTextCognome, editTextPhone;
     private ProgressDialog progressDialog;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
@@ -84,7 +84,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextIndirizzo = (EditText) findViewById(R.id.editTextIndirizzo);
         editTextCap = (EditText) findViewById(R.id.editTextCap);
         editTextPhone = (EditText) findViewById(R.id.editTextPhone);
-        editTextCategory = (EditText) findViewById(R.id.editTextCategory);
         editTextLuogo = (EditText) findViewById(R.id.editTextLuogo);
         editTextResidenza = (EditText) findViewById(R.id.editTextResidenza);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
@@ -169,6 +168,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     private void saveUserInformation() {
         if (tipoUtente.equals( "Utente")) {
+
             String name = editTextName.getText().toString().trim();
             String cognome = editTextCognome.getText().toString().trim();
             String fullname = name + " " + cognome;
@@ -198,7 +198,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String name = editTextName.getText().toString().trim();
             String cognome = editTextCognome.getText().toString().trim();
             String fullname = name + " " + cognome;
-            String category = editTextCategory.getText().toString().trim();
+            String category = "Organizzatore";
             String mail = editTextEmail.getText().toString().trim();
             String phone = editTextPhone.getText().toString().trim();
             String data = editTextData.getText().toString().trim();
@@ -222,7 +222,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 });
             }
 
-            databaseReference.child("UserID").child("Organizzatori").child(name + " " + cognome).setValue(databaseUtente);
+            databaseReference.child("UserID").child("Utenti").child(name + " " + cognome).setValue(databaseUtente);
             Toast.makeText(this, "Informazioni Salvate", Toast.LENGTH_LONG).show();
         }
     }
@@ -251,7 +251,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 editTextPassword.setVisibility(View.VISIBLE);
                 editTextConfPassword.setVisibility(View.VISIBLE);
                 editTextPhone.setVisibility(View.GONE);
-                editTextCategory.setVisibility(View.GONE);
                 editTextData.setVisibility(View.GONE);
                 editTextLuogo.setVisibility(View.GONE);
                 editTextResidenza.setVisibility(View.GONE);
@@ -260,8 +259,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 tipoUtente = "Utente";
                 break;
             case "Organizzatore":
-                editTextEmail.setVisibility(View.GONE);
-                editTextCategory.setVisibility(View.VISIBLE);
+                editTextEmail.setVisibility(View.VISIBLE);
                 editTextPassword.setVisibility(View.VISIBLE);
                 editTextConfPassword.setVisibility(View.VISIBLE);
                 editTextPhone.setVisibility(View.VISIBLE);

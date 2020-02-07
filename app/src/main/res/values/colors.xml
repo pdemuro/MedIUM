@@ -6,4 +6,5 @@
     <color name="colorBlack">#000000</color>
     <color name="rossoButton">#d25219</color>
     <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlueLight">#4D2BB4FF</color>
 </resources>

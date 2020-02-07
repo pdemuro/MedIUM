@@ -45,14 +45,6 @@
             android:hint="@string/cognome"
             android:inputType="textPersonName" />
 
-        <EditText
-            android:id="@+id/editTextCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="@string/category"
-            android:inputType="text" />
-
         <Spinner
             android:id="@+id/spinner1"
             android:layout_width="match_parent"

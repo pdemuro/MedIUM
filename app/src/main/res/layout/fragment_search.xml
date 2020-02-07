@@ -35,20 +35,40 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-
-
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/filtroAttivo"
+                android:visibility="gone"
+                android:orientation="horizontal"
+                android:background="@color/colorBlueLight"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/textFiltroAttivo">
+
+                </TextView>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:id="@+id/IconsId"
+            android:background="@color/colorBlueLight">
+        <LinearLayout
 
                 android:layout_width="match_parent"
-                android:layout_height="130dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_height="160dp"
                 android:orientation="horizontal"
                 android:visibility="visible"
-                android:id="@+id/IconsId"
-                >
+                android:layout_marginTop="20dp"
 
+                >
                 <RelativeLayout
+
                     android:id="@+id/icon1"
                     android:layout_width="95dp"
                     android:layout_height="130dp"
@@ -108,6 +128,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="-48dp"
                         android:text="Meno distante"
+                        android:id="@+id/menoDistante"
                         android:textAlignment="center"></TextView>
                 </RelativeLayout>
 
@@ -243,6 +264,8 @@
 
                 </FrameLayout>
             </LinearLayout>
+        </LinearLayout>
+
 
             <TableRow
                 android:id="@+id/tableRow1"
