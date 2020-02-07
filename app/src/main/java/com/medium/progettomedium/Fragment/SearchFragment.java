@@ -208,7 +208,8 @@ public class SearchFragment extends Fragment implements LocationListener {
             @Override
             public void onClick(View v) {
                 CheckPermission();
-
+                
+                icone.setVisibility(View.GONE);
                 compare(tvLati,tvLongi,eventi);
                 var=0;
             }
