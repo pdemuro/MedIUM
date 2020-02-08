@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,7 +24,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
     boolean doubleTap = false;
     private ArrayList<DatabaseEvento> eventi = new ArrayList<DatabaseEvento>();
     private AdaptEvento adapter;
@@ -31,6 +32,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView listaEventiView;
     DatabaseReference mRef;
     private DatabaseReference databaseReference;
+    private Button statoprenotazione;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,8 +46,6 @@ public class HomeFragment extends Fragment {
         linearLayoutManager.setStackFromEnd(true);
         listaEventiView.setLayoutManager(linearLayoutManager);
         eventi = new ArrayList<DatabaseEvento>();
-
-
 
         FirebaseMessaging.getInstance().subscribeToTopic("MyTopic");
 
@@ -80,7 +80,6 @@ public class HomeFragment extends Fragment {
 
 
         });
-
 
         return view;
 
@@ -133,6 +132,4 @@ public class HomeFragment extends Fragment {
         adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
         listaEventiView.setAdapter(adapter);
     }
-
-
 }

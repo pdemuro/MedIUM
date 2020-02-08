@@ -1,6 +1,7 @@
 package com.medium.progettomedium.Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,9 +29,6 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
     protected   Context c;
     List<DatabaseEvento> eventi;
     View mView;
-    FirebaseUser firebaseUser;
-    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-
 
     View v = mView;
 
@@ -55,6 +53,7 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.addapt_evento,parent,false);
 
+
         return new ViewHolder(v);
     }
 
@@ -72,13 +71,17 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
     }
 
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView titolo;
         private TextView luogo;
         private TextView data;
         private ImageView immagine;
         private Button stato;
+        private DatabaseEvento evento;
+        private DatabaseReference databaseReference;
+        private DatabaseReference databaseReference2;
+        private FirebaseAuth firebaseAuth;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -88,22 +91,132 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
             immagine = itemView.findViewById(R.id.immagine);
             stato = itemView.findViewById(R.id.stato);
 
+
         }
 
         public void bind(final DatabaseEvento evento, final OnItemClickListener listener) {
+            final String id = evento.getId();
+            firebaseAuth = FirebaseAuth.getInstance();
+            final FirebaseUser user = firebaseAuth.getCurrentUser();
+            final String nome1= user.getDisplayName().replaceAll("%20" ," ");
+            databaseReference = FirebaseDatabase.getInstance().getReference();
+            databaseReference2 = FirebaseDatabase.getInstance().getReference();
 
             titolo.setText(evento.getTitolo());
             luogo.setText(evento.getLuogo());
             data.setText(evento.getDate());
             Picasso.get().load(evento.getImmagine()).into(immagine);
+
+            databaseReference.child("UserID").child("Utenti").child(nome1).child("prenotazioni").addValueEventListener(new ValueEventListener() {
+
+                /**
+                 * This method will be invoked any time the data on the database changes.
+                 * Additionally, it will be invoked as soon as we connect the listener, so that we can get an initial snapshot of the data on the database.
+                 * @param dataSnapshot
+                 */
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // get all of the children at this level.
+                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                    // shake hands with each of them.'
+                    int var = 0;
+                    for (DataSnapshot child : children) {
+                        if(id.equals(child.getKey())) {
+                            var =1;
+                            if(child.getValue().equals(false)){
+                             var = 2;
+                            }
+                        }
+                    }
+                    if(var == 2){
+                        stato.setEnabled(false);
+
+                        stato.setText("Prenotato");
+                        stato.setBackgroundColor(Color.GRAY);
+                    } else if(var == 1){
+
+                        stato.setEnabled(false);
+
+                        stato.setText("In attesa");
+                        stato.setBackgroundColor(Color.YELLOW);
+                    }
+                    else{
+                        stato.setText(evento.getStato());
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+
+
+            });
+
+
+             stato.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    databaseReference.child("UserID").child("Utenti").child(nome1).child("prenotazioni").addValueEventListener(new ValueEventListener() {
+
+                        /**
+                         * This method will be invoked any time the data on the database changes.
+                         * Additionally, it will be invoked as soon as we connect the listener, so that we can get an initial snapshot of the data on the database.
+                         * @param dataSnapshot
+                         */
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // get all of the children at this level.
+                            Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                            // shake hands with each of them.'
+                            int var = 0;
+                            for (DataSnapshot child : children) {
+                                if(id.equals(child.getValue())) {
+                                    var =1;
+                                }
+                            }
+                            if(var == 1){
+                                stato.setEnabled(false);
+
+                                stato.setText("In attesa");
+                                stato.setBackgroundColor(Color.YELLOW);
+                            }
+                            else{
+                                FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti")
+                                        .child(nome1).child("prenotazioni").child(evento.getId()).setValue(true);
+                                stato.setEnabled(false);
+
+                                stato.setText("In attesa");
+                                stato.setBackgroundColor(Color.YELLOW);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+
+
+                    });
+                }
+            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     listener.onItemClick(evento);
+
                 }
             });
-            stato.setText(evento.getStato());
+
+
         }
+
+
     }
+
+
+
 
 
 }

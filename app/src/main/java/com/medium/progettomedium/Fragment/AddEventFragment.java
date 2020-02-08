@@ -150,9 +150,7 @@ public class AddEventFragment extends Fragment implements View.OnClickListener{
         final String id = quizRef.push().getKey();
          //CARICAMENTO EVENTO
         if (mImageUri != null) {
-
-            final StorageReference ref = mStorageRef.child(System.currentTimeMillis()
-                    + "." + getFileExtension(mImageUri));
+            final StorageReference ref = FirebaseStorage.getInstance().getReference("immaginiEventi/" + System.currentTimeMillis() + ".jpg");
 
             mUploadTask = ref.putFile(mImageUri); //VIENE INSERITO IL FILE NELLO STORAGE
             Task<Uri> urlTask = mUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -170,7 +168,7 @@ public class AddEventFragment extends Fragment implements View.OnClickListener{
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult(); //LINK SFONDO
                         //VENGONO CARICATI TUTTI I CAMPI DELL'EVENTO
-                        DatabaseEvento upload = new DatabaseEvento(id,data2, titolo, latitude, longitude, luogo.toLowerCase(), prenotazioni, downloadUri.toString(), descrizione,0., "In attesa");
+                        DatabaseEvento upload = new DatabaseEvento(id,data2, titolo, latitude, longitude, luogo.toLowerCase(), prenotazioni, downloadUri.toString(), descrizione,0., "Prenota Ora");
                         databaseReference.child("Eventi").child(titolo).setValue(upload);
                     } else {
                         // Handle failures
