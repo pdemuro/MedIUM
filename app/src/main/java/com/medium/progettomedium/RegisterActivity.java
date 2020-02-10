@@ -20,6 +20,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,17 +43,16 @@ import java.io.IOException;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private Button buttonRegister;
-    private EditText editTextEmail;
-    private EditText editTextPec;
-    private EditText editTextData;
-    private EditText editTextLuogo;
-    private EditText editTextResidenza;
-    private EditText editTextIndirizzo;
-    private EditText editTextCap;
-    private EditText editTextPassword;
-    private EditText editTextConfPassword;
+    private TextInputLayout editTextEmail;
+    private TextInputLayout editTextData;
+    private TextInputLayout editTextLuogo;
+    private TextInputLayout editTextResidenza;
+    private TextInputLayout editTextIndirizzo;
+    private TextInputLayout editTextCap;
+    private TextInputLayout editTextPassword;
+    private TextInputLayout editTextConfPassword;
     private TextView textViewSignIn;
-    private EditText editTextName,editTextCognome, editTextPhone;
+    private TextInputLayout editTextName,editTextCognome, editTextPhone;
     private ProgressDialog progressDialog;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
@@ -70,24 +71,25 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        if(firebaseAuth.getCurrentUser() != null){
+        //DA CONTROLLARE
+        /*if(firebaseAuth.getCurrentUser() != null){
             //Attivita del profilo
             finish();
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
-        }
+        }*/
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        editTextName = (EditText) findViewById(R.id.editTextName);
-        editTextCognome = (EditText) findViewById(R.id.editTextCognome);
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        editTextData = (EditText) findViewById(R.id.editTextData);
-        editTextIndirizzo = (EditText) findViewById(R.id.editTextIndirizzo);
-        editTextCap = (EditText) findViewById(R.id.editTextCap);
-        editTextPhone = (EditText) findViewById(R.id.editTextPhone);
-        editTextLuogo = (EditText) findViewById(R.id.editTextLuogo);
-        editTextResidenza = (EditText) findViewById(R.id.editTextResidenza);
-        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        editTextConfPassword = (EditText) findViewById(R.id.editTextConfPassword);
+        editTextName = findViewById(R.id.editTextName);
+        editTextCognome = findViewById(R.id.editTextCognome);
+        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextData = findViewById(R.id.editTextData);
+        editTextIndirizzo = findViewById(R.id.editTextIndirizzo);
+        editTextCap =  findViewById(R.id.editTextCap);
+        editTextPhone =  findViewById(R.id.editTextPhone);
+        editTextLuogo =  findViewById(R.id.editTextLuogo);
+        editTextResidenza =  findViewById(R.id.editTextResidenza);
+        editTextPassword =  findViewById(R.id.editTextPassword);
+        editTextConfPassword = findViewById(R.id.editTextConfPassword);
         textViewSignIn = (TextView) findViewById(R.id.textViewSignIn);
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
         Spinner spinner = (Spinner) findViewById(R.id.spinner1);
@@ -106,73 +108,163 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         textViewSignIn.setOnClickListener(this);
     }
 
-    private void registerUser(){
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
-        String confPassword = editTextConfPassword.getText().toString().trim();
-        if(TextUtils.isEmpty(email) && TextUtils.isEmpty(email)){
-            Toast.makeText(this,"Inserisci l'email",Toast.LENGTH_SHORT).show();
-            return;
+    private void registerUser() {
+
+        String nome = editTextName.getEditText().getText().toString().trim();
+        String cognome = editTextCognome.getEditText().getText().toString().trim();
+        String email = editTextEmail.getEditText().getText().toString().trim();
+        String password = editTextPassword.getEditText().getText().toString().trim();
+        String confPassword = editTextConfPassword.getEditText().getText().toString().trim();
+        String telefono = editTextPhone.getEditText().getText().toString().trim();
+        String data = editTextData.getEditText().getText().toString().trim();
+        String luogo = editTextLuogo.getEditText().getText().toString().trim();
+        String indirizzo = editTextIndirizzo.getEditText().getText().toString().trim();
+        String residenza = editTextResidenza.getEditText().getText().toString().trim();
+        String cap = editTextCap.getEditText().getText().toString().trim();
+
+        boolean var = true;
+
+
+        if (TextUtils.isEmpty(nome)) {
+            editTextName.setError("Non hai inserito il nome");
+            var = false;
+
+        } else {
+            editTextName.setError(null);
+
+
         }
-        if(TextUtils.isEmpty(password)){
-            Toast.makeText(this,"Inserisci la password",Toast.LENGTH_SHORT).show();
-            return;
-
-        }else if(password.length() < 8){
-            Toast.makeText(this,"La password deve avere almeno 8 caratteri",Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if(TextUtils.isEmpty(confPassword)){
-            Toast.makeText(this,"conferma la password",Toast.LENGTH_SHORT).show();
-            return;
-
-        }
-        if(!password.equals(confPassword)){
-            Toast.makeText(this,"la conferma è errata",Toast.LENGTH_SHORT).show();
-            return;
+        if (TextUtils.isEmpty(cognome)) {
+            editTextCognome.setError("Non hai inserito il cognome");
+            var = false;
+        } else {
+            editTextCognome.setError(null);
 
         }
 
-        progressDialog.setMessage("Registrazione in corso...");
-        progressDialog.show();
+        if (TextUtils.isEmpty(email)) {
+            editTextEmail.setError("Non hai inserito la email");
+            var = false;
+        } else {
+            editTextEmail.setError(null);
 
-        //creazione nuovo utente
+        }
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    //Attivita del profilo
-                    saveUserInformation();
-                    FirebaseUser user = firebaseAuth.getCurrentUser();
-                    if (user != null) {
-                        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(RegisterActivity.this, "Email di Verifica Inviata", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                    finish();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                } else {
-                    Toast.makeText(RegisterActivity.this, "Errore nella registrazione,Riprova", Toast.LENGTH_SHORT).show();
-                }
-                progressDialog.dismiss();
+        if (TextUtils.isEmpty(password)) {
+            editTextPassword.setError("Non hai inserito la password");
+            var = false;
+
+        } else if (password.length() < 8) {
+            editTextPassword.setError("La password deve avere almeno 8 caratteri");
+            var = false;
+
+        }
+
+        if (TextUtils.isEmpty(confPassword)) {
+            editTextConfPassword.setError("Non hai confermato la password");
+            var = false;
+
+        } else {
+            editTextConfPassword.setError(null);
+
+        }
+        if (!password.equals(confPassword)) {
+            editTextConfPassword.setError("Le password non coincidono");
+            var = false;
+
+        } else {
+            editTextConfPassword.setError(null);
+
+        }
+        if (tipoUtente.equals("Organizzatore")) {
+            if (TextUtils.isEmpty(telefono)) {
+                editTextPhone.setError("Non hai inserito il telefono");
+                var = false;
+            } else {
+                editTextPhone.setError(null);
             }
-        });
 
+            if (TextUtils.isEmpty(data)) {
+                editTextData.setError("Non hai inserito la data di nascita");
+                var = false;
+            } else {
+                editTextData.setError(null);
+
+            }
+
+            if (TextUtils.isEmpty(luogo)) {
+                editTextLuogo.setError("Non hai inserito il luogo di nascita");
+                var = false;
+            } else {
+                editTextLuogo.setError(null);
+
+            }
+
+            if (TextUtils.isEmpty(indirizzo)) {
+                editTextIndirizzo.setError("Non hai inserito l'indirizzo");
+                var = false;
+            } else {
+                editTextIndirizzo.setError(null);
+
+            }
+            if (TextUtils.isEmpty(residenza)) {
+                editTextResidenza.setError("Non hai inserito la residenza");
+                var = false;
+            } else {
+                editTextResidenza.setError(null);
+
+            }
+            if (TextUtils.isEmpty(cap)) {
+                editTextCap.setError("Non hai inserito il CAP");
+                var = false;
+            } else {
+                editTextCap.setError(null);
+
+            }
+        }
+
+        if(var) {
+
+
+            progressDialog.setMessage("Registrazione in corso...");
+            progressDialog.show();
+
+            //creazione nuovo utente
+
+            firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        //Attivita del profilo
+                        saveUserInformation();
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        if (user != null) {
+                            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(RegisterActivity.this, "Email di Verifica Inviata", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "Errore nella registrazione,Riprova", Toast.LENGTH_SHORT).show();
+                    }
+                    progressDialog.dismiss();
+                }
+            });
+        }
 
     }
 
     private void saveUserInformation() {
         if (tipoUtente.equals( "Utente")) {
 
-            String name = editTextName.getText().toString().trim();
-            String cognome = editTextCognome.getText().toString().trim();
+            String name = editTextName.getEditText().getText().toString().trim();
+            String cognome = editTextCognome.getEditText().getText().toString().trim();
             String fullname = name + " " + cognome;
-            String email = editTextEmail.getText().toString().trim();
+            String email = editTextEmail.getEditText().getText().toString().trim();
             String userID = firebaseAuth.getUid();
             String category = "Utente";
             DatabaseUtente databaseUtente = new DatabaseUtente(fullname, email,userID, category);
@@ -195,17 +287,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if (tipoUtente.equals( "Organizzatore")) {
-            String name = editTextName.getText().toString().trim();
-            String cognome = editTextCognome.getText().toString().trim();
+            String name = editTextName.getEditText().getText().toString().trim();
+            String cognome = editTextCognome.getEditText().getText().toString().trim();
             String fullname = name + " " + cognome;
             String category = "Organizzatore";
-            String mail = editTextEmail.getText().toString().trim();
-            String phone = editTextPhone.getText().toString().trim();
-            String data = editTextData.getText().toString().trim();
-            String luogo = editTextLuogo.getText().toString().trim();
-            String indirizzo =  editTextIndirizzo.getText().toString().trim();
-            String cap =  editTextCap.getText().toString().trim();
-            String residenza = editTextResidenza.getText().toString().trim();
+            String mail = editTextEmail.getEditText().getText().toString().trim();
+            String phone = editTextPhone.getEditText().getText().toString().trim();
+            String data = editTextData.getEditText().getText().toString().trim();
+            String luogo = editTextLuogo.getEditText().getText().toString().trim();
+            String indirizzo =  editTextIndirizzo.getEditText().getText().toString().trim();
+            String cap =  editTextCap.getEditText().getText().toString().trim();
+            String residenza = editTextResidenza.getEditText().getText().toString().trim();
             String userID = firebaseAuth.getUid();
             DatabaseUtente databaseUtente = new DatabaseUtente(fullname, mail, userID,category, phone, data, luogo, residenza,indirizzo, cap );
 

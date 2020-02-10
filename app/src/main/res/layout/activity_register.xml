@@ -29,21 +29,39 @@
             android:text="Registazione Utente"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
-        <EditText
-            android:id="@+id/editTextName"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="@string/nome"
-            android:inputType="textPersonName" />
+            app:errorEnabled="true"
+            android:id="@+id/editTextName">
 
-        <EditText
-            android:id="@+id/editTextCognome"
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome"
+                android:inputType="textPersonName">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="@string/cognome"
-            android:inputType="textPersonName" />
+            app:errorEnabled="true"
+            android:id="@+id/editTextCognome">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cognome"
+                android:inputType="textPersonName">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
             android:id="@+id/spinner1"
@@ -52,85 +70,168 @@
             android:layout_margin="15dp" />
 
 
-        <EditText
-            android:id="@+id/editTextEmail"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:visibility="gone" />
+            app:errorEnabled="true"
+            android:visibility="gone"
+            android:id="@+id/editTextEmail">
 
-        <EditText
-            android:id="@+id/editTextPassword"
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Email"
+                android:inputType="textEmailAddress">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:visibility="gone" />
-        <EditText
-            android:id="@+id/editTextConfPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="Conferma Password"
-            android:inputType="textPassword"
-            android:visibility="gone" />
-        <EditText
-            android:id="@+id/editTextPhone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="@string/telefono"
-            android:inputType="phone"
-            android:visibility="gone" />
+            app:errorEnabled="true"
+            android:visibility="gone"
+            android:id="@+id/editTextPassword">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-        <EditText
-            android:id="@+id/editTextData"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="Data di nascita"
-            android:inputType="date"
-            android:visibility="gone" />
+            app:errorEnabled="true"
+            android:visibility="gone"
+            android:id="@+id/editTextConfPassword">
 
-        <EditText
-            android:id="@+id/editTextLuogo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-        android:hint="Luogo di nascita"
-        android:inputType="text"
-        android:visibility="gone" />
+            <com.google.android.material.textfield.TextInputEditText
 
-        <EditText
-            android:id="@+id/editTextIndirizzo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="Indirizzo"
-            android:inputType="text"
-            android:visibility="gone" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Conferma Password"
+                android:inputType="textPassword">
 
-        <EditText
-            android:id="@+id/editTextResidenza"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:hint="Residenza"
-            android:inputType="text"
-            android:visibility="gone" />
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTextCap"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:hint="Cap"
-            android:inputType="number"
-            android:visibility="gone" />
+            app:errorEnabled="true"
+            android:visibility="gone"
+            android:id="@+id/editTextPhone">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Telefono"
+                android:inputType="phone">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            app:errorEnabled="true"
+            android:visibility="gone"
+            android:id="@+id/editTextData">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Data di Nascita"
+                android:inputType="date">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            app:errorEnabled="true"
+            android:visibility="gone"
+            android:id="@+id/editTextLuogo">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Luogo di Nascita"
+                android:inputType="text">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            app:errorEnabled="true"
+            android:visibility="gone"
+            android:id="@+id/editTextIndirizzo">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Indirizzo"
+                android:inputType="text">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            app:errorEnabled="true"
+            android:visibility="gone"
+            android:id="@+id/editTextResidenza">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Residenza"
+                android:inputType="text">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            app:errorEnabled="true"
+            android:visibility="gone"
+            android:id="@+id/editTextCap">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Cap"
+                android:inputType="number">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/buttonRegister"
