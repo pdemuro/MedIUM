@@ -1,96 +1,79 @@
 package com.medium.progettomedium.Adapter;
 
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+        import android.content.Context;
+        import android.content.SharedPreferences;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
+        import androidx.annotation.NonNull;
+        import androidx.fragment.app.FragmentActivity;
+        import androidx.recyclerview.widget.RecyclerView;
 
-import com.medium.progettomedium.Model.DatabaseEvento;
-import com.medium.progettomedium.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.squareup.picasso.Picasso;
+        import com.bumptech.glide.Glide;
+        import com.medium.progettomedium.Fragment.PostDetailFragment;
+        import com.medium.progettomedium.Model.Post;
+        import com.medium.progettomedium.R;
 
-import java.util.List;
+
+        import java.util.List;
+
+        import static android.content.Context.MODE_PRIVATE;
 
 public class MyFotosAdapter extends RecyclerView.Adapter<MyFotosAdapter.ImageViewHolder> {
 
     private Context mContext;
-    private List<DatabaseEvento> mPosts;
+    private List<Post> mPosts;
 
-    public MyFotosAdapter(Context context, List<DatabaseEvento> posts){
+    public MyFotosAdapter(Context context, List<Post> posts){
         mContext = context;
         mPosts = posts;
     }
 
-
     @NonNull
     @Override
     public MyFotosAdapter.ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.addapt_evento, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fotos_item, parent, false);
         return new MyFotosAdapter.ImageViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final MyFotosAdapter.ImageViewHolder holder, final int position) {
 
-        //holder.bind(mPosts.get(position), listener);
-        final FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-        final DatabaseEvento evento = mPosts.get(position);
+        final Post post = mPosts.get(position);
 
+        Glide.with(mContext).load(post.getPostimage()).into(holder.post_image);
+
+        holder.post_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+                editor.putString("postid", post.getPostid());
+                editor.apply();
+
+                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new PostDetailFragment()).commit();
+            }
+        });
 
     }
-
-
-
-
 
     @Override
     public int getItemCount() {
         return mPosts.size();
     }
 
+    public class ImageViewHolder extends RecyclerView.ViewHolder {
 
-    static class ImageViewHolder extends RecyclerView.ViewHolder {
+        public ImageView post_image;
 
-        private TextView titolo;
-        private TextView luogo;
-        private TextView data;
-        private ImageView immagine;
-        ImageView like;
-        TextView likes;
-        private Button stato;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            titolo = itemView.findViewById(R.id.titolo);
-            luogo = itemView.findViewById(R.id.luogo);
-            data = itemView.findViewById(R.id.data);
-            immagine = itemView.findViewById(R.id.immagine);
 
-            stato = itemView.findViewById(R.id.stato);
-            // likes = itemView.findViewById(R.id.likes);
+            post_image = itemView.findViewById(R.id.post_image);
+
         }
-
-        public void bind(final DatabaseEvento evento, final AdaptEvento.OnItemClickListener listener) {
-
-            titolo.setText(evento.getTitolo());
-            luogo.setText(evento.getLuogo());
-            data.setText(evento.getDate());
-            Picasso.get().load(evento.getImmagine()).into(immagine);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                    listener.onItemClick(evento);
-                }
-            });
-            stato.setText(evento.getStato());
-        }
-
     }
 }

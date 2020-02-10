@@ -10,7 +10,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/foto_dettagli_evento"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginBottom="383dp"
@@ -19,33 +19,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/titolo_dettagli_evento"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/titolo_dettagli_evento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="80dp"
             android:layout_marginBottom="30dp"
             android:text="Nome evento"
             android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/imageView2"
+            app:layout_constraintBottom_toTopOf="@+id/foto_dettagli_evento"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/descrizione_dettagli_evento"
             android:layout_width="244dp"
             android:layout_height="84dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="75dp"
             android:layout_marginEnd="10dp"
-            android:text="Breve descrizione dell' evento...balblaabllabbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaassssssssssssssssssssssssssssaaaaa"
+            android:text="Breve descrizione dell' evento.."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/foto_dettagli_evento" />
 
         <Button
             android:id="@+id/button"
@@ -56,11 +56,11 @@
             android:textColor="#ffff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/descrizione_dettagli_evento"
             android:background="#f44336"/>
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/luogo_dettagli_evento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -68,7 +68,7 @@
             android:text="Cagliari"
             android:textSize="17sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/foto_dettagli_evento" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -76,12 +76,12 @@
             android:layout_height="25dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintStart_toEndOf="@+id/luogo_dettagli_evento"
+            app:layout_constraintTop_toBottomOf="@+id/foto_dettagli_evento"
             tools:srcCompat="@drawable/placeholder" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/data_dettagli_evento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -89,7 +89,7 @@
             android:text="20/01/2021"
             android:textSize="17sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/foto_dettagli_evento" />
 
         <ImageView
             android:id="@+id/imageView3"
@@ -97,8 +97,8 @@
             android:layout_height="25dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="15dp"
-            app:layout_constraintEnd_toStartOf="@+id/textView4"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toStartOf="@+id/data_dettagli_evento"
+            app:layout_constraintTop_toBottomOf="@+id/foto_dettagli_evento"
             app:srcCompat="@drawable/calendar" />
 
 

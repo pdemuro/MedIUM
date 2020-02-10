@@ -230,7 +230,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             progressDialog.show();
 
             //creazione nuovo utente
-
+/*
             firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -246,14 +246,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 }
                             });
                         }
-                        finish();
+
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
                     } else {
                         Toast.makeText(RegisterActivity.this, "Errore nella registrazione,Riprova", Toast.LENGTH_SHORT).show();
                     }
                     progressDialog.dismiss();
                 }
-            });
+            });*/
         }
 
     }
@@ -324,8 +325,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         if(view == buttonRegister){
             registerUser();
-
-
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            finish();
         }
 
         if(view == textViewSignIn){

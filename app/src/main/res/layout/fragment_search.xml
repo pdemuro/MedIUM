@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:orientation="horizontal"
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/IconsId"
             android:background="@color/colorBlueLight">
         <LinearLayout

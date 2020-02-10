@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
                     bottomNavigationView = findViewById(R.id.bottom_navigation);
                     bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
                     bottomNavigationView.setVisibility(View.VISIBLE);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SearchFragment()).commit();
 
                     Bundle intent = getIntent().getExtras();
                     if (intent != null){
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         bottomNavigationView.getMenu().getItem(0).setChecked(true);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new HomeFragment()).commit();
+                                new SearchFragment()).commit();
 
                     }
                 }
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                     bottomNavigationViewOrga = findViewById(R.id.bottom_navigation_amm);
                     bottomNavigationViewOrga.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
                     bottomNavigationViewOrga.setVisibility(View.VISIBLE);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SearchFragment()).commit();
 
                     Bundle intent = getIntent().getExtras();
                     if (intent != null){
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         bottomNavigationViewOrga.getMenu().getItem(0).setChecked(true);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new HomeFragment()).commit();
+                                new SearchFragment()).commit();
 
                     }
                 }
@@ -136,20 +136,12 @@ public class MainActivity extends AppCompatActivity {
 
             switch (menuItem.getItemId()){
                 case R.id.nav_home:
-                    selectedFragment= new HomeFragment();
-                    break;
-                case R.id.nav_addpost:
-                    //startActivity( new Intent(MainActivity.this, MapActivity.class));
-                    break;
-                case R.id.nav_search:
-
                     selectedFragment= new SearchFragment();
                     break;
-
-                case R.id.nav_favorite:
-
-                    selectedFragment= new FavouriteFragment();
+                case R.id.nav_addpost:
+                    startActivity( new Intent(MainActivity.this, AddPostActivity.class));
                     break;
+
                 case R.id.nav_profile:
                     SharedPreferences.Editor editor = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
                     editor.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());

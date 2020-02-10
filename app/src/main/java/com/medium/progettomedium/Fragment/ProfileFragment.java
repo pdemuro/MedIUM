@@ -14,15 +14,20 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.medium.progettomedium.ActivityDettagliEvento;
 import com.medium.progettomedium.Adapter.AdaptEvento;
+import com.medium.progettomedium.Adapter.MyFotosAdapter;
 import com.medium.progettomedium.EditProfileActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
+import com.medium.progettomedium.Model.Post;
 import com.medium.progettomedium.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,6 +47,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -64,7 +70,7 @@ public class ProfileFragment extends Fragment {
     String profileid;
 
     private RecyclerView recyclerView;
-    private AdaptEvento myFotosAdapter;
+    private MyFotosAdapter myFotosAdapter;
     private List<DatabaseEvento> eventi = new ArrayList<DatabaseEvento>();
     private RecyclerView recyclerView_saves;
     private AdaptEvento myFotosAdapter_saves;
@@ -75,7 +81,7 @@ public class ProfileFragment extends Fragment {
     private UploadTask mUploadTask;
     FirebaseAuth firebaseAuth;
     private AdaptEvento.OnItemClickListener itemClickListener;
-
+    private List<Post> postList;
     ImageButton my_fotos, saved_fotos;
 
 
@@ -102,29 +108,22 @@ public class ProfileFragment extends Fragment {
         category = view.findViewById(R.id.category);
         edit_profile = view.findViewById(R.id.edit_profile);
         //username = view.findViewById(R.id.username);
-       // my_fotos = view.findViewById(R.id.my_fotos);
+        my_fotos = view.findViewById(R.id.my_fotos);
         saved_fotos = view.findViewById(R.id.saved_fotos);
-        options = view.findViewById(R.id.options);
-/*
-        recyclerView = view.findViewById(R.id.row_adda);
-       // recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
 
-        //recyclerView.setHasFixedSize(true);
-        //LinearLayoutManager mLayoutManager = new GridLayoutManager(getContext(), 3);
-//        recyclerView.setLayoutManager(mLayoutManager);
-      // recyclerView.setAdapter(myFotosAdapter);
-*/
-       // recyclerView_saves = view.findViewById(R.id.recycler_view_save);
-     /*   recyclerView_saves.setHasFixedSize(true);
-        //LinearLayoutManager mLayoutManagers = new GridLayoutManager(getContext(), 3);
-        //recyclerView_saves.setLayoutManager(mLayoutManagers);
-        postList_saves = new ArrayList<>();
-        myFotosAdapter_saves = new AdaptEvento(getContext(), postList_saves, itemClickListener);
-*/
+        options = view.findViewById(R.id.options);
+
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new GridLayoutManager(getContext(), 3);
+        recyclerView.setLayoutManager(mLayoutManager);
+        postList = new ArrayList<>();
+        myFotosAdapter = new MyFotosAdapter(getContext(), postList);
+        recyclerView.setAdapter(myFotosAdapter);
+
+
+         postList_saves = new ArrayList<>();
+
         listaEventiView = (RecyclerView) view.findViewById(R.id.recycler_view_save);
         listaEventiView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -132,14 +131,15 @@ public class ProfileFragment extends Fragment {
         linearLayoutManager.setStackFromEnd(true);
         listaEventiView.setLayoutManager(linearLayoutManager);
         eventi = new ArrayList<DatabaseEvento>();
-        postList_saves = new ArrayList<>();
-        // recyclerView.setVisibility(View.VISIBLE);
-       //recyclerView_saves.setVisibility(View.GONE);
+
+
+        DatabaseEvento.date_collection_arr = new ArrayList<DatabaseEvento>();
 
         userInfo();
         //getFollowers();
         //getNrPosts();
-       // myFotos();
+        myFotos();
+        postEvent();
       mySaves();
 
        edit_profile.setText("Edit Profile");
@@ -160,11 +160,12 @@ public class ProfileFragment extends Fragment {
 
 
 
-       /* my_fotos.setOnClickListener(new View.OnClickListener() {
+      my_fotos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 recyclerView.setVisibility(View.VISIBLE);
-                recyclerView_saves.setVisibility(View.GONE);
+                listaEventiView.setVisibility(View.GONE);
+                myFotos();
             }
         });
 
@@ -172,10 +173,11 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 recyclerView.setVisibility(View.GONE);
-                recyclerView_saves.setVisibility(View.VISIBLE);
+                listaEventiView.setVisibility(View.VISIBLE);
+                postEvent();
             }
         });
-*/
+
 
 /*        followers.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,21 +201,131 @@ public class ProfileFragment extends Fragment {
 
         return view;
     }
+    private void myFotos(){
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                postList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Post post = snapshot.getValue(Post.class);
+                    if (post.getPublisher().equals(profileid)){
+                        postList.add(post);
+                    }
+                }
+                Collections.reverse(postList);
+                myFotosAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void postEvent(){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        databaseReference = database.getReference("Eventi");
+        //POPOLAZIONE EVENTI DA DATABASE
+        databaseReference.addChildEventListener(new ChildEventListener() {
+
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                loadData(dataSnapshot);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                loadData(dataSnapshot);
+            }
+
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                removeData(dataSnapshot);
+            }
+
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            public void onCancelled(DatabaseError databaseError) {
+            }
+
+
+        });
+    }
 
     public void loadData(DataSnapshot dataSnapshot) {
         // get all of the children at this level.
-        int flag = 0;
-        DatabaseEvento doc = dataSnapshot.getValue(DatabaseEvento.class);
-        DatabaseEvento eve = dataSnapshot.getValue(DatabaseEvento.class);
-        for(DatabaseEvento eventi: eventi){
-            if(eventi.getTitolo().equals(doc.getTitolo())){
-                flag = 1;
+
+        final DatabaseEvento doc = dataSnapshot.getValue(DatabaseEvento.class);
+        final DatabaseEvento eve = dataSnapshot.getValue(DatabaseEvento.class);
+
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+        final String nome1= user.getDisplayName().replaceAll("%20" ," ");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
+        databaseReference.child("UserID").child("Utenti").child(nome1).child("prenotazioni").addValueEventListener(new ValueEventListener() {
+
+            /**
+             * This method will be invoked any time the data on the database changes.
+             * Additionally, it will be invoked as soon as we connect the listener, so that we can get an initial snapshot of the data on the database.
+             * @param dataSnapshot
+             */
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // get all of the children at this level.
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                // shake hands with each of them.'
+                int var = 0;
+                for (DataSnapshot child : children) {
+
+                    if (doc.getId().equals(child.getKey())){
+                        var = 1;
+                    }
+
+                }
+                if(var == 1) {
+                    DatabaseEvento.date_collection_arr.add(eve);
+                    eventi.add(doc);
+                }
+                adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+
+                //listaEventiView.setAdapter(adapter);
+                listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                    @Override public void onItemClick(DatabaseEvento item) {
+
+                        String mTitolo = item.getTitolo();
+                        String mLuogo = item.getLuogo();
+                        String mData = item.getDate();
+                        String mImage = item.getImmagine();
+                        Intent intent = new Intent(listaEventiView.getContext(), ActivityDettagliEvento.class);
+                        intent.putExtra("titolo", mTitolo);
+                        intent.putExtra("luogo", mLuogo);
+                        intent.putExtra("data", mData);
+                        intent.putExtra("immagine", mImage);
+                        startActivity(intent);
+                    }
+
+
+                }));
+
             }
-        }
-        if(flag == 0) {
-            DatabaseEvento.date_collection_arr.add(eve);
-            eventi.add(doc);
-        }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+
+        });
+
+
         adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
 
         //listaEventiView.setAdapter(adapter);
@@ -441,10 +553,6 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-    }
-
-    private void myFotos(){
-
     }
 
     private void mySaves(){

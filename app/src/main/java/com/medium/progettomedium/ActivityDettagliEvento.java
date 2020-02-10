@@ -18,10 +18,10 @@ public class ActivityDettagliEvento extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettagli_evento);
-        titolo = findViewById(R.id.textView);
-        luogo = findViewById(R.id.textView3);
+        titolo = findViewById(R.id.titolo_dettagli_evento);
+        luogo = findViewById(R.id.luogo_dettagli_evento);
         descrizione = findViewById(R.id.textView2);
-        foto = findViewById(R.id.imageView2);
+        foto = findViewById(R.id.foto_dettagli_evento);
 
         String title = getIntent().getStringExtra("title");
         String place = getIntent().getStringExtra("place");
