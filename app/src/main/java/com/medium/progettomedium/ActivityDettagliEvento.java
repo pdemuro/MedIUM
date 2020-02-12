@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 public class ActivityDettagliEvento extends AppCompatActivity {
 
 
-    TextView titolo, luogo, descrizione;
+    TextView titolo, luogo, descrizione,data;
     ImageView foto;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,17 +20,20 @@ public class ActivityDettagliEvento extends AppCompatActivity {
         setContentView(R.layout.activity_dettagli_evento);
         titolo = findViewById(R.id.titolo_dettagli_evento);
         luogo = findViewById(R.id.luogo_dettagli_evento);
-        descrizione = findViewById(R.id.textView2);
+        descrizione = findViewById(R.id.descrizione_dettagli_evento);
         foto = findViewById(R.id.foto_dettagli_evento);
+        data = findViewById(R.id.data_dettagli_evento);
 
         String title = getIntent().getStringExtra("title");
-        String place = getIntent().getStringExtra("place");
-        String description = getIntent().getStringExtra("description");
+        String place = getIntent().getStringExtra("description");
+        String description = getIntent().getStringExtra("descrizione");
         String image = getIntent().getStringExtra("image");
+        String data1 = getIntent().getStringExtra("date");
 
         titolo.setText(title);
         luogo.setText(place);
         descrizione.setText(description);
+        data.setText(data1);
         Picasso.get().load(image).into(foto);
     }
 

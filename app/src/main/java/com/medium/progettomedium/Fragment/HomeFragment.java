@@ -110,11 +110,13 @@ public class HomeFragment extends Fragment{
                 String mLuogo = item.getLuogo();
                 String mData = item.getDate();
                 String mImage = item.getImmagine();
+                String mDescription = item.getImmagine();
                 Intent intent = new Intent(listaEventiView.getContext(), ActivityDettagliEvento.class);
                 intent.putExtra("titolo", mTitolo);
                 intent.putExtra("luogo", mLuogo);
                 intent.putExtra("data", mData);
                 intent.putExtra("immagine", mImage);
+                intent.putExtra("descrizione", mDescription);
                 startActivity(intent);
             }
 
