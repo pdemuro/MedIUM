@@ -106,9 +106,8 @@ public class SearchFragment extends Fragment implements LocationListener {
         calendario = view.findViewById(R.id.buttonCalendario);
         mappa = view.findViewById(R.id.buttonMap);
         icone=view.findViewById(R.id.IconsId);
-        filtroAttivo=view.findViewById(R.id.filtroAttivo);
-        testoFiltroAttivo=view.findViewById(R.id.textFiltroAttivo);
-        menoDista = view.findViewById(R.id.menoDistante);
+        //filtroAttivo=view.findViewById(R.id.filtroAttivo);
+        //testoFiltroAttivo=view.findViewById(R.id.textFiltroAttivo);
         testo_mese= view.findViewById(R.id.tv_month);
         previous = (ImageButton) view.findViewById(R.id.ib_prev);
         layoutCalendario =  view.findViewById(R.id.ll_calendar);

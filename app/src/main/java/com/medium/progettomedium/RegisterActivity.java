@@ -246,9 +246,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 }
                             });
                         }
-
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                         finish();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     } else {
                         Toast.makeText(RegisterActivity.this, "Errore nella registrazione,Riprova", Toast.LENGTH_SHORT).show();
                     }
@@ -314,9 +313,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     }
                 });
             }
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
-
 
             databaseReference.child("UserID").child("Utenti").child(name + " " + cognome).setValue(databaseUtente);
             Toast.makeText(this, "Informazioni Salvate", Toast.LENGTH_LONG).show();
@@ -326,8 +322,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        if(view == buttonRegister) {
+        if(view == buttonRegister){
             registerUser();
+
+
         }
 
         if(view == textViewSignIn){

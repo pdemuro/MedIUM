@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        FirebaseUser nome = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseAuth=FirebaseAuth.getInstance();
+        FirebaseUser nome = firebaseAuth.getCurrentUser();
         String nome1= nome.getDisplayName().replaceAll("%20" ," ");
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserID").child("Utenti").child(nome1);
         reference.addValueEventListener(new ValueEventListener() {
