@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -59,7 +60,7 @@ import java.util.List;
 public class SearchFragment extends Fragment implements LocationListener {
 
     private RecyclerView recyclerView;
-    private LinearLayout icone;
+    private ConstraintLayout icone;
     private AdaptEvento eventAdapter;
     private List<DatabaseEvento> eventList;
     private List<DatabaseUtente> userList;
@@ -105,14 +106,14 @@ public class SearchFragment extends Fragment implements LocationListener {
         questaSettimana = view.findViewById(R.id.buttonQuestaSettimana);
         calendario = view.findViewById(R.id.buttonCalendario);
         mappa = view.findViewById(R.id.buttonMap);
-        icone=view.findViewById(R.id.IconsId);
+        icone = view.findViewById(R.id.IconsId);
         //filtroAttivo=view.findViewById(R.id.filtroAttivo);
         //testoFiltroAttivo=view.findViewById(R.id.textFiltroAttivo);
         testo_mese= view.findViewById(R.id.tv_month);
         previous = (ImageButton) view.findViewById(R.id.ib_prev);
         layoutCalendario =  view.findViewById(R.id.ll_calendar);
         giorni =  view.findViewById(R.id.giorni);
-         gridview = (GridView) view.findViewById(R.id.gv_calendar);
+        gridview = (GridView) view.findViewById(R.id.gv_calendar);
         next = (ImageButton) view.findViewById(R.id.Ib_next);
         //readUsers();
         // readEvent();
@@ -220,8 +221,8 @@ public class SearchFragment extends Fragment implements LocationListener {
             @Override
             public void onClick(View v) {
                 CheckPermission();
-                filtroAttivo.setVisibility(View.VISIBLE);
-                testoFiltroAttivo.setText(menoDista.getText());
+//                filtroAttivo.setVisibility(View.VISIBLE);
+ //               testoFiltroAttivo.setText(menoDista.getText());
                 icone.setVisibility(View.GONE);
                 compare(tvLati,tvLongi,eventi);
                 var=0;

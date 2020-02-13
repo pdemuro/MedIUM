@@ -39,15 +39,15 @@
             android:id="@+id/descrizione_dettagli_evento"
             android:layout_width="244dp"
             android:layout_height="84dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="75dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="20dp"
             android:text="Breve descrizione dell' evento.."
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/foto_dettagli_evento" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +57,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descrizione_dettagli_evento"
+            app:cornerRadius="8dp"
             android:background="#f44336"/>
+
+
+
 
         <TextView
             android:id="@+id/luogo_dettagli_evento"
