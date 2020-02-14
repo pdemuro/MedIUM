@@ -123,11 +123,11 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
                 public void onClick(View v) {
 
 
-                    databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(false);
+                    databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(3);
                 }
 
             });
-            
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     listener.onItemClick(utente);

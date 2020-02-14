@@ -133,7 +133,8 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                                     for (DataSnapshot child : children) {
                                         if(id.equals(child.getKey())) {
                                             var =1;
-                                            if(child.getValue().equals(false)){
+                                            String stato = child.getValue().toString();
+                                            if(stato.equals("3")){
                                                 var = 2;
                                             }
                                         }
@@ -151,7 +152,8 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                                         stato.setBackgroundColor(Color.YELLOW);
                                     }
                                     else{
-                                        stato.setText(evento.getStato());
+                                        stato.setText("Prenota Ora");
+                                        stato.setBackgroundColor(Color.GREEN);
                                     }
                                 }
 
@@ -208,7 +210,7 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                             }
                             else{
                                 FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti")
-                                        .child(nome1).child("prenotazioni").child(evento.getId()).setValue(true);
+                                        .child(nome1).child("prenotazioni").child(evento.getId()).setValue(2);
                                 stato.setEnabled(false);
 
                                 stato.setText("In attesa");

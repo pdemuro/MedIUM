@@ -48,7 +48,7 @@
     android:layout_alignRight="@id/immagine"
     android:layout_marginTop="80dp"
     android:layout_marginRight="20dp"
-    android:background="@color/verdeprenota"
+    android:background="@null"
     android:text=""
     android:id="@+id/stato">
 

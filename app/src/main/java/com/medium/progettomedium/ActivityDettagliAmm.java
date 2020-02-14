@@ -77,8 +77,8 @@ public class ActivityDettagliAmm extends AppCompatActivity {
 
                                 for (DataSnapshot child : children) {
                                     if(id.equals(child.getKey())) {
-
-                                        if(child.getValue().equals(true)){
+                                        String stato = child.getValue().toString();
+                                        if(stato.equals("2")){
                                             utenti.add(utente);
                                         }
                                     }
