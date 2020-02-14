@@ -14,11 +14,14 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
+        android:focusable="auto"
+        android:longClickable="false"
         app:cardCornerRadius="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -30,9 +33,13 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginTop="20dp"
+                android:autoSizeMaxTextSize="20sp"
+                android:autoSizeStepGranularity="2sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="2"
                 android:text="Nome evento"
                 android:textAllCaps="true"
-                android:textColor="#000000"
+                android:textColor="@color/primary_text_default_material_light"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@+id/stato"
                 app:layout_constraintStart_toStartOf="@+id/stato"
@@ -56,11 +63,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:autoSizeMaxTextSize="30sp"
+                android:autoSizeMinTextSize="2sp"
+                android:autoSizeStepGranularity="2sp"
+                android:autoSizeTextType="uniform"
                 android:text="Luogo"
-                android:textColor="#000000"
+                android:textColor="@color/secondary_text_material_light"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@+id/titolo"
-                app:layout_constraintStart_toStartOf="@+id/titolo"
+                app:layout_constraintEnd_toEndOf="@+id/stato"
+                app:layout_constraintStart_toStartOf="@+id/stato"
                 app:layout_constraintTop_toBottomOf="@+id/titolo" />
 
             <TextView
@@ -68,16 +79,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-medium"
                 android:text="Data"
                 android:textColor="#F44336"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@+id/titolo"
-                app:layout_constraintStart_toStartOf="@+id/titolo"
+                app:layout_constraintEnd_toEndOf="@+id/stato"
+                app:layout_constraintStart_toStartOf="@+id/stato"
                 app:layout_constraintTop_toBottomOf="@+id/luogo" />
 
             <ImageView
                 android:id="@+id/immagine"
-                android:layout_width="187dp"
+                android:layout_width="170dp"
                 android:layout_height="0dp"
                 android:background="#515d7fd3"
                 android:scaleType="fitXY"
@@ -99,7 +111,7 @@
                 android:id="@+id/imageView4"
                 android:layout_width="15dp"
                 android:layout_height="18dp"
-                android:layout_marginStart="2dp"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toEndOf="@+id/data"
                 app:layout_constraintTop_toBottomOf="@+id/luogo"
