@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ValueEventListener;
+import com.medium.progettomedium.ActivityDettagliAmm;
 import com.medium.progettomedium.ActivityDettagliEvento;
 import com.medium.progettomedium.Adapter.AdaptEvento;
 import com.medium.progettomedium.Model.DatabaseEvento;
@@ -138,13 +139,15 @@ public class HomeFragment extends Fragment{
                         String mLuogo = item.getLuogo();
                         String mData = item.getDate();
                         String mImage = item.getImmagine();
+                        String mId = item.getId();
                         String mDescription = item.getImmagine();
-                        Intent intent = new Intent(listaEventiView.getContext(), ActivityDettagliEvento.class);
+                        Intent intent = new Intent(listaEventiView.getContext(), ActivityDettagliAmm.class);
                         intent.putExtra("titolo", mTitolo);
                         intent.putExtra("luogo", mLuogo);
                         intent.putExtra("data", mData);
                         intent.putExtra("immagine", mImage);
                         intent.putExtra("descrizione", mDescription);
+                        intent.putExtra("id",mId);
                         startActivity(intent);
                     }
 
