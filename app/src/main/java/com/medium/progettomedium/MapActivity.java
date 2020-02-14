@@ -1,5 +1,6 @@
 package com.medium.progettomedium;
 
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -28,7 +29,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private GoogleMap mMap;
     private ChildEventListener mChildEventListener;
     private DatabaseReference mUsers;
-    Marker marker;
+    private Marker marker;
+    private DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,18 +63,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         googleMap.setOnMarkerClickListener(this);
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        CameraUpdate center= CameraUpdateFactory.newLatLng(new LatLng(40.1199325, 9.0104808));
-        CameraUpdate zoom=CameraUpdateFactory.zoomTo(8);
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(40.1199325, 9.0104808));
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(8);
 
         mMap.moveCamera(center);
         mMap.animateCamera(zoom);
         mUsers.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot s: dataSnapshot.getChildren()){
+                for (DataSnapshot s : dataSnapshot.getChildren()) {
                     DatabaseEvento evento = s.getValue(DatabaseEvento.class);
                     LatLng location = new LatLng(evento.latitude, evento.longitude);
-                    mMap.addMarker(new MarkerOptions().position(location).title(evento.titolo));
+                    marker = mMap.addMarker(new MarkerOptions().position(location).title(evento.titolo));
+                    marker.setTag(evento.getId());
+
                 }
             }
 
@@ -80,7 +85,53 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
             }
         });
+        mMap.setOnMarkerClickListener(this);
 
+    }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Eventi");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    DatabaseEvento databaseEvento = snapshot.getValue(DatabaseEvento.class);
+                    if (databaseEvento.getId().equals(marker.getTag())) {
+                        String mTitolo = databaseEvento.getTitolo();
+                        String mLuogo = databaseEvento.getLuogo();
+                        String mDescrizione = databaseEvento.getDescrizione();
+                        String mImage = databaseEvento.getImmagine();
+                        String mData = databaseEvento.getDate();
+                        String mId = databaseEvento.getId();
+                        Intent intent = new Intent(getApplicationContext(), ActivityDettagliEvento.class);
+                        intent.putExtra("title", mTitolo);
+                        intent.putExtra("description", mLuogo);
+                        intent.putExtra("descrizione", mDescrizione);
+                        intent.putExtra("image", mImage);
+                        intent.putExtra("date", mData);
+                        intent.putExtra("id", mId);
+                        startActivity(intent);
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        // Return false to indicate that we have not consumed the event and that we wish
+        // for the default behavior to occur (which is for the camera to move such that the
+        // marker is centered and for the marker's info window to open, if it has one).
+        return false;
     }
 
     @Override
@@ -101,10 +152,5 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onProviderDisabled(String provider) {
 
-    }
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        return false;
     }
 }

@@ -306,12 +306,14 @@ public class ProfileFragment extends Fragment {
                         String mDescrizione = item.getDescrizione();
                         String mImage = item.getImmagine();
                         String mData= item.getDate();
-                        Intent intent = new Intent(listaEventiView.getContext(), ActivityDettagliEvento.class);
+                        String mId = item.getId();
+                        Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliEvento.class);
                         intent.putExtra("title", mTitolo);
                         intent.putExtra("description", mLuogo);
                         intent.putExtra("descrizione", mDescrizione);
                         intent.putExtra("image", mImage);
                         intent.putExtra("date", mData);
+                        intent.putExtra("id",mId);
                         startActivity(intent);
                     }
 
@@ -339,12 +341,14 @@ public class ProfileFragment extends Fragment {
                 String mDescrizione = item.getDescrizione();
                 String mImage = item.getImmagine();
                 String mData= item.getDate();
+                String mId = item.getId();
                 Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliEvento.class);
                 intent.putExtra("title", mTitolo);
                 intent.putExtra("description", mLuogo);
                 intent.putExtra("descrizione", mDescrizione);
                 intent.putExtra("image", mImage);
                 intent.putExtra("date", mData);
+                intent.putExtra("id",mId);
                 startActivity(intent);
             }
 
@@ -610,13 +614,17 @@ public class ProfileFragment extends Fragment {
 
                         String mTitolo = item.getTitolo();
                         String mLuogo = item.getLuogo();
-                        String mData = item.getDate();
+                        String mDescrizione = item.getDescrizione();
                         String mImage = item.getImmagine();
-                        Intent intent = new Intent(listaEventiView.getContext(), ActivityDettagliEvento.class);
-                        intent.putExtra("titolo", mTitolo);
-                        intent.putExtra("luogo", mLuogo);
-                        intent.putExtra("data", mData);
-                        intent.putExtra("immagine", mImage);
+                        String mData= item.getDate();
+                        String mId = item.getId();
+                        Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliEvento.class);
+                        intent.putExtra("title", mTitolo);
+                        intent.putExtra("description", mLuogo);
+                        intent.putExtra("descrizione", mDescrizione);
+                        intent.putExtra("image", mImage);
+                        intent.putExtra("date", mData);
+                        intent.putExtra("id",mId);
                         startActivity(intent);
                     }
 
