@@ -1,5 +1,6 @@
 package com.medium.progettomedium;
 
+import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import com.medium.progettomedium.Fragment.SearchFragment;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -151,6 +153,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public void onProviderDisabled(String provider) {
+
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
     }
 }

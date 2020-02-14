@@ -227,7 +227,7 @@ public class SearchFragment extends Fragment implements LocationListener {
         calendario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                icone.setVisibility(View.GONE);
+                //icone.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.GONE);
                 layoutCalendario.setVisibility(View.VISIBLE);
                 giorni.setVisibility(View.VISIBLE);
@@ -245,8 +245,6 @@ public class SearchFragment extends Fragment implements LocationListener {
             @Override
             public void onClick(View v) {
                 CheckPermission();
-
-                icone.setVisibility(View.GONE);
                 compare(tvLati,tvLongi,eventi);
                 var=0;
             }

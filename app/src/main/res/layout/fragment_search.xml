@@ -159,6 +159,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
             android:background="#343434"
+            android:layout_below="@+id/toolbar"
             android:id="@+id/ll_calendar"
             android:orientation="vertical"
             android:visibility="gone">
