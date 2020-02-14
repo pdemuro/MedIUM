@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         bottomNavigationViewOrga.getMenu().getItem(0).setChecked(true);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new SearchFragment()).commit();
+                                new HomeFragment()).commit();
 
                     }
                 }

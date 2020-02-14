@@ -22,6 +22,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.medium.progettomedium.MainActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.R;
@@ -72,6 +77,8 @@ public class AddEventFragment extends Fragment implements View.OnClickListener{
     private String data2;
     private static final String TAG = "ActivityAdmin";
     private DatePickerDialog.OnDateSetListener mDateSetListener;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReferenceutente;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -170,6 +177,23 @@ public class AddEventFragment extends Fragment implements View.OnClickListener{
                         //VENGONO CARICATI TUTTI I CAMPI DELL'EVENTO
                         DatabaseEvento upload = new DatabaseEvento(id,data2, titolo, latitude, longitude, luogo.toLowerCase(), prenotazioni, downloadUri.toString(), descrizione,0., "Prenota Ora");
                         databaseReference.child("Eventi").child(titolo).setValue(upload);
+
+                        firebaseAuth = FirebaseAuth.getInstance();
+                        FirebaseUser user = firebaseAuth.getCurrentUser();
+                        final String nome1= user.getDisplayName().replaceAll("%20" ," ");
+                        databaseReferenceutente = FirebaseDatabase.getInstance().getReference();
+                        databaseReferenceutente.child("UserID").child("Utenti").child(nome1).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                databaseReference.child("UserID").child("Utenti").child(nome1).child("Eventi Creati").child(id).setValue(true);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+
                     } else {
                         // Handle failures
                         // ...

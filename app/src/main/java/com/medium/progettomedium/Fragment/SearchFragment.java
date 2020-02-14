@@ -22,6 +22,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -60,6 +63,7 @@ import java.util.List;
 public class SearchFragment extends Fragment implements LocationListener {
 
     private RecyclerView recyclerView;
+    private Toolbar toolbar;
     private ConstraintLayout icone;
     private AdaptEvento eventAdapter;
     private List<DatabaseEvento> eventList;
@@ -86,6 +90,9 @@ public class SearchFragment extends Fragment implements LocationListener {
     public Double tvLati;
     LocationManager locationManager;
     public int var=0;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReferenceutente;
+    private DatabaseReference getDatabaseReferencevento;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,6 +104,8 @@ public class SearchFragment extends Fragment implements LocationListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         search_bar = view.findViewById(R.id.search_bar);
+
+
 
 
         userList = new ArrayList<>();
@@ -117,6 +126,7 @@ public class SearchFragment extends Fragment implements LocationListener {
         next = (ImageButton) view.findViewById(R.id.Ib_next);
         //readUsers();
         // readEvent();
+
 
         DatabaseEvento.date_collection_arr = new ArrayList<DatabaseEvento>();
 
@@ -156,6 +166,8 @@ public class SearchFragment extends Fragment implements LocationListener {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         eventi = new ArrayList<DatabaseEvento>();
+
+
 
 
 
@@ -351,9 +363,12 @@ public class SearchFragment extends Fragment implements LocationListener {
 
     public void loadData(DataSnapshot dataSnapshot) {
         // get all of the children at this level.
+
+
         int flag = 0;
-        DatabaseEvento doc = dataSnapshot.getValue(DatabaseEvento.class);
-        DatabaseEvento eve = dataSnapshot.getValue(DatabaseEvento.class);
+        final DatabaseEvento doc = dataSnapshot.getValue(DatabaseEvento.class);
+        final DatabaseEvento eve = dataSnapshot.getValue(DatabaseEvento.class);
+
         for(DatabaseEvento eventi: eventi){
             if(eventi.getTitolo().equals(doc.getTitolo())){
                 flag = 1;
