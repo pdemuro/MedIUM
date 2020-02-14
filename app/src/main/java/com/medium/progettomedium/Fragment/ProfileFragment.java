@@ -284,7 +284,6 @@ public class ProfileFragment extends Fragment {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 // shake hands with each of them.'
                 int var = 0;
-                eventi.clear();
                 for (DataSnapshot child : children) {
 
                     if (doc.getId().equals(child.getKey())){
@@ -351,6 +350,8 @@ public class ProfileFragment extends Fragment {
 
 
         }));
+
+        eventi.clear();
     }
     public void removeData(DataSnapshot dataSnapshot) {
         // get all of the children at this level.
