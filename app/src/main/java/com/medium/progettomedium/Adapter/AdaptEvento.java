@@ -163,7 +163,8 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
 
                             });
                         }
-                        else{
+                        else if(child.getValue().equals("Organizzatore")){
+
                             stato.setVisibility(View.GONE);
                         }
                     }
