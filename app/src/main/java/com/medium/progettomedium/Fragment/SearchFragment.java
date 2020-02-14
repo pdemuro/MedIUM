@@ -37,6 +37,7 @@ import com.medium.progettomedium.ActivityDettagliEvento;
 import com.medium.progettomedium.Adapter.AdaptCalendario;
 import com.medium.progettomedium.Adapter.AdaptEvento;
 import com.medium.progettomedium.Adapter.UserAdapter;
+import com.medium.progettomedium.EventoPrenotabile;
 import com.medium.progettomedium.MapActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
@@ -51,6 +52,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -173,8 +178,6 @@ public class SearchFragment extends Fragment implements LocationListener {
 
         FirebaseMessaging.getInstance().subscribeToTopic("MyTopic");
 
-        DatabaseEvento.date_collection_arr = new ArrayList<DatabaseEvento>();
-
         databaseReference = database.getReference("Eventi");
         //POPOLAZIONE EVENTI DA DATABASE
         search_bar.setOnClickListener(new View.OnClickListener() {
@@ -183,7 +186,10 @@ public class SearchFragment extends Fragment implements LocationListener {
                 icone.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
                 layoutCalendario.setVisibility(View.GONE);
-                filtroAttivo.setVisibility(View.GONE);
+                giorni.setVisibility(View.GONE);
+
+                // layoutCalendario.setVisibility(View.GONE);
+                //filtroAttivo.setVisibility(View.GONE);
                 giorni.setVisibility(View.GONE);
             }
         });
@@ -209,6 +215,12 @@ public class SearchFragment extends Fragment implements LocationListener {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getContext(), MapActivity.class));
+                icone.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.GONE);
+                layoutCalendario.setVisibility(View.GONE);
+                giorni.setVisibility(View.GONE);
+
+
             }
         });
 
@@ -233,8 +245,7 @@ public class SearchFragment extends Fragment implements LocationListener {
             @Override
             public void onClick(View v) {
                 CheckPermission();
-//                filtroAttivo.setVisibility(View.VISIBLE);
- //               testoFiltroAttivo.setText(menoDista.getText());
+
                 icone.setVisibility(View.GONE);
                 compare(tvLati,tvLongi,eventi);
                 var=0;
@@ -479,7 +490,7 @@ public class SearchFragment extends Fragment implements LocationListener {
 
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 String selectedGridDate = AdaptCalendario.day_string.get(position);
-                ((AdaptCalendario) parent.getAdapter()).getPositionList(selectedGridDate,getContext());
+               getPositionList(selectedGridDate,getContext());
             }
 
         });
@@ -748,6 +759,72 @@ public class SearchFragment extends Fragment implements LocationListener {
                                 Math.pow(Math.sin(deltaLon/2), 2) ) );
         return radius * angle;
     }
+    public void getPositionList(String date,final Context act){
+
+        int len= DatabaseEvento.date_collection_arr.size();
+        JSONArray jbarrays=new JSONArray();
+
+        DatabaseEvento evento = new DatabaseEvento();
+        eventi.clear();
+        for (int j=0; j<len; j++){
+            if (DatabaseEvento.date_collection_arr.get(j).date.equals(date) && ! DatabaseEvento.date_collection_arr.get(j).id.equals(evento.id) ){
+              /*  HashMap<String, String> maplist = new HashMap<String, String>();
+                maplist.put("hnames", DatabaseEvento.date_collection_arr.get(j).date);
+                maplist.put("hsubject", DatabaseEvento.date_collection_arr.get(j).titolo);
+                maplist.put("descript", DatabaseEvento.date_collection_arr.get(j).luogo);
+                JSONObject json1 = new JSONObject(maplist);
+                jbarrays.put(json1);*/
+              evento=DatabaseEvento.date_collection_arr.get(j);
+
+                eventi.add(DatabaseEvento.date_collection_arr.get(j));
+            }
+        }
+
+            adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+            recyclerView.setVisibility(View.VISIBLE);
+            //listaEventiView.setAdapter(adapter);
+            recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                @Override
+                public void onItemClick(DatabaseEvento item) {
+
+
+                    String mTitolo = item.getTitolo();
+                    String mLuogo = item.getLuogo();
+                    String mDescrizione = item.getDescrizione();
+                    String mImage = item.getImmagine();
+                    String mData = item.getDate();
+                    Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliEvento.class);
+                    intent.putExtra("title", mTitolo);
+                    intent.putExtra("description", mLuogo);
+                    intent.putExtra("descrizione", mDescrizione);
+                    intent.putExtra("image", mImage);
+                    intent.putExtra("date", mData);
+                    startActivity(intent);
+                }
+
+
+            }));
+
+
+            /*final Dialog dialogs = new Dialog(context);
+            dialogs.setContentView(R.layout.dialog_prenotazione);
+            listTeachers = (ListView) dialogs.findViewById(R.id.list_teachers);
+            ImageView imgCross = (ImageView) dialogs.findViewById(R.id.img_cross);
+            listTeachers.setAdapter(new AdaptEventoPrenotabile(context, getMatchList(jbarrays + "")));
+            imgCross.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogs.dismiss();
+                }
+            });
+            dialogs.show();
+
+        }*/
+
+
+
+        }
+
 
    /* @Override
     public void onBackPressed() {
