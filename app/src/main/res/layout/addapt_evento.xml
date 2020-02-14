@@ -1,69 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="150dp">
 
-    <ImageView
-        android:id="@+id/immagine"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="#515d7fd3"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/titolo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="20dp"
+                android:text="Nome evento"
+                android:textAllCaps="true"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/stato"
+                app:layout_constraintStart_toStartOf="@+id/stato"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/stato"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="45dp"
+                android:layout_marginBottom="16dp"
+                android:background="@null"
+                android:text=""
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/immagine">
+
+            </Button>
+
+            <TextView
+                android:id="@+id/luogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Luogo"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/titolo"
+                app:layout_constraintStart_toStartOf="@+id/titolo"
+                app:layout_constraintTop_toBottomOf="@+id/titolo" />
+
+            <TextView
+                android:id="@+id/data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Data"
+                android:textColor="#F44336"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/titolo"
+                app:layout_constraintStart_toStartOf="@+id/titolo"
+                app:layout_constraintTop_toBottomOf="@+id/luogo" />
+
+            <ImageView
+                android:id="@+id/immagine"
+                android:layout_width="187dp"
+                android:layout_height="0dp"
+                android:background="#515d7fd3"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="15dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toEndOf="@+id/luogo"
+                app:layout_constraintTop_toBottomOf="@+id/titolo"
+                app:srcCompat="@drawable/placeholder" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="15dp"
+                android:layout_height="18dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toEndOf="@+id/data"
+                app:layout_constraintTop_toBottomOf="@+id/luogo"
+                app:srcCompat="@drawable/calendar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 
-    <RelativeLayout
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp">
-
-        <TextView
-            android:id="@+id/data"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="55dp"
-            android:layout_marginLeft="20dp"
-            android:text="Data"
-            android:textColor="#fffefc"
-            android:textSize="18dp" />
-
-        <TextView
-            android:id="@+id/luogo"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginLeft="20dp"
-            android:text="Luogo"
-            android:textColor="#fffefc"
-            android:textSize="18dp" />
-
-    </RelativeLayout>
-
-    <Button
-    android:layout_width="130dp"
-    android:layout_height="50dp"
-    android:layout_alignRight="@id/immagine"
-    android:layout_marginTop="80dp"
-    android:layout_marginRight="20dp"
-    android:background="@color/verdeprenota"
-    android:text=""
-    android:id="@+id/stato">
-
-</Button>
-
-    <TextView
-        android:id="@+id/titolo"
-        android:layout_width="250dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="20dp"
-
-        android:text="Nome evento"
-        android:textColor="#ffffff"
-        android:textSize="25dp" />
-
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
