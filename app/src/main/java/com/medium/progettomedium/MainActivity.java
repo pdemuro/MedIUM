@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     bottomNavigationViewOrga = findViewById(R.id.bottom_navigation_amm);
                     bottomNavigationViewOrga.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
                     bottomNavigationViewOrga.setVisibility(View.VISIBLE);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SearchFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
 
                     Bundle intent = getIntent().getExtras();
                     if (intent != null){
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         bottomNavigationViewOrga.getMenu().getItem(0).setChecked(true);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new SearchFragment()).commit();
+                                new HomeFragment()).commit();
 
                     }
                 }

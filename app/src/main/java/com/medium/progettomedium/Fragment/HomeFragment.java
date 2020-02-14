@@ -7,10 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ValueEventListener;
+import com.medium.progettomedium.ActivityDettagliAmm;
 import com.medium.progettomedium.ActivityDettagliEvento;
 import com.medium.progettomedium.Adapter.AdaptEvento;
 import com.medium.progettomedium.Model.DatabaseEvento;
@@ -33,6 +38,9 @@ public class HomeFragment extends Fragment{
     DatabaseReference mRef;
     private DatabaseReference databaseReference;
     private Button statoprenotazione;
+    private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReferenceutente;
+    private DatabaseReference getDatabaseReferencevento;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,40 +96,76 @@ public class HomeFragment extends Fragment{
 
     public void loadData(DataSnapshot dataSnapshot) {
         // get all of the children at this level.
-        int flag = 0;
-        DatabaseEvento doc = dataSnapshot.getValue(DatabaseEvento.class);
-        DatabaseEvento eve = dataSnapshot.getValue(DatabaseEvento.class);
-        for(DatabaseEvento eventi: eventi){
-            if(eventi.getTitolo().equals(doc.getTitolo())){
-                flag = 1;
+        final int flag = 0;
+        final DatabaseEvento doc = dataSnapshot.getValue(DatabaseEvento.class);
+        final DatabaseEvento eve = dataSnapshot.getValue(DatabaseEvento.class);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        final String nome1= user.getDisplayName().replaceAll("%20" ," ");
+        databaseReferenceutente = FirebaseDatabase.getInstance().getReference();
+        getDatabaseReferencevento = FirebaseDatabase.getInstance().getReference();
+
+        databaseReferenceutente.child("UserID").child("Utenti").child(nome1).child("Eventi Creati").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                // shake hands with each of them.'
+                int var = 0;
+                int flag = 0;
+                for (DataSnapshot child : children) {
+                    final String evento = child.getKey().toString();
+
+                    if (evento.equals(doc.getId())){
+                        for(DatabaseEvento eventi: eventi){
+                            if(eventi.getId().equals(evento)){
+                                flag = 1;
+                            }
+                        }
+                        if(flag == 0){
+                            DatabaseEvento.date_collection_arr.add(eve);
+                            eventi.add(doc);
+                        }
+                    }
+
+                }
+                adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+
+                //listaEventiView.setAdapter(adapter);
+                listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                    @Override public void onItemClick(DatabaseEvento item) {
+
+                        String mTitolo = item.getTitolo();
+                        String mLuogo = item.getLuogo();
+                        String mData = item.getDate();
+                        String mImage = item.getImmagine();
+                        String mId = item.getId();
+                        String mDescription = item.getImmagine();
+                        Intent intent = new Intent(listaEventiView.getContext(), ActivityDettagliAmm.class);
+                        intent.putExtra("titolo", mTitolo);
+                        intent.putExtra("luogo", mLuogo);
+                        intent.putExtra("data", mData);
+                        intent.putExtra("immagine", mImage);
+                        intent.putExtra("descrizione", mDescription);
+                        intent.putExtra("id",mId);
+                        startActivity(intent);
+                    }
+
+
+                }));
+
             }
-        }
-        if(flag == 0) {
-            DatabaseEvento.date_collection_arr.add(eve);
-            eventi.add(doc);
-        }
-        adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
 
-        //listaEventiView.setAdapter(adapter);
-        listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
-            @Override public void onItemClick(DatabaseEvento item) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                String mTitolo = item.getTitolo();
-                String mLuogo = item.getLuogo();
-                String mData = item.getDate();
-                String mImage = item.getImmagine();
-                String mDescription = item.getImmagine();
-                Intent intent = new Intent(listaEventiView.getContext(), ActivityDettagliEvento.class);
-                intent.putExtra("titolo", mTitolo);
-                intent.putExtra("luogo", mLuogo);
-                intent.putExtra("data", mData);
-                intent.putExtra("immagine", mImage);
-                intent.putExtra("descrizione", mDescription);
-                startActivity(intent);
             }
 
 
-        }));
+
+        });
+
+
     }
     public void removeData(DataSnapshot dataSnapshot) {
         // get all of the children at this level.

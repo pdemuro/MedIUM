@@ -81,6 +81,7 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
         private DatabaseEvento evento;
         private DatabaseReference databaseReference;
         private DatabaseReference databaseReference2;
+        private DatabaseReference databaseReferenceutente;
         private FirebaseAuth firebaseAuth;
 
         public ViewHolder(View itemView) {
@@ -99,6 +100,7 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
             firebaseAuth = FirebaseAuth.getInstance();
             final FirebaseUser user = firebaseAuth.getCurrentUser();
             final String nome1= user.getDisplayName().replaceAll("%20" ," ");
+            databaseReferenceutente = FirebaseDatabase.getInstance().getReference();
             databaseReference = FirebaseDatabase.getInstance().getReference();
             databaseReference2 = FirebaseDatabase.getInstance().getReference();
 
@@ -107,51 +109,74 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
             data.setText(evento.getDate());
             Picasso.get().load(evento.getImmagine()).into(immagine);
 
-            databaseReference.child("UserID").child("Utenti").child(nome1).child("prenotazioni").addValueEventListener(new ValueEventListener() {
-
-                /**
-                 * This method will be invoked any time the data on the database changes.
-                 * Additionally, it will be invoked as soon as we connect the listener, so that we can get an initial snapshot of the data on the database.
-                 * @param dataSnapshot
-                 */
+            databaseReferenceutente.child("UserID").child("Utenti").child(nome1).addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // get all of the children at this level.
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                     // shake hands with each of them.'
                     int var = 0;
                     for (DataSnapshot child : children) {
-                        if(id.equals(child.getKey())) {
-                            var =1;
-                            if(child.getValue().equals(false)){
-                             var = 2;
-                            }
+                        if(child.getValue().equals("Utente")) {
+                            databaseReference.child("UserID").child("Utenti").child(nome1).child("prenotazioni").addValueEventListener(new ValueEventListener() {
+
+                                /**
+                                 * This method will be invoked any time the data on the database changes.
+                                 * Additionally, it will be invoked as soon as we connect the listener, so that we can get an initial snapshot of the data on the database.
+                                 * @param dataSnapshot
+                                 */
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    // get all of the children at this level.
+                                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                                    // shake hands with each of them.'
+                                    int var = 0;
+                                    for (DataSnapshot child : children) {
+                                        if(id.equals(child.getKey())) {
+                                            var =1;
+                                            String stato = child.getValue().toString();
+                                            if(stato.equals("3")){
+                                                var = 2;
+                                            }
+                                        }
+                                    }
+                                    if(var == 2){
+                                        stato.setEnabled(false);
+
+                                        stato.setText("Prenotato");
+                                        stato.setBackgroundColor(Color.GRAY);
+                                    } else if(var == 1){
+
+                                        stato.setEnabled(false);
+
+                                        stato.setText("In attesa");
+                                        stato.setBackgroundColor(Color.YELLOW);
+                                    }
+                                    else{
+                                        stato.setText("Prenota Ora");
+                                        stato.setBackgroundColor(Color.GREEN);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+
+
+                            });
+                        }
+                        else if(child.getValue().equals("Organizzatore")){
+
+                            stato.setVisibility(View.GONE);
                         }
                     }
-                    if(var == 2){
-                        stato.setEnabled(false);
-
-                        stato.setText("Prenotato");
-                        stato.setBackgroundColor(Color.GRAY);
-                    } else if(var == 1){
-
-                        stato.setEnabled(false);
-
-                        stato.setText("In attesa");
-                        stato.setBackgroundColor(Color.YELLOW);
-                    }
-                    else{
-                        stato.setText(evento.getStato());
-                    }
                 }
-
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-
-
             });
+
 
 
              stato.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +210,7 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                             }
                             else{
                                 FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti")
-                                        .child(nome1).child("prenotazioni").child(evento.getId()).setValue(true);
+                                        .child(nome1).child("prenotazioni").child(evento.getId()).setValue(2);
                                 stato.setEnabled(false);
 
                                 stato.setText("In attesa");

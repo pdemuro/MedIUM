@@ -2,6 +2,7 @@ package com.medium.progettomedium.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.medium.progettomedium.ActivityDettagliEvento;
 import com.medium.progettomedium.EventoPrenotabile;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.R;
@@ -44,7 +46,8 @@ public class AdaptCalendario extends BaseAdapter {
     int mnthlength;
     String itemvalue, curentDateString;
     DateFormat df;
-
+    private ArrayList<DatabaseEvento> eventi = new ArrayList<DatabaseEvento>();
+    private AdaptEvento adapter;
     private ArrayList<String> items;
     public static List<String> day_string;
     public ArrayList<DatabaseEvento>  date_collection_arr;
@@ -205,64 +208,7 @@ public class AdaptCalendario extends BaseAdapter {
     }
 
     //RENDE L'EVENTO CLICCABILE
-    public void getPositionList(String date,final Context act){
 
-        int len= DatabaseEvento.date_collection_arr.size();
-        JSONArray jbarrays=new JSONArray();
-        for (int j=0; j<len; j++){
-            if (DatabaseEvento.date_collection_arr.get(j).date.equals(date)){
-                HashMap<String, String> maplist = new HashMap<String, String>();
-                maplist.put("hnames", DatabaseEvento.date_collection_arr.get(j).date);
-                maplist.put("hsubject", DatabaseEvento.date_collection_arr.get(j).titolo);
-                maplist.put("descript", DatabaseEvento.date_collection_arr.get(j).luogo);
-                JSONObject json1 = new JSONObject(maplist);
-                jbarrays.put(json1);
-            }
-        }
-        if (jbarrays.length()!=0) {
-            final Dialog dialogs = new Dialog(context);
-            dialogs.setContentView(R.layout.dialog_prenotazione);
-            listTeachers = (ListView) dialogs.findViewById(R.id.list_teachers);
-            ImageView imgCross = (ImageView) dialogs.findViewById(R.id.img_cross);
-            listTeachers.setAdapter(new AdaptEventoPrenotabile(context, getMatchList(jbarrays + "")));
-            imgCross.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialogs.dismiss();
-                }
-            });
-            dialogs.show();
-
-        }
-
-    }
-
-    //SERVE PER VEDERE DATA, TITOLO E LUOGO DELL'EVENTO
-    private ArrayList<EventoPrenotabile> getMatchList(String detail) {
-
-        try {
-            JSONArray jsonArray = new JSONArray(detail);
-            alCustom = new ArrayList<EventoPrenotabile>();
-            for (int i = 0; i < jsonArray.length(); i++) {
-
-                JSONObject jsonObject = jsonArray.optJSONObject(i);
-
-                EventoPrenotabile pojo = new EventoPrenotabile();
-
-                pojo.setTitolo(jsonObject.optString("hnames"));
-                pojo.setLuogo(jsonObject.optString("hsubject"));
-                pojo.setDescrizione(jsonObject.optString("descript"));
-
-                alCustom.add(pojo);
-
-            }
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return alCustom;
-    }
 }
 
 

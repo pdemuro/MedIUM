@@ -1,41 +1,54 @@
 package com.medium.progettomedium;
 
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.medium.progettomedium.Adapter.AdaptAmm;
+import com.medium.progettomedium.Adapter.AdaptEvento;
+import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
-import com.squareup.picasso.Picasso;
 
-public class ActivityDettagliEvento extends AppCompatActivity {
+import java.util.ArrayList;
 
+public class ActivityDettagliAmm extends AppCompatActivity {
 
-    TextView titolo, luogo, descrizione,data;
-    ImageView foto;
-    Button prenota;
+    private RecyclerView recyclerView;
+    private AdaptAmm ammAdapter;
+    private ArrayList<DatabaseUtente> utenti = new ArrayList<DatabaseUtente>();
     private DatabaseReference databaseReferenceutente;
     private DatabaseReference databaseReference;
+    private AdaptAmm.OnItemClickListener itemClickListener;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dettagli_evento);
-        titolo = findViewById(R.id.titolo_dettagli_evento);
-        luogo = findViewById(R.id.luogo_dettagli_evento);
-        descrizione = findViewById(R.id.descrizione_dettagli_evento);
-        foto = findViewById(R.id.foto_dettagli_evento);
-        data = findViewById(R.id.data_dettagli_evento);
-        prenota = findViewById(R.id.button);
+        setContentView(R.layout.activity_dettagli_amm);
+
+        recyclerView = findViewById(R.id.elenco_richieste);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+        recyclerView.setAdapter(ammAdapter);
+
+
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        utenti = new ArrayList<DatabaseUtente>();
 
         String title = getIntent().getStringExtra("title");
         String place = getIntent().getStringExtra("description");
@@ -65,27 +78,32 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                                 for (DataSnapshot child : children) {
                                     if(id.equals(child.getKey())) {
                                         String stato = child.getValue().toString();
-
-                                        if(stato.equals("1")){
-                                            prenota.setText("Prenota Ora");
-                                            prenota.setBackgroundColor(Color.GREEN);
-                                        }
                                         if(stato.equals("2")){
-                                            prenota.setText("In Attesa");
-                                            prenota.setBackgroundColor(Color.YELLOW);
-                                        }
-                                        if(stato.equals("3")){
-                                            prenota.setText("Prenotato");
-                                            prenota.setBackgroundColor(Color.GRAY);
-                                        }
-                                        if(stato.equals("4")){
-                                            prenota.setText("Rifiutato");
-                                            prenota.setBackgroundColor(Color.RED);
+                                            utenti.add(utente);
                                         }
                                     }
 
                                 }
 
+
+                                ammAdapter = new AdaptAmm(getApplication(), utenti,id, itemClickListener);
+
+                                //listaEventiView.setAdapter(adapter);
+                                recyclerView.setAdapter(new AdaptAmm(getApplication(), utenti,id, new AdaptAmm.OnItemClickListener() {
+                                    @Override public void onItemClick(DatabaseUtente item) {
+
+                                        String mNome = item.getFullname();
+                                        String mMail = item.getMail();
+                                        String mPhone = item.getPhone();
+                                        Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliAmm.class);
+                                        intent.putExtra("nome", mNome);
+                                        intent.putExtra("mail", mMail);
+                                        intent.putExtra("phone", mPhone);
+                                        startActivity(intent);
+                                    }
+
+
+                                }));
                             }
 
                             @Override
@@ -103,19 +121,8 @@ public class ActivityDettagliEvento extends AppCompatActivity {
 
             }
         });
-        titolo.setText(title);
-        luogo.setText(place);
-        descrizione.setText(description);
-        data.setText(data1);
-        Picasso.get().load(image).into(foto);
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == android.R.id.home){
-            this.finish();
-        }
-        return super.onOptionsItemSelected(item);
+
+
     }
 }

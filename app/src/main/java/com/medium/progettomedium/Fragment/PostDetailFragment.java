@@ -61,7 +61,7 @@ public class PostDetailFragment extends Fragment {
         recyclerView.setAdapter(postAdapter);
 
         // Inflate the layout for this fragment
-        listaEventiView = (RecyclerView) view.findViewById(R.id.row_adda);
+        listaEventiView = (RecyclerView) view.findViewById(R.id.recycler_view);
         listaEventiView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);
