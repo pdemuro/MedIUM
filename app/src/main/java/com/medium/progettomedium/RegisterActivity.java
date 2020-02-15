@@ -240,14 +240,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         //Attivita del profilo
                         saveUserInformation();
                         FirebaseUser user = firebaseAuth.getCurrentUser();
-                        if (user != null) {
+                       /* if (user != null) {
                             user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     Toast.makeText(RegisterActivity.this, "Email di Verifica Inviata", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                        }
+                        }*/
                         finish();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     } else {

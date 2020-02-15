@@ -59,7 +59,7 @@
 
                     <TextView
                         android:id="@+id/fullname"
-                        android:layout_width="89dp"
+                        android:layout_width="192dp"
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:textColor="@color/colorPrimaryDark"
@@ -149,7 +149,7 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="visible"/>
+                android:visibility="gone"/>
 
 
         </LinearLayout>
@@ -181,7 +181,8 @@
             android:layout_marginStart="30dp"
             android:textSize="20dp"
             android:layout_toRightOf="@+id/options"
-            android:text="Logout" />
+            android:text="Logout"
+            android:id="@+id/logout"/>
 
     </RelativeLayout>
 
