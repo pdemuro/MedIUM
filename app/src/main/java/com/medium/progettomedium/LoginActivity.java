@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
            startActivity(new Intent(getApplicationContext(),MainActivity.class));
         }
 
+
         editTextEmail =  findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
 

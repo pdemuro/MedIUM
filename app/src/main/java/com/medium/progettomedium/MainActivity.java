@@ -3,6 +3,7 @@ package com.medium.progettomedium;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -167,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
-    public void onBackPressed() {
+    /*public void onBackPressed() {
         if (doubleTap) {
             moveTaskToBack(true);
             android.os.Process.killProcess(android.os.Process.myPid());
@@ -182,10 +183,52 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     doubleTap = false;
                 }
-            }, 1000);*/
+            }, 1000);
             FirebaseAuth.getInstance().signOut();
             finish();
             startActivity(new Intent(this, LoginActivity.class));
+        }
+    }*/
+    public void onBackPressed() {
+        if (doubleTap) {
+            FirebaseAuth.getInstance().signOut();
+            finish();
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
+        else{
+            doubleTap = true;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleTap = false;
+                    FirebaseUser nome = firebaseAuth.getCurrentUser();
+                    String nome1= nome.getDisplayName().replaceAll("%20" ," ");
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserID").child("Utenti").child(nome1);
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
+                            if (user.category.equals("Utente")) {
+                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                        new SearchFragment()).commit();
+                            }
+                            else  if (user.category.equals("Organizzatore")){
+                                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                        new HomeFragment()).commit();
+                            }
+                        }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new HomeFragment()).commit();
+                }
+            }, 500);
         }
     }
 
