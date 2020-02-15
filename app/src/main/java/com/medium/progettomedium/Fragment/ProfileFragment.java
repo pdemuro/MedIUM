@@ -25,6 +25,8 @@ import com.medium.progettomedium.ActivityDettagliEvento;
 import com.medium.progettomedium.Adapter.AdaptEvento;
 import com.medium.progettomedium.Adapter.MyFotosAdapter;
 import com.medium.progettomedium.EditProfileActivity;
+import com.medium.progettomedium.LoginActivity;
+import com.medium.progettomedium.MapActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.medium.progettomedium.Model.Post;
@@ -83,7 +85,7 @@ public class ProfileFragment extends Fragment {
     private AdaptEvento.OnItemClickListener itemClickListener;
     private List<Post> postList;
     ImageButton my_fotos, saved_fotos;
-
+    TextView logout;
 
     private DatabaseReference databaseReference;
     private AdaptEvento adapter;
@@ -110,7 +112,7 @@ public class ProfileFragment extends Fragment {
         //username = view.findViewById(R.id.username);
         my_fotos = view.findViewById(R.id.my_fotos);
         saved_fotos = view.findViewById(R.id.saved_fotos);
-
+        logout=view.findViewById(R.id.logout);
         options = view.findViewById(R.id.options);
 
         recyclerView = view.findViewById(R.id.recycler_view);
@@ -175,6 +177,16 @@ public class ProfileFragment extends Fragment {
                 recyclerView.setVisibility(View.GONE);
                 listaEventiView.setVisibility(View.VISIBLE);
                 postEvent();
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                FirebaseAuth.getInstance().signOut();
+
+                startActivity(new Intent(getContext(), LoginActivity.class));
+
+
             }
         });
 

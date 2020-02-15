@@ -1,7 +1,6 @@
 package com.medium.progettomedium.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
@@ -21,8 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.medium.progettomedium.ActivityDettagliAmm;
-import com.medium.progettomedium.Fragment.HomeFragment;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.medium.progettomedium.R;
@@ -31,7 +28,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
-    private static Context c;
+    protected Context c;
     List<DatabaseUtente> utenti;
     View mView;
     String idEvento;
@@ -126,13 +123,11 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
                 public void onClick(View v) {
 
 
-                    databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(3);
-                    //Intent intent = new Intent(c, HomeFragment.class);
-                    //c.startActivity(intent);
+                    databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(false);
                 }
 
             });
-
+            
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     listener.onItemClick(utente);

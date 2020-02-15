@@ -155,7 +155,12 @@ public class AddEventFragment extends Fragment implements View.OnClickListener{
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference quizRef = rootRef.child("Eventi");
         final String id = quizRef.push().getKey();
-         //CARICAMENTO EVENTO
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+        final String nome1= user.getDisplayName().replaceAll("%20" ," ");
+
+        //CARICAMENTO EVENTO
         if (mImageUri != null) {
             final StorageReference ref = FirebaseStorage.getInstance().getReference("immaginiEventi/" + System.currentTimeMillis() + ".jpg");
 

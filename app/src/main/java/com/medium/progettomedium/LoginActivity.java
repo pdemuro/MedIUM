@@ -39,12 +39,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
         if(user != null){
-            if(user.isEmailVerified()) {
+          if(user.isEmailVerified()) {
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }else{
                 Toast.makeText(this,"L'account non è verificato: controlla la mail",Toast.LENGTH_SHORT).show();
             }
-
+           // startActivity(new Intent(getApplicationContext(),MainActivity.class));
         }
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
