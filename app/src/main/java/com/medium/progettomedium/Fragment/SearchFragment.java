@@ -1,12 +1,15 @@
 package com.medium.progettomedium.Fragment;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -22,7 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
@@ -37,7 +40,6 @@ import com.medium.progettomedium.ActivityDettagliEvento;
 import com.medium.progettomedium.Adapter.AdaptCalendario;
 import com.medium.progettomedium.Adapter.AdaptEvento;
 import com.medium.progettomedium.Adapter.UserAdapter;
-import com.medium.progettomedium.EventoPrenotabile;
 import com.medium.progettomedium.MapActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
@@ -54,8 +56,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -64,6 +64,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 
 public class SearchFragment extends Fragment implements LocationListener {
 
@@ -221,13 +223,15 @@ public class SearchFragment extends Fragment implements LocationListener {
         mappa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), MapActivity.class));
+                CheckPermission();
+
                 icone.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.GONE);
                 recyclerView2.setVisibility(View.GONE);
 
                 layoutCalendario.setVisibility(View.GONE);
                 giorni.setVisibility(View.GONE);
+                startActivity(new Intent(getContext(), MapActivity.class));
 
 
             }
@@ -288,6 +292,13 @@ public class SearchFragment extends Fragment implements LocationListener {
                     eventi.clear();
                     for(DataSnapshot dss : dataSnapshot.getChildren()){
                         String luogo = dss.child("titolo").getValue(String.class);
+                        if(luogo.contains(query)) {
+                            final DatabaseEvento databaseEvento = dss.getValue(DatabaseEvento.class);
+                            eventi.add(databaseEvento);
+                        }
+                    }
+                    for(DataSnapshot dss : dataSnapshot.getChildren()){
+                        String luogo = dss.child("luogo").getValue(String.class);
                         if(luogo.contains(query)) {
                             final DatabaseEvento databaseEvento = dss.getValue(DatabaseEvento.class);
                             eventi.add(databaseEvento);
@@ -539,8 +550,10 @@ public class SearchFragment extends Fragment implements LocationListener {
     }
 
     public void CheckPermission() {
-        if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext().getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+        if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext().getApplicationContext(), ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, 101);
         }
     }
 

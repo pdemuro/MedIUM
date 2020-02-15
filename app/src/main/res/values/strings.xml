@@ -26,5 +26,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="MenoDistante">Meno Distante</string>
+    <string name="gps_network_not_enabled">GPS non attivo</string>
+    <string name="open_location_settings">Apertura impostazioni</string>
+    <string name="Cancel">Cancella</string>
 
 </resources>

@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.medium.progettomedium.Fragment.HomeFragment;
 import com.medium.progettomedium.Fragment.SearchFragment;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.google.android.gms.tasks.Continuation;
@@ -250,6 +251,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         }*/
                         finish();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+
                     } else {
                         Toast.makeText(RegisterActivity.this, "Errore nella registrazione,Riprova", Toast.LENGTH_SHORT).show();
                     }
