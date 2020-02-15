@@ -44,19 +44,6 @@
                 app:layout_constraintStart_toEndOf="@+id/immagine"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/stato"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/gradius_image"
-                android:text="Prenota"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/immagine">
-
-            </Button>
-
             <TextView
                 android:id="@+id/luogo"
                 android:layout_width="wrap_content"
@@ -115,6 +102,19 @@
                 app:layout_constraintStart_toEndOf="@+id/data"
                 app:layout_constraintTop_toBottomOf="@+id/luogo"
                 app:srcCompat="@drawable/calendar" />
+
+            <Button
+                android:id="@+id/stato"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/gradius_image"
+                android:text="Prenota"
+                android:textColor="@color/material_blue_A200"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/immagine" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
