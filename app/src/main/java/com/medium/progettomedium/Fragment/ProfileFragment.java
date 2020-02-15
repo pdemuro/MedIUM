@@ -144,7 +144,7 @@ public class ProfileFragment extends Fragment {
         postEvent();
       mySaves();
 
-       edit_profile.setText("Edit Profile");
+       edit_profile.setText("Modifica Profilo");
 
 
         edit_profile.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +152,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 String btn = edit_profile.getText().toString();
 
-                if (btn.equals("Edit Profile")){
+                if (btn.equals("Modifica Profilo")){
 
                     startActivity(new Intent(getContext(), EditProfileActivity.class));
 
