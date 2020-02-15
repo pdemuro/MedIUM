@@ -67,7 +67,7 @@ import java.util.List;
 
 public class SearchFragment extends Fragment implements LocationListener {
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView,recyclerView2;
     private Toolbar toolbar;
     private ConstraintLayout icone;
     private AdaptEvento eventAdapter;
@@ -107,6 +107,9 @@ public class SearchFragment extends Fragment implements LocationListener {
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView2 = view.findViewById(R.id.recycler_view2);
+        recyclerView2.setHasFixedSize(true);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
 
         search_bar = view.findViewById(R.id.search_bar);
 
@@ -116,6 +119,8 @@ public class SearchFragment extends Fragment implements LocationListener {
         userList = new ArrayList<>();
 
         recyclerView.setAdapter(eventAdapter);
+        recyclerView2.setAdapter(eventAdapter);
+
         menoDistante = view.findViewById(R.id.buttonMenoDistante);
         questaSettimana = view.findViewById(R.id.buttonQuestaSettimana);
         calendario = view.findViewById(R.id.buttonCalendario);
@@ -166,6 +171,7 @@ public class SearchFragment extends Fragment implements LocationListener {
         });
 
         recyclerView.setHasFixedSize(true);
+        recyclerView2.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
@@ -185,6 +191,7 @@ public class SearchFragment extends Fragment implements LocationListener {
             public void onClick(View v) {
                 icone.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.VISIBLE);
+                recyclerView2.setVisibility(View.GONE);
                 layoutCalendario.setVisibility(View.GONE);
                 giorni.setVisibility(View.GONE);
 
@@ -217,6 +224,8 @@ public class SearchFragment extends Fragment implements LocationListener {
                 startActivity(new Intent(getContext(), MapActivity.class));
                 icone.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.GONE);
+                recyclerView2.setVisibility(View.GONE);
+
                 layoutCalendario.setVisibility(View.GONE);
                 giorni.setVisibility(View.GONE);
 
@@ -232,7 +241,9 @@ public class SearchFragment extends Fragment implements LocationListener {
                 layoutCalendario.setVisibility(View.VISIBLE);
                 giorni.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
+                recyclerView2.setVisibility(View.GONE);
                 icone.setVisibility(View.GONE);
+
                 Calendario();
             }
         });
@@ -781,9 +792,9 @@ public class SearchFragment extends Fragment implements LocationListener {
         }
 
         adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
-        recyclerView.setVisibility(View.VISIBLE);
+        recyclerView2.setVisibility(View.VISIBLE);
         //listaEventiView.setAdapter(adapter);
-        recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+        recyclerView2.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
             @Override
             public void onItemClick(DatabaseEvento item) {
 
@@ -793,7 +804,7 @@ public class SearchFragment extends Fragment implements LocationListener {
                 String mDescrizione = item.getDescrizione();
                 String mImage = item.getImmagine();
                 String mData = item.getDate();
-                Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliEvento.class);
+                Intent intent = new Intent(recyclerView2.getContext(), ActivityDettagliEvento.class);
                 intent.putExtra("title", mTitolo);
                 intent.putExtra("description", mLuogo);
                 intent.putExtra("descrizione", mDescrizione);

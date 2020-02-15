@@ -157,9 +157,6 @@ public class AddEventFragment extends Fragment implements View.OnClickListener{
         final String id = quizRef.push().getKey();
         firebaseAuth = FirebaseAuth.getInstance();
 
-        final FirebaseUser user = firebaseAuth.getCurrentUser();
-        final String nome1= user.getDisplayName().replaceAll("%20" ," ");
-
         //CARICAMENTO EVENTO
         if (mImageUri != null) {
             final StorageReference ref = FirebaseStorage.getInstance().getReference("immaginiEventi/" + System.currentTimeMillis() + ".jpg");
