@@ -153,7 +153,7 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                                     }
                                     else{
                                         stato.setText("Prenota Ora");
-                                        stato.setBackgroundColor(Color.GREEN);
+                                        stato.setBackgroundColor(R.drawable.gradius_image);
                                     }
                                 }
 
