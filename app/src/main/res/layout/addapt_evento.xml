@@ -32,6 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
                 android:autoSizeMaxTextSize="20sp"
                 android:autoSizeStepGranularity="2sp"
@@ -41,18 +42,17 @@
                 android:textAllCaps="true"
                 android:textColor="@color/primary_text_default_material_light"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@+id/stato"
-                app:layout_constraintStart_toStartOf="@+id/stato"
+                app:layout_constraintStart_toEndOf="@+id/immagine"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/stato"
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="45dp"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginBottom="16dp"
-                android:background="@null"
-                android:text=""
+                android:background="@drawable/gradius_image"
+                android:text="Prenota"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/immagine">
 
@@ -62,6 +62,7 @@
                 android:id="@+id/luogo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
                 android:autoSizeMaxTextSize="30sp"
                 android:autoSizeMinTextSize="2sp"
@@ -70,21 +71,20 @@
                 android:text="Luogo"
                 android:textColor="@color/secondary_text_material_light"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@+id/stato"
-                app:layout_constraintStart_toStartOf="@+id/stato"
+                app:layout_constraintStart_toEndOf="@+id/immagine"
                 app:layout_constraintTop_toBottomOf="@+id/titolo" />
 
             <TextView
                 android:id="@+id/data"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif-medium"
                 android:text="Data"
-                android:textColor="#F44336"
+                android:textColor="@color/material_red_300"
                 android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="@+id/stato"
-                app:layout_constraintStart_toStartOf="@+id/stato"
+                app:layout_constraintStart_toEndOf="@+id/immagine"
                 app:layout_constraintTop_toBottomOf="@+id/luogo" />
 
             <ImageView
@@ -109,8 +109,8 @@
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="15dp"
-                android:layout_height="18dp"
+                android:layout_width="13dp"
+                android:layout_height="17dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="5dp"
                 app:layout_constraintStart_toEndOf="@+id/data"
