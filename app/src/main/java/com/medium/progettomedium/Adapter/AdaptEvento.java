@@ -149,11 +149,12 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                                         stato.setEnabled(false);
 
                                         stato.setText("In attesa");
-                                        stato.setBackgroundColor(Color.YELLOW);
+                                        stato.setTextColor(Color.parseColor("#ffffbc00"));
+                                        stato.setBackgroundResource(R.drawable.gradius_attesa);
                                     }
                                     else{
                                         stato.setText("Prenota Ora");
-                                        stato.setBackgroundColor(Color.GREEN);
+                                        stato.setBackgroundResource(R.drawable.gradius_image);
                                     }
                                 }
 

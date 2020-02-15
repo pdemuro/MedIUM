@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
-    android:layout_height="150dp">
+    android:layout_height="140dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -16,12 +16,11 @@
         android:layout_marginBottom="5dp"
         android:focusable="auto"
         android:longClickable="false"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,7 +32,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:autoSizeMaxTextSize="20sp"
                 android:autoSizeStepGranularity="2sp"
                 android:autoSizeTextType="uniform"
@@ -44,19 +43,6 @@
                 android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/immagine"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/stato"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/gradius_image"
-                android:text="Prenota"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/immagine">
-
-            </Button>
 
             <TextView
                 android:id="@+id/luogo"
@@ -116,6 +102,19 @@
                 app:layout_constraintStart_toEndOf="@+id/data"
                 app:layout_constraintTop_toBottomOf="@+id/luogo"
                 app:srcCompat="@drawable/calendar" />
+
+            <Button
+                android:id="@+id/stato"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/gradius_image"
+                android:text="Prenota"
+                android:textColor="@color/material_blue_A200"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/immagine" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
