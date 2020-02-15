@@ -333,7 +333,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         if(view == textViewSignIn){
-            startActivity(new Intent(this,LoginActivity.class));
+            startActivity(new Intent(this,MainActivity.class));
         }
     }
 

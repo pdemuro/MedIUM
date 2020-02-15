@@ -223,16 +223,16 @@ public class SearchFragment extends Fragment implements LocationListener {
         mappa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CheckPermission();
+                if(CheckPermission()) {
 
-                icone.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.GONE);
-                recyclerView2.setVisibility(View.GONE);
+                    icone.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
+                    recyclerView2.setVisibility(View.GONE);
 
-                layoutCalendario.setVisibility(View.GONE);
-                giorni.setVisibility(View.GONE);
-                startActivity(new Intent(getContext(), MapActivity.class));
-
+                    layoutCalendario.setVisibility(View.GONE);
+                    giorni.setVisibility(View.GONE);
+                    startActivity(new Intent(getContext(), MapActivity.class));
+                }
 
             }
         });
@@ -261,9 +261,10 @@ public class SearchFragment extends Fragment implements LocationListener {
         menoDistante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheckPermission();
-                compare(tvLati,tvLongi,eventi);
-                var=0;
+                if(CheckPermission()) {
+                    compare(tvLati, tvLongi, eventi);
+                    var = 0;
+                }
             }
         });
         questaSettimana.setOnClickListener(new View.OnClickListener() {
@@ -549,12 +550,15 @@ public class SearchFragment extends Fragment implements LocationListener {
         }
     }
 
-    public void CheckPermission() {
+    public boolean CheckPermission() {
         if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext().getApplicationContext(), ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, 101);
+        }else{
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -573,7 +577,6 @@ public class SearchFragment extends Fragment implements LocationListener {
 
     @Override
     public void onProviderDisabled(String provider) {
-        Toast.makeText(getContext(), "Perfavore abilita la posizione", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -583,7 +586,6 @@ public class SearchFragment extends Fragment implements LocationListener {
 
     @Override
     public void onProviderEnabled(String provider) {
-        Toast.makeText(getContext(), "Abilita il nuovo provider" + provider, Toast.LENGTH_SHORT).show();
     }
 
     public void eventisettimana(ArrayList<DatabaseEvento> lista1){
