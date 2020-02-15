@@ -14,16 +14,22 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button buttonSignIn, buttonAdmin;
-    private EditText editTextEmail;
-    private EditText editTextPassword;
+    private TextInputLayout editTextEmail;
+    private TextInputLayout editTextPassword;
     private TextView textViewSignUp;
     private ProgressDialog progressDialog;
 
@@ -39,16 +45,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
         if(user != null){
-          if(user.isEmailVerified()) {
+         /* if(user.isEmailVerified()) {
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
             }else{
                 Toast.makeText(this,"L'account non è verificato: controlla la mail",Toast.LENGTH_SHORT).show();
-            }
-           // startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            }*/
+
+           startActivity(new Intent(getApplicationContext(),MainActivity.class));
         }
 
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        editTextEmail =  findViewById(R.id.editTextEmail);
+        editTextPassword = findViewById(R.id.editTextPassword);
 
         buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
         //buttonAdmin = (Button) findViewById(R.id.buttonAdmin);
@@ -62,34 +69,59 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void userLogin(){
-        String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getText().toString().trim();
+        final String email = editTextEmail.getEditText().getText().toString().trim();
+        final String password = editTextPassword.getEditText().getText().toString().trim();
+        boolean var = true;
 
-        if(TextUtils.isEmpty(email)){
-            Toast.makeText(this,"Inserisci l'email",Toast.LENGTH_SHORT).show();
-            return;
+
+        if (TextUtils.isEmpty(email)) {
+            editTextEmail.setError("Non hai inserito l'email");
+            var = false;
+
+        } else {
+            editTextEmail.setError(null);
+
+
         }
-        if(TextUtils.isEmpty(password)){
-            Toast.makeText(this,"Inserisci la password",Toast.LENGTH_SHORT).show();
-            return;
+        if (TextUtils.isEmpty(password)) {
+            editTextPassword.setError("Non hai inserito la pass");
+            var = false;
+        } else {
+            editTextPassword.setError(null);
 
         }
 
-        progressDialog.setMessage("Accesso in corso...");
-        progressDialog.show();
+        if(var) {
 
-        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                progressDialog.dismiss();
 
-                if(task.isSuccessful()){
-                    //Inizio attivita del profilo
-                    finish();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    progressDialog.dismiss();
+
+                    if (task.isSuccessful()) {
+                        progressDialog.setMessage("Accesso in corso...");
+                        progressDialog.show();
+                        //Inizio attivita del profilo
+                        finish();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    }
                 }
-            }
-        });
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                    if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                        editTextPassword.setError("Password non valida");
+                    } else if (e instanceof FirebaseAuthInvalidUserException) {
+                        editTextEmail.setError("Email non valida");
+                    } else {
+
+                        progressDialog.setMessage("Errore sconosciuto");
+                    }
+                }
+            });
+        }
     }
     @Override
     public void onClick(View view) {
