@@ -143,7 +143,8 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                                         stato.setEnabled(false);
 
                                         stato.setText("Prenotato");
-                                        stato.setBackgroundColor(Color.GRAY);
+                                        stato.setTextColor(Color.parseColor("#ffc6ff00"));
+                                        stato.setBackgroundResource(R.drawable.gradius_prenotato);
                                     } else if(var == 1){
 
                                         stato.setEnabled(false);
