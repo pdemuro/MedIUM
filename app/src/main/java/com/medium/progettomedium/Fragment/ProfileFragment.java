@@ -140,11 +140,9 @@ public class ProfileFragment extends Fragment {
         userInfo();
         //getFollowers();
         //getNrPosts();
-
+        myFotos();
         postEvent();
       mySaves();
-
-       edit_profile.setText("Modifica Profilo");
 
 
         edit_profile.setOnClickListener(new View.OnClickListener() {
