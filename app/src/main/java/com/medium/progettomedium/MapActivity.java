@@ -6,10 +6,15 @@ import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.medium.progettomedium.Fragment.HomeFragment;
 import com.medium.progettomedium.Fragment.SearchFragment;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.google.android.gms.maps.CameraUpdate;
@@ -26,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.medium.progettomedium.Model.DatabaseUtente;
 
 public class MapActivity extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback,LocationListener,GoogleMap.OnMarkerClickListener {
 
@@ -34,15 +40,20 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnInfoWin
     private DatabaseReference mUsers;
     private Marker marker;
     private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
+    ImageView close;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        close = findViewById(R.id.close);
+        firebaseAuth= FirebaseAuth.getInstance();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
 
         ChildEventListener mChildEventListener;
         mUsers = FirebaseDatabase.getInstance().getReference("Eventi");
@@ -101,6 +112,14 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnInfoWin
         });
         mMap.setOnMarkerClickListener(this);
         mMap.setOnInfoWindowClickListener(this);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+            }
+        });
     }
 
     @Override
