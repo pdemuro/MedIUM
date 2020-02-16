@@ -2,14 +2,17 @@ package com.medium.progettomedium.Fragment;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -167,6 +170,8 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 recyclerView.setVisibility(View.VISIBLE);
                 listaEventiView.setVisibility(View.GONE);
+                my_fotos.setBackgroundColor(Color.parseColor("#20444444"));
+                saved_fotos.setBackgroundColor(0xDCDCDC);
                 myFotos();
             }
         });
@@ -176,6 +181,8 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 recyclerView.setVisibility(View.GONE);
                 listaEventiView.setVisibility(View.VISIBLE);
+                saved_fotos.setBackgroundColor(Color.parseColor("#20444444"));
+                my_fotos.setBackgroundColor(0xDCDCDC);
                 postEvent();
             }
         });
@@ -189,6 +196,7 @@ public class ProfileFragment extends Fragment {
 
             }
         });
+
 
 
 /*        followers.setOnClickListener(new View.OnClickListener() {
