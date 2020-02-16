@@ -2,6 +2,7 @@ package com.medium.progettomedium;
 
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback,LocationListener,GoogleMap.OnMarkerClickListener {
+public class MapActivity extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener,OnMapReadyCallback,LocationListener,GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     private ChildEventListener mChildEventListener;
@@ -76,8 +77,19 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 for (DataSnapshot s : dataSnapshot.getChildren()) {
                     DatabaseEvento evento = s.getValue(DatabaseEvento.class);
                     LatLng location = new LatLng(evento.latitude, evento.longitude);
-                    marker = mMap.addMarker(new MarkerOptions().position(location).title(evento.titolo));
-                    marker.setTag(evento.getId());
+                    marker = mMap.addMarker(new MarkerOptions().position(location).title(evento.titolo).snippet("Data: "+evento.date));
+
+
+
+                    InfoWindowData info = new InfoWindowData();
+                    info.setFoto(evento.getImmagine());
+                    info.setDettagli("Più Dettagli");
+                    info.setId(evento.getId());
+                    marker.setTag(info);
+                    CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(getApplicationContext());
+                    mMap.setInfoWindowAdapter(customInfoWindow);
+
+
 
                 }
             }
@@ -88,46 +100,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
         });
         mMap.setOnMarkerClickListener(this);
-
+        mMap.setOnInfoWindowClickListener(this);
     }
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Eventi");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    DatabaseEvento databaseEvento = snapshot.getValue(DatabaseEvento.class);
-                    if (databaseEvento.getId().equals(marker.getTag())) {
-                        String mTitolo = databaseEvento.getTitolo();
-                        String mLuogo = databaseEvento.getLuogo();
-                        String mDescrizione = databaseEvento.getDescrizione();
-                        String mImage = databaseEvento.getImmagine();
-                        String mData = databaseEvento.getDate();
-                        String mId = databaseEvento.getId();
-                        Intent intent = new Intent(getApplicationContext(), ActivityDettagliEvento.class);
-                        intent.putExtra("title", mTitolo);
-                        intent.putExtra("description", mLuogo);
-                        intent.putExtra("descrizione", mDescrizione);
-                        intent.putExtra("image", mImage);
-                        intent.putExtra("date", mData);
-                        intent.putExtra("id", mId);
-                        startActivity(intent);
-                    }
-
-                }
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
 
         // Return false to indicate that we have not consumed the event and that we wish
@@ -160,6 +137,51 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         super.onBackPressed();
         finish();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+    }
+
+    @Override
+    public void onInfoWindowClick(final Marker marker) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Eventi");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    DatabaseEvento databaseEvento = snapshot.getValue(DatabaseEvento.class);
+                    InfoWindowData infoWindowData = (InfoWindowData) marker.getTag();
+                    String id = infoWindowData.getId();
+                    if (databaseEvento.getId().equals(id)) {
+                        String mTitolo = databaseEvento.getTitolo();
+                        String mLuogo = databaseEvento.getLuogo();
+                        String mDescrizione = databaseEvento.getDescrizione();
+                        String mImage = databaseEvento.getImmagine();
+                        String mData = databaseEvento.getDate();
+                        String mId = databaseEvento.getId();
+                        Intent intent = new Intent(getApplicationContext(), ActivityDettagliEvento.class);
+                        intent.putExtra("title", mTitolo);
+                        intent.putExtra("description", mLuogo);
+                        intent.putExtra("descrizione", mDescrizione);
+                        intent.putExtra("image", mImage);
+                        intent.putExtra("date", mData);
+                        intent.putExtra("id", mId);
+                        startActivity(intent);
+                    }
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }

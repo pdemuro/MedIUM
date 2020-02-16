@@ -29,5 +29,5 @@
     <string name="gps_network_not_enabled">GPS non attivo</string>
     <string name="open_location_settings">Apertura impostazioni</string>
     <string name="Cancel">Cancella</string>
-
+    <string name="Dettagli"><font fgcolor='#455cde'>Dettagli</font></string>
 </resources>
