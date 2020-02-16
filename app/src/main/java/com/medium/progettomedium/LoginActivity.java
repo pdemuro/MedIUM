@@ -51,7 +51,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(this,"L'account non è verificato: controlla la mail",Toast.LENGTH_SHORT).show();
             }*/
 
-           startActivity(new Intent(getApplicationContext(),MainActivity.class));
+         if(user.getDisplayName() != null) {
+             startActivity(new Intent(getApplicationContext(), MainActivity.class));
+         }
         }
 
 

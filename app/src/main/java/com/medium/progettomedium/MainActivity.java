@@ -1,7 +1,10 @@
 package com.medium.progettomedium;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -191,9 +194,28 @@ public class MainActivity extends AppCompatActivity {
     }*/
     public void onBackPressed() {
         if (doubleTap) {
-            FirebaseAuth.getInstance().signOut();
-            finish();
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("");
+            builder.setMessage("Uscire dall'applicazione?");
+            builder.setCancelable(false);
+
+            builder.setPositiveButton("Esci", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            //startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
         else{
             doubleTap = true;
