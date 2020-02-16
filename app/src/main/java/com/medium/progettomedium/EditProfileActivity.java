@@ -116,8 +116,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 updateProfile(fullname.getText().toString(),
                         email.getText().toString());
-
-
+                finish();
             }
 
 
