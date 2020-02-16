@@ -1,8 +1,10 @@
 package com.medium.progettomedium;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,6 +26,8 @@ public class ActivityDettagliEvento extends AppCompatActivity {
     TextView titolo, luogo, descrizione,data;
     ImageView foto;
     Button prenota;
+    ImageView close;
+
     private DatabaseReference databaseReferenceutente;
     private DatabaseReference databaseReference;
     @Override
@@ -36,6 +40,7 @@ public class ActivityDettagliEvento extends AppCompatActivity {
         foto = findViewById(R.id.foto_dettagli_evento);
         data = findViewById(R.id.data_dettagli_evento);
         prenota = findViewById(R.id.button);
+        close = findViewById(R.id.close);
 
         String title = getIntent().getStringExtra("title");
         String place = getIntent().getStringExtra("description");
@@ -111,6 +116,14 @@ public class ActivityDettagliEvento extends AppCompatActivity {
         descrizione.setText(description);
         data.setText(data1);
         Picasso.get().load(image).into(foto);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+
+            }
+        });
     }
 
     @Override
