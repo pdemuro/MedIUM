@@ -1,6 +1,8 @@
 package com.medium.progettomedium.Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +61,7 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        holder.bind(listaEventi.get(position), listener);
+        holder.bind(listaEventi.get(position),c, listener);
         final FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         final String nome1= firebaseUser.getDisplayName().replaceAll("%20" ," ");
         final DatabaseEvento evento = listaEventi.get(position);
@@ -95,7 +97,7 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
 
         }
 
-        public void bind(final DatabaseEvento evento, final OnItemClickListener listener) {
+        public void bind(final DatabaseEvento evento,Context c, final OnItemClickListener listener) {
             final String id = evento.getId();
             firebaseAuth = FirebaseAuth.getInstance();
             final FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -103,7 +105,7 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
             databaseReferenceutente = FirebaseDatabase.getInstance().getReference();
             databaseReference = FirebaseDatabase.getInstance().getReference();
             databaseReference2 = FirebaseDatabase.getInstance().getReference();
-
+            final Context context = c;
             titolo.setText(evento.getTitolo());
             luogo.setText(evento.getLuogo());
             data.setText(evento.getDate());
@@ -115,6 +117,7 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                     Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                     // shake hands with each of them.'
                     int var = 0;
+
                     for (DataSnapshot child : children) {
                         if(child.getValue().equals("Utente")) {
                             databaseReference.child("UserID").child("Utenti").child(nome1).child("prenotazioni").addValueEventListener(new ValueEventListener() {
@@ -211,12 +214,41 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                                 stato.setBackgroundColor(Color.YELLOW);
                             }
                             else{
-                                FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti")
+                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                                builder.setTitle("Conferma Prenotazione");
+                                builder.setMessage("Vuoi confermare la prenotazione per questo evento?");
+                                builder.setCancelable(false);
+
+                                builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti")
+                                                .child(nome1).child("prenotazioni").child(evento.getId()).setValue(2);
+
+                                        stato.setEnabled(false);
+
+                                        stato.setText("In attesa");
+                                        stato.setBackgroundColor(Color.YELLOW);
+                                    }
+                                });
+                                builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                });
+
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+
+
+
+                                /*FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti")
                                         .child(nome1).child("prenotazioni").child(evento.getId()).setValue(2);
                                 stato.setEnabled(false);
 
                                 stato.setText("In attesa");
-                                stato.setBackgroundColor(Color.YELLOW);
+                                stato.setBackgroundColor(Color.YELLOW);*/
                             }
                         }
 
