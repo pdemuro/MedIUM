@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -46,6 +47,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         ChildEventListener mChildEventListener;
         mUsers = FirebaseDatabase.getInstance().getReference("Eventi");
         mUsers.push().setValue(marker);
+
     }
 
 
@@ -79,6 +81,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                     marker = mMap.addMarker(new MarkerOptions().position(location).title(evento.titolo));
                     marker.setTag(evento.getId());
 
+
                 }
             }
 
@@ -88,6 +91,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             }
         });
         mMap.setOnMarkerClickListener(this);
+
 
     }
 
