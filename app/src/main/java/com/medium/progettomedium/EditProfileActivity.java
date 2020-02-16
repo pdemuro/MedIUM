@@ -17,6 +17,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.medium.progettomedium.Fragment.HomeFragment;
+import com.medium.progettomedium.Fragment.ProfileFragment;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -119,7 +121,6 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 updateProfile(nomeU.getText().toString(),cognome.getText().toString(),
                         email.getText().toString());
-                finish();
             }
 
 
@@ -160,7 +161,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         reference.updateChildren(map);
 
-        Toast.makeText(EditProfileActivity.this, "Successfully updated!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(EditProfileActivity.this, "Informazioni Aggiornate!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("publisherid", firebaseUser.getUid());
         this.startActivity(intent);

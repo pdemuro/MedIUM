@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                                 new ProfileFragment()).commit();
-                        bottomNavigationView.getMenu().getItem(4).setChecked(true);
+                        bottomNavigationView.getMenu().getItem(2).setChecked(true);
 
                     } else {
                         bottomNavigationView.getMenu().getItem(0).setChecked(true);
