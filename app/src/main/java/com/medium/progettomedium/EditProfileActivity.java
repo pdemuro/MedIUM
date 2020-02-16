@@ -119,8 +119,7 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 updateProfile(nomeU.getText().toString(),cognome.getText().toString(),
                         email.getText().toString());
-
-
+                finish();
             }
 
 

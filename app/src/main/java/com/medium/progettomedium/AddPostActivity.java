@@ -36,7 +36,7 @@ public class AddPostActivity extends AppCompatActivity {
     private StorageTask uploadTask;
     StorageReference storageRef;
 
-    ImageView  image_added;
+    ImageView  image_added,close;
     TextView post,pubblica;
     EditText description;
     @Override
@@ -45,7 +45,7 @@ public class AddPostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_post);
         pubblica = findViewById(R.id.pubblica);
         image_added = findViewById(R.id.addPost);
-
+        close=findViewById(R.id.close);
         description = findViewById(R.id.descrizione);
 
         storageRef = FirebaseStorage.getInstance().getReference("posts");
@@ -64,6 +64,13 @@ public class AddPostActivity extends AppCompatActivity {
                 CropImage.activity()
                         .setAspectRatio(1,1)
                         .start(AddPostActivity.this);
+            }
+        });
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 

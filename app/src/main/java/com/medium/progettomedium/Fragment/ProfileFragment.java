@@ -137,7 +137,7 @@ public class ProfileFragment extends Fragment {
         userInfo();
         //getFollowers();
         //getNrPosts();
-        myFotos();
+
         postEvent();
       mySaves();
 
