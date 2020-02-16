@@ -223,16 +223,16 @@ public class SearchFragment extends Fragment implements LocationListener {
         mappa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CheckPermission();
+                if(CheckPermission()) {
 
-                icone.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.GONE);
-                recyclerView2.setVisibility(View.GONE);
+                    icone.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
+                    recyclerView2.setVisibility(View.GONE);
 
-                layoutCalendario.setVisibility(View.GONE);
-                giorni.setVisibility(View.GONE);
-                startActivity(new Intent(getContext(), MapActivity.class));
-
+                    layoutCalendario.setVisibility(View.GONE);
+                    giorni.setVisibility(View.GONE);
+                    startActivity(new Intent(getContext(), MapActivity.class));
+                }
 
             }
         });
@@ -261,9 +261,10 @@ public class SearchFragment extends Fragment implements LocationListener {
         menoDistante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheckPermission();
-                compare(tvLati,tvLongi,eventi);
-                var=0;
+                if(CheckPermission()) {
+                    compare(tvLati, tvLongi, eventi);
+                    var = 0;
+                }
             }
         });
         questaSettimana.setOnClickListener(new View.OnClickListener() {
@@ -291,15 +292,9 @@ public class SearchFragment extends Fragment implements LocationListener {
                 if(dataSnapshot.hasChildren()){
                     eventi.clear();
                     for(DataSnapshot dss : dataSnapshot.getChildren()){
-                        String luogo = dss.child("titolo").getValue(String.class);
-                        if(luogo.contains(query)) {
-                            final DatabaseEvento databaseEvento = dss.getValue(DatabaseEvento.class);
-                            eventi.add(databaseEvento);
-                        }
-                    }
-                    for(DataSnapshot dss : dataSnapshot.getChildren()){
+                        String titolo = dss.child("titolo").getValue(String.class);
                         String luogo = dss.child("luogo").getValue(String.class);
-                        if(luogo.contains(query)) {
+                        if(luogo.contains(query) || titolo.contains(query)) {
                             final DatabaseEvento databaseEvento = dss.getValue(DatabaseEvento.class);
                             eventi.add(databaseEvento);
                         }
@@ -308,6 +303,7 @@ public class SearchFragment extends Fragment implements LocationListener {
                 adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
 
                 //listaEventiView.setAdapter(adapter);
+                recyclerView2.setVisibility(View.GONE);
                 recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
                     @Override public void onItemClick(DatabaseEvento item) {
 
@@ -330,6 +326,7 @@ public class SearchFragment extends Fragment implements LocationListener {
 
 
                 }));
+
             }
 
 
@@ -339,7 +336,9 @@ public class SearchFragment extends Fragment implements LocationListener {
             }
 
         };
+
         mRef.addListenerForSingleValueEvent(firebaseSearchQuery);
+        eventi.clear();
     }
 
     private void searchUsers(String s) {
@@ -549,12 +548,15 @@ public class SearchFragment extends Fragment implements LocationListener {
         }
     }
 
-    public void CheckPermission() {
+    public boolean CheckPermission() {
         if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext().getApplicationContext(), ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, 101);
+        }else{
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -573,7 +575,6 @@ public class SearchFragment extends Fragment implements LocationListener {
 
     @Override
     public void onProviderDisabled(String provider) {
-        Toast.makeText(getContext(), "Perfavore abilita la posizione", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -583,7 +584,6 @@ public class SearchFragment extends Fragment implements LocationListener {
 
     @Override
     public void onProviderEnabled(String provider) {
-        Toast.makeText(getContext(), "Abilita il nuovo provider" + provider, Toast.LENGTH_SHORT).show();
     }
 
     public void eventisettimana(ArrayList<DatabaseEvento> lista1){
@@ -665,6 +665,7 @@ public class SearchFragment extends Fragment implements LocationListener {
             }
         });
 
+        Collections.reverse(eventi);
         adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
         recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
             @Override public void onItemClick(DatabaseEvento item) {
@@ -817,12 +818,14 @@ public class SearchFragment extends Fragment implements LocationListener {
                 String mDescrizione = item.getDescrizione();
                 String mImage = item.getImmagine();
                 String mData = item.getDate();
+                String mId = item.getId();
                 Intent intent = new Intent(recyclerView2.getContext(), ActivityDettagliEvento.class);
                 intent.putExtra("title", mTitolo);
                 intent.putExtra("description", mLuogo);
                 intent.putExtra("descrizione", mDescrizione);
                 intent.putExtra("image", mImage);
                 intent.putExtra("date", mData);
+                intent.putExtra("id",mId);
                 startActivity(intent);
             }
 
