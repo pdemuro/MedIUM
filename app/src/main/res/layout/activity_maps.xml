@@ -2,7 +2,24 @@
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapActivity" />
+    tools:context=".MapActivity">
+
+<androidx.appcompat.widget.Toolbar
+android:id="@+id/toolbar"
+android:layout_width="match_parent"
+android:layout_height="?attr/actionBarSize"
+android:background="?attr/colorPrimary"
+android:theme="@style/ThemeOverlay.AppCompat.Dark"
+app:popupTheme="@style/AppTheme"
+app:title="@string/app_name"
+app:titleTextColor="@color/colorBlack">
+
+
+</androidx.appcompat.widget.Toolbar>
+
+</fragment>

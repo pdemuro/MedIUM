@@ -292,15 +292,9 @@ public class SearchFragment extends Fragment implements LocationListener {
                 if(dataSnapshot.hasChildren()){
                     eventi.clear();
                     for(DataSnapshot dss : dataSnapshot.getChildren()){
-                        String luogo = dss.child("titolo").getValue(String.class);
-                        if(luogo.contains(query)) {
-                            final DatabaseEvento databaseEvento = dss.getValue(DatabaseEvento.class);
-                            eventi.add(databaseEvento);
-                        }
-                    }
-                    for(DataSnapshot dss : dataSnapshot.getChildren()){
+                        String titolo = dss.child("titolo").getValue(String.class);
                         String luogo = dss.child("luogo").getValue(String.class);
-                        if(luogo.contains(query)) {
+                        if(luogo.contains(query) || titolo.contains(query)) {
                             final DatabaseEvento databaseEvento = dss.getValue(DatabaseEvento.class);
                             eventi.add(databaseEvento);
                         }
@@ -309,6 +303,7 @@ public class SearchFragment extends Fragment implements LocationListener {
                 adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
 
                 //listaEventiView.setAdapter(adapter);
+                recyclerView2.setVisibility(View.GONE);
                 recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
                     @Override public void onItemClick(DatabaseEvento item) {
 
@@ -331,6 +326,7 @@ public class SearchFragment extends Fragment implements LocationListener {
 
 
                 }));
+
             }
 
 
@@ -340,7 +336,9 @@ public class SearchFragment extends Fragment implements LocationListener {
             }
 
         };
+
         mRef.addListenerForSingleValueEvent(firebaseSearchQuery);
+        eventi.clear();
     }
 
     private void searchUsers(String s) {
@@ -667,6 +665,7 @@ public class SearchFragment extends Fragment implements LocationListener {
             }
         });
 
+        Collections.reverse(eventi);
         adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
         recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
             @Override public void onItemClick(DatabaseEvento item) {

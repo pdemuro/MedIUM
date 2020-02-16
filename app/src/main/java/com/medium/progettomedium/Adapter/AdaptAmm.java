@@ -132,6 +132,17 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
                 }
 
             });
+            rifiuta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(4);
+                    //Intent intent = new Intent(c, HomeFragment.class);
+                    //c.startActivity(intent);
+                }
+
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
