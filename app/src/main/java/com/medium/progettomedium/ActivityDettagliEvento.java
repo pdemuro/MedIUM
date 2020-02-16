@@ -1,5 +1,8 @@
 package com.medium.progettomedium;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,12 +47,15 @@ public class ActivityDettagliEvento extends AppCompatActivity {
         prenota = findViewById(R.id.button);
         close = findViewById(R.id.close);
 
+
+
         String title = getIntent().getStringExtra("title");
         String place = getIntent().getStringExtra("description");
         String description = getIntent().getStringExtra("descrizione");
         String image = getIntent().getStringExtra("image");
         String data1 = getIntent().getStringExtra("date");
         final String id = getIntent().getStringExtra("id");
+
         databaseReferenceutente = FirebaseDatabase.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReferenceutente.child("UserID").child("Utenti").addValueEventListener(new ValueEventListener() {
@@ -59,7 +67,7 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                 for (final DataSnapshot child : children) {
                     final DatabaseUtente utente = child.getValue(DatabaseUtente.class);
                     if(utente.getCategory().equals("Utente")) {
-                        databaseReference.child("UserID").child("Utenti").child(utente.fullname).child("prenotazioni").addValueEventListener(new ValueEventListener() {
+                        databaseReference.child("UserID").child("Utenti").child(utente.nome+" "+utente.cognome).child("prenotazioni").addValueEventListener(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -121,6 +129,78 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                 finish();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
+            }
+        });
+        final FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+        final String nome1= firebaseUser.getDisplayName().replaceAll("%20" ," ");
+
+        prenota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                databaseReference.child("UserID").child("Utenti").child(nome1).child("prenotazioni").addValueEventListener(new ValueEventListener() {
+
+                    /**
+                     * This method will be invoked any time the data on the database changes.
+                     * Additionally, it will be invoked as soon as we connect the listener, so that we can get an initial snapshot of the data on the database.
+                     * @param dataSnapshot
+                     */
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // get all of the children at this level.
+                        Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                        // shake hands with each of them.'
+                        int var = 0;
+                        for (DataSnapshot child : children) {
+                            if(id.equals(child.getValue())) {
+                                var =1;
+                            }
+                        }
+                        if(var == 1){
+                            prenota.setEnabled(false);
+
+                            prenota.setText("In attesa");
+                            prenota.setBackgroundColor(Color.YELLOW);
+                        }
+                        else{
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDettagliEvento.this);
+                            builder.setTitle("Conferma Prenotazione");
+                            builder.setMessage("Vuoi confermare la prenotazione per questo evento?");
+                            builder.setCancelable(false);
+
+                            builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti")
+                                            .child(nome1).child("prenotazioni").child(id).setValue(2);
+
+                                    prenota.setEnabled(false);
+
+                                    prenota.setText("In attesa");
+                                    prenota.setBackgroundColor(Color.YELLOW);
+                                }
+                            });
+                            builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+
+                });
             }
         });
     }

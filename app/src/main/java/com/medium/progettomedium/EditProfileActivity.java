@@ -17,6 +17,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.medium.progettomedium.Fragment.HomeFragment;
+import com.medium.progettomedium.Fragment.ProfileFragment;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,7 +46,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     ImageView close, image_profile;
     TextView save, tv_change;
-    MaterialEditText fullname, email, bio;
+    MaterialEditText nomeU,cognome, email, bio;
 
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
@@ -61,7 +63,8 @@ public class EditProfileActivity extends AppCompatActivity {
         image_profile = findViewById(R.id.image_profile);
         save = findViewById(R.id.save);
         tv_change = findViewById(R.id.tv_change);
-        fullname = findViewById(R.id.fullname);
+        nomeU = findViewById(R.id.nomeU);
+        cognome = findViewById(R.id.cognomeU);
         email = findViewById(R.id.email);
         //bio = findViewById(R.id.bio);
 
@@ -78,7 +81,9 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
                 FirebaseUser photoUser= firebaseAuth.getCurrentUser();
-                fullname.setText(user.getFullname());
+
+                nomeU.setText(user.getNome());
+                cognome.setText(user.getCognome());
                 email.setText(user.getMail());
                 //bio.setText(user.getCategory());
                 if (photoUser.getPhotoUrl() != null) {
@@ -114,10 +119,8 @@ public class EditProfileActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateProfile(fullname.getText().toString(),
+                updateProfile(nomeU.getText().toString(),cognome.getText().toString(),
                         email.getText().toString());
-
-
             }
 
 
@@ -144,20 +147,21 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void updateProfile(String fullname, String email){
+    private void updateProfile(String nomeU, String cognome, String email){
         FirebaseUser nome = firebaseAuth.getCurrentUser();
         String nome1= nome.getDisplayName().replaceAll("%20" ," ");
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome1);
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("fullname", fullname);
+        map.put("nome", nomeU);
+        map.put("cognome", cognome);
         map.put("mail", email);
        // map.put("bio", bio);
 
         reference.updateChildren(map);
 
-        Toast.makeText(EditProfileActivity.this, "Successfully updated!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(EditProfileActivity.this, "Informazioni Aggiornate!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("publisherid", firebaseUser.getUid());
         this.startActivity(intent);

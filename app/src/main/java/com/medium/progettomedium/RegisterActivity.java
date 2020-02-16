@@ -271,7 +271,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String email = editTextEmail.getEditText().getText().toString().trim();
             String userID = firebaseAuth.getUid();
             String category = "Utente";
-            DatabaseUtente databaseUtente = new DatabaseUtente(fullname, email,userID, category);
+            DatabaseUtente databaseUtente = new DatabaseUtente(name,cognome, email,userID, category);
 
 
             FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -303,7 +303,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String cap =  editTextCap.getEditText().getText().toString().trim();
             String residenza = editTextResidenza.getEditText().getText().toString().trim();
             String userID = firebaseAuth.getUid();
-            DatabaseUtente databaseUtente = new DatabaseUtente(fullname, mail, userID,category, phone, data, luogo, residenza,indirizzo, cap );
+            DatabaseUtente databaseUtente = new DatabaseUtente(name, cognome, mail, userID,category, phone, data, luogo, residenza,indirizzo, cap );
 
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {

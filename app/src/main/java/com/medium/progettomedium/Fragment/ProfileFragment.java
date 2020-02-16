@@ -125,9 +125,8 @@ public class ProfileFragment extends Fragment {
         postList = new ArrayList<>();
         myFotosAdapter = new MyFotosAdapter(getContext(), postList);
         recyclerView.setAdapter(myFotosAdapter);
-
-
          postList_saves = new ArrayList<>();
+
 
         listaEventiView = (RecyclerView) view.findViewById(R.id.recycler_view_save);
         listaEventiView.setHasFixedSize(true);
@@ -136,14 +135,12 @@ public class ProfileFragment extends Fragment {
         linearLayoutManager.setStackFromEnd(true);
         listaEventiView.setLayoutManager(linearLayoutManager);
         eventi = new ArrayList<DatabaseEvento>();
-
-
         DatabaseEvento.date_collection_arr = new ArrayList<DatabaseEvento>();
 
         userInfo();
         //getFollowers();
         //getNrPosts();
-        myFotos();
+
         postEvent();
       mySaves();
 
@@ -174,7 +171,7 @@ public class ProfileFragment extends Fragment {
                 saved_fotos.setBackgroundColor(0xDCDCDC);
                 myFotos();
             }
-        });
+      });
 
         saved_fotos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -430,7 +427,8 @@ public class ProfileFragment extends Fragment {
                         }
                     });
 
-                fullname.setText(user.getFullname());
+                    String nome = user.getNome()+" "+user.getCognome();
+                fullname.setText(nome);
                 category.setText(user.getCategory());
 
 

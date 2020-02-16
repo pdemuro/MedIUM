@@ -115,8 +115,8 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
             databaseReference = FirebaseDatabase.getInstance().getReference();
             databaseReference2 = FirebaseDatabase.getInstance().getReference();
 
-            final String nome = utente.getFullname();
-            nome_utente.setText(utente.getFullname());
+            final String nome = utente.getNome()+" "+utente.getCognome();
+            nome_utente.setText(nome);
             mail.setText(utente.getMail());
             telefono.setText(utente.getPhone());
             //Picasso.get().load(evento.getImmagine()).into(immagine); VALUTARE SE INSERIRE

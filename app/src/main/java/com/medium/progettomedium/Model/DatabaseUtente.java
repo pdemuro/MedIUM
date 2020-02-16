@@ -4,7 +4,8 @@ public class DatabaseUtente {
 
 
     public String id;
-    public String fullname;
+    public String nome;
+    public String cognome;
     public String imageUrl;
     public String category;
     public String mail;
@@ -20,15 +21,17 @@ public class DatabaseUtente {
 
     }
 
-    public DatabaseUtente(String fullname, String mail,String id, String category) {
-        this.fullname = fullname;
+    public DatabaseUtente(String nome, String cognome, String mail,String id, String category) {
+        this.nome = nome;
+        this.cognome = cognome;
         this.mail = mail;
         this.id=id;
         this.category = category;
     }
 
-    public DatabaseUtente(String fullname, String mail, String id, String category, String phone, String data, String luogo, String residenza, String indirizzo, String cap) {
-        this.fullname = fullname;
+    public DatabaseUtente(String nome,String cognome, String mail, String id, String category, String phone, String data, String luogo, String residenza, String indirizzo, String cap) {
+        this.nome = nome;
+        this.cognome = cognome;
         this.category = category;
         this.mail = mail;
         this.id  = id;
@@ -40,6 +43,23 @@ public class DatabaseUtente {
         this.cap = cap;
 
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
+    public void setCognome(String cognome) {
+        this.cognome = cognome;
+    }
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -62,14 +82,6 @@ public class DatabaseUtente {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
     }
 
     public String getMail() {
