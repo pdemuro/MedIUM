@@ -139,6 +139,8 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                                             String stato = child.getValue().toString();
                                             if(stato.equals("3")){
                                                 var = 2;
+                                            }else if(stato.equals("4")){
+                                                var=3;
                                             }
                                         }
                                     }
@@ -155,6 +157,12 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                                         stato.setText("In attesa");
                                         stato.setTextColor(Color.parseColor("#ffffbc00"));
                                         stato.setBackgroundResource(R.drawable.gradius_attesa);
+                                    }else if(var == 3){
+
+                                        stato.setEnabled(false);
+                                        stato.setText("Rifiutato");
+                                        stato.setTextColor(Color.parseColor("#ffff1744"));
+                                        stato.setBackgroundResource(R.drawable.gradius_rifiutato);
                                     }
                                     else{
                                         stato.setText("Prenota Ora");

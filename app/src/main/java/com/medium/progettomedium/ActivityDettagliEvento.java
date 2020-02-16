@@ -56,7 +56,7 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 // shake hands with each of them.'
                 int var = 0;
-                for (DataSnapshot child : children) {
+                for (final DataSnapshot child : children) {
                     final DatabaseUtente utente = child.getValue(DatabaseUtente.class);
                     if(utente.getCategory().equals("Utente")) {
                         databaseReference.child("UserID").child("Utenti").child(utente.fullname).child("prenotazioni").addValueEventListener(new ValueEventListener() {
@@ -67,32 +67,31 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                                 // shake hands with each of them.'
 
+
+
                                 for (DataSnapshot child : children) {
                                     if(id.equals(child.getKey())) {
+
                                         String stato = child.getValue().toString();
 
-                                        if(stato.equals("1")){
-                                            prenota.setText("Prenota Ora");
-                                            prenota.setBackgroundResource(R.drawable.gradius_image);
-                                        }
                                         if(stato.equals("2")){
                                             prenota.setText("In Attesa");
                                             prenota.setTextColor(Color.parseColor("#ffffbc00"));
                                             prenota.setBackgroundResource(R.drawable.gradius_attesa);
-                                        }
-                                        if(stato.equals("3")){
+                                        }else if(stato.equals("3")){
                                             prenota.setText("Prenotato");
                                             prenota.setTextColor(Color.parseColor("#ffc6ff00"));
                                             prenota.setBackgroundResource(R.drawable.gradius_prenotato);
-                                        }
-                                        if(stato.equals("4")){
+                                        }else if(stato.equals("4")){
                                             prenota.setText("Rifiutato");
                                             prenota.setTextColor(Color.parseColor("#ffff1744"));
                                             prenota.setBackgroundResource(R.drawable.gradius_rifiutato);
                                         }
                                     }
 
+
                                 }
+
 
                             }
 
