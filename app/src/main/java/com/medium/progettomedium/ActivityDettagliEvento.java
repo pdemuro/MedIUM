@@ -59,7 +59,7 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                 for (DataSnapshot child : children) {
                     final DatabaseUtente utente = child.getValue(DatabaseUtente.class);
                     if(utente.getCategory().equals("Utente")) {
-                        databaseReference.child("UserID").child("Utenti").child(utente.fullname).child("prenotazioni").addValueEventListener(new ValueEventListener() {
+                        databaseReference.child("UserID").child("Utenti").child(utente.nome+" "+utente.cognome).child("prenotazioni").addValueEventListener(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {

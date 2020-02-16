@@ -67,7 +67,7 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                 for (DataSnapshot child : children) {
                     final DatabaseUtente utente = child.getValue(DatabaseUtente.class);
                     if(utente.getCategory().equals("Utente")) {
-                        databaseReference.child("UserID").child("Utenti").child(utente.fullname).child("prenotazioni").addValueEventListener(new ValueEventListener() {
+                        databaseReference.child("UserID").child("Utenti").child(utente.nome+" "+utente.cognome).child("prenotazioni").addValueEventListener(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -92,7 +92,7 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                                 recyclerView.setAdapter(new AdaptAmm(getApplication(), utenti,id, new AdaptAmm.OnItemClickListener() {
                                     @Override public void onItemClick(DatabaseUtente item) {
 
-                                        String mNome = item.getFullname();
+                                        String mNome = item.getNome()+" "+item.getCognome();
                                         String mMail = item.getMail();
                                         String mPhone = item.getPhone();
                                         Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliAmm.class);
