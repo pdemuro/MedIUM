@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.medium.progettomedium.ActivityDettagliEvento;
 import com.medium.progettomedium.Adapter.AdaptEvento;
 import com.medium.progettomedium.Adapter.MyFotosAdapter;
+import com.medium.progettomedium.Adapter.PostAdapter;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.Post;
 import com.medium.progettomedium.R;
@@ -37,9 +38,9 @@ public class ActivityPostDetail extends AppCompatActivity {
     String postid;
 
     private RecyclerView recyclerView;
-    private MyFotosAdapter postAdapter;
+    private PostAdapter postAdapter;
     private List<Post> postList;
-private MyFotosAdapter adapter;
+    private MyFotosAdapter adapter;
     private ArrayList<Post> posts = new ArrayList<Post>();
     private RecyclerView listaEventiView;
     DatabaseReference mRef;
@@ -60,9 +61,7 @@ private MyFotosAdapter adapter;
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         listaEventiView.setLayoutManager(linearLayoutManager);
-        postList = new ArrayList<Post>();
-        postAdapter = new MyFotosAdapter(ActivityPostDetail.this, postList);
-        listaEventiView.setAdapter(postAdapter);
+
 
 
 
@@ -72,7 +71,12 @@ private MyFotosAdapter adapter;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-       readPost();
+
+        postList = new ArrayList<>();
+        postAdapter = new PostAdapter(ActivityPostDetail.this, postList);
+        listaEventiView.setAdapter(postAdapter);
+
+        readPost();
 
     }
 
@@ -85,7 +89,7 @@ private MyFotosAdapter adapter;
                 postList.clear();
                 Post post = dataSnapshot.getValue(Post.class);
                 postList.add(post);
-                
+
                 postAdapter.notifyDataSetChanged();
             }
 

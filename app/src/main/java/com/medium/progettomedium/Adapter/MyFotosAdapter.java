@@ -1,28 +1,28 @@
 package com.medium.progettomedium.Adapter;
 
-        import android.content.Context;
-        import android.content.Intent;
-        import android.content.SharedPreferences;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.ImageView;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
-        import androidx.annotation.NonNull;
-        import androidx.fragment.app.FragmentActivity;
-        import androidx.recyclerview.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
-        import com.bumptech.glide.Glide;
-        import com.medium.progettomedium.ActivityPostDetail;
-        import com.medium.progettomedium.MapActivity;
-        import com.medium.progettomedium.Model.DatabaseEvento;
-        import com.medium.progettomedium.Model.Post;
-        import com.medium.progettomedium.R;
+import com.bumptech.glide.Glide;
+import com.medium.progettomedium.ActivityPostDetail;
+import com.medium.progettomedium.MapActivity;
+import com.medium.progettomedium.Model.DatabaseEvento;
+import com.medium.progettomedium.Model.Post;
+import com.medium.progettomedium.R;
 
 
-        import java.util.List;
+import java.util.List;
 
-        import static android.content.Context.MODE_PRIVATE;
+import static android.content.Context.MODE_PRIVATE;
 
 public class MyFotosAdapter extends RecyclerView.Adapter<MyFotosAdapter.ImageViewHolder> {
 

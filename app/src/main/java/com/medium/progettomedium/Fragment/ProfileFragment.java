@@ -125,7 +125,7 @@ public class ProfileFragment extends Fragment {
         postList = new ArrayList<>();
         myFotosAdapter = new MyFotosAdapter(getContext(), postList);
         recyclerView.setAdapter(myFotosAdapter);
-         postList_saves = new ArrayList<>();
+        postList_saves = new ArrayList<>();
 
 
         listaEventiView = (RecyclerView) view.findViewById(R.id.recycler_view_save);
@@ -142,7 +142,7 @@ public class ProfileFragment extends Fragment {
         //getNrPosts();
         myFotos();
         postEvent();
-      mySaves();
+        mySaves();
 
 
         edit_profile.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +160,7 @@ public class ProfileFragment extends Fragment {
 
 
 
-      my_fotos.setOnClickListener(new View.OnClickListener() {
+        my_fotos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 recyclerView.setVisibility(View.VISIBLE);
@@ -169,7 +169,7 @@ public class ProfileFragment extends Fragment {
                 saved_fotos.setBackgroundColor(0xDCDCDC);
                 myFotos();
             }
-      });
+        });
 
         saved_fotos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,6 +217,10 @@ public class ProfileFragment extends Fragment {
         return view;
     }
     private void myFotos(){
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+        final String nome1= user.getDisplayName().replaceAll("%20" ," ");
+
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Posts");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -224,7 +228,7 @@ public class ProfileFragment extends Fragment {
                 postList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     Post post = snapshot.getValue(Post.class);
-                    if (post.getPublisher().equals(profileid)){
+                    if (post.getPublisher().equals(nome1)){
                         postList.add(post);
                     }
                 }
@@ -411,21 +415,23 @@ public class ProfileFragment extends Fragment {
                     //saved_fotos.setVisibility(View.GONE);
                 }
                 FirebaseUser photoUser= firebaseAuth.getCurrentUser();
-                    if (photoUser.getPhotoUrl() != null) {
-                        Glide.with(getContext()).load(photoUser.getPhotoUrl()).into(image_profile);
+                if (photoUser.getPhotoUrl() != null) {
+                    Glide.with(getContext()).load(photoUser.getPhotoUrl()).into(image_profile);
+                }
+                image_profile.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        CropImage.activity()
+                                .setGuidelines(CropImageView.Guidelines.ON)
+                                .setAspectRatio(60, 60)
+                                .start(getContext(),ProfileFragment.this);
+
+
                     }
-                    image_profile.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                });
 
-                            CropImage.activity()
-                                    .setGuidelines(CropImageView.Guidelines.ON)
-                                    .setAspectRatio(60, 60)
-                                    .start(getContext(),ProfileFragment.this);
-                        }
-                    });
-
-                    String nome = user.getNome()+" "+user.getCognome();
+                String nome = user.getNome()+" "+user.getCognome();
                 fullname.setText(nome);
                 category.setText(user.getCategory());
 
@@ -442,7 +448,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 mImageUri = result.getUri();
@@ -495,15 +501,39 @@ public class ProfileFragment extends Fragment {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null && image_url != null) {
             UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder().setPhotoUri(Uri.parse(image_url)).build();
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                    .child("UserID").child("Utenti");
+
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        DatabaseUtente user = snapshot.getValue(DatabaseUtente.class);
+                        String nome = user.getNome() + " " + user.getCognome();
+
+                        FirebaseUser user2 = firebaseAuth.getCurrentUser();
+                        if (nome.equals(user2.getDisplayName())) {
+                            user.setImageUrl(image_url);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
             user.updateProfile(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
                         FirebaseUser user = firebaseAuth.getCurrentUser();
+
                         if (user.getPhotoUrl() != null) {
                             Glide.with(getContext()).load(user.getPhotoUrl()).into(image_profile);
 
                         }
+
                     }
                 }
             });

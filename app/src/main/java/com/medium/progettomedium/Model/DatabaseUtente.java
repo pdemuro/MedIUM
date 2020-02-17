@@ -1,5 +1,7 @@
 package com.medium.progettomedium.Model;
 
+import java.util.ArrayList;
+
 public class DatabaseUtente {
 
 
@@ -17,19 +19,22 @@ public class DatabaseUtente {
     public String cap;
 
 
+
     public DatabaseUtente(){
 
     }
 
-    public DatabaseUtente(String nome, String cognome, String mail,String id, String category) {
+    public static ArrayList<DatabaseUtente> date_collection_arr;
+    public DatabaseUtente(String nome, String cognome, String mail,String id, String category,String imageUrl) {
         this.nome = nome;
         this.cognome = cognome;
         this.mail = mail;
         this.id=id;
         this.category = category;
+        this.imageUrl =imageUrl;
     }
 
-    public DatabaseUtente(String nome,String cognome, String mail, String id, String category, String phone, String data, String luogo, String residenza, String indirizzo, String cap) {
+    public DatabaseUtente(String nome,String cognome, String mail, String id, String category, String phone, String data, String luogo, String residenza, String indirizzo, String cap,String imageUrl) {
         this.nome = nome;
         this.cognome = cognome;
         this.category = category;
@@ -41,6 +46,8 @@ public class DatabaseUtente {
         this.residenza=residenza;
         this.indirizzo = indirizzo;
         this.cap = cap;
+
+        this.imageUrl =imageUrl;
 
     }
 

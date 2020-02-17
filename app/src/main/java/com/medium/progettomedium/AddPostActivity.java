@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -87,6 +88,10 @@ public class AddPostActivity extends AppCompatActivity {
         final ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Posting");
         pd.show();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser user = firebaseAuth.getCurrentUser();
+        final String nome1= user.getDisplayName().replaceAll("%20" ," ");
+
         if (mImageUri != null){
             final StorageReference fileReference = FirebaseStorage.getInstance().getReference("immaginiPost/" + System.currentTimeMillis() + ".jpg");
 
@@ -111,11 +116,12 @@ public class AddPostActivity extends AppCompatActivity {
 
                         String postid = reference.push().getKey();
 
+
                         HashMap<String, Object> hashMap = new HashMap<>();
                         hashMap.put("postid", postid);
                         hashMap.put("postimage", miUrlOk);
                         hashMap.put("description", description.getText().toString());
-                        hashMap.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        hashMap.put("publisher", nome1);
 
                         reference.child(postid).setValue(hashMap);
 
@@ -136,7 +142,7 @@ public class AddPostActivity extends AppCompatActivity {
             });
 
         } else {
-            Toast.makeText(AddPostActivity.this, "No image selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddPostActivity.this, "Nessuna immagine selazionata", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -151,7 +157,7 @@ public class AddPostActivity extends AppCompatActivity {
 
             image_added.setImageURI(mImageUri);
         } else {
-            Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Qualcosa è andato storto!", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(AddPostActivity.this, MainActivity.class));
             finish();
         }

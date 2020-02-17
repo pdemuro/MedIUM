@@ -51,9 +51,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Toast.makeText(this,"L'account non è verificato: controlla la mail",Toast.LENGTH_SHORT).show();
             }*/
 
-         if(user.getDisplayName() != null) {
-             startActivity(new Intent(getApplicationContext(), MainActivity.class));
-         }
+            if(user.getDisplayName() != null) {
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
         }
 
 
@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialog = new ProgressDialog(this);
 
         buttonSignIn.setOnClickListener(this);
-       // buttonAdmin.setOnClickListener(this);
+        // buttonAdmin.setOnClickListener(this);
         textViewSignUp.setOnClickListener(this);
     }
 
