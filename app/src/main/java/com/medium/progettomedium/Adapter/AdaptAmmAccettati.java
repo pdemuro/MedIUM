@@ -1,9 +1,11 @@
 package com.medium.progettomedium.Adapter;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.provider.ContactsContract;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,26 +13,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.medium.progettomedium.ActivityDettagliAmm;
-import com.medium.progettomedium.Fragment.HomeFragment;
-import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.medium.progettomedium.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
+public class AdaptAmmAccettati extends RecyclerView.Adapter<AdaptAmmAccettati.ViewHolder>{
     private static Context c;
     List<DatabaseUtente> utenti;
     View mView;
@@ -45,13 +38,13 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
     }
 
     private List<DatabaseUtente> listaUtenti;
-    private OnItemClickListener listener;
+    private AdaptAmmAccettati.OnItemClickListener listener;
 
     public String getIdEvento() {
         return idEvento;
     }
 
-    public AdaptAmm(Context c, List<DatabaseUtente> listaUtenti, String idEvento, OnItemClickListener listener) {
+    public AdaptAmmAccettati(Context c, List<DatabaseUtente> listaUtenti, String idEvento, AdaptAmmAccettati.OnItemClickListener listener) {
         this.c = c;
         this.listaUtenti = listaUtenti;
         this.listener = listener;
@@ -60,15 +53,15 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.addapt_amm,parent,false);
+    public AdaptAmmAccettati.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_adapt_amm_accettati,parent,false);
 
 
-        return new ViewHolder(v);
+        return new AdaptAmmAccettati.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final AdaptAmmAccettati.ViewHolder holder, int position) {
         holder.bind(listaUtenti.get(position),getIdEvento(), listener);
         final FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
         final String nome1= firebaseUser.getDisplayName().replaceAll("%20" ," ");
@@ -100,14 +93,12 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
             nome_utente = itemView.findViewById(R.id.nome_utente);
             mail = itemView.findViewById(R.id.mail);
             telefono = itemView.findViewById(R.id.telefono);
-            accetta = itemView.findViewById(R.id.accetta);
-            rifiuta = itemView.findViewById(R.id.rifiuta);
-            immagine = itemView.findViewById(R.id.immagine);
 
+            immagine=itemView.findViewById(R.id.immagine);
 
         }
 
-        public void bind(final DatabaseUtente utente,String idEvento, final OnItemClickListener listener) {
+        public void bind(final DatabaseUtente utente,String idEvento, final AdaptAmmAccettati.OnItemClickListener listener) {
             final String eventoid = idEvento;
             final String id = utente.getId();
             firebaseAuth = FirebaseAuth.getInstance();
@@ -123,29 +114,6 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
             mail.setText(utente.getMail());
             telefono.setText(utente.getPhone());
             Picasso.get().load(utente.getImageUrl()).into(immagine);
-
-            accetta.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-                    databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(3);
-                    //Intent intent = new Intent(c, HomeFragment.class);
-                    //c.startActivity(intent);
-                }
-
-            });
-            rifiuta.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-
-                    databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(4);
-                    //Intent intent = new Intent(c, HomeFragment.class);
-                    //c.startActivity(intent);
-                }
-
-            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {

@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.medium.progettomedium.Adapter.AdaptAmm;
+import com.medium.progettomedium.Adapter.AdaptAmmAccettati;
 import com.medium.progettomedium.Adapter.AdaptEvento;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
@@ -28,10 +29,12 @@ public class ActivityDettagliAmm extends AppCompatActivity {
      RecyclerView recyclerView,elencoAccettati;
      Button accettati,prenotati;
      AdaptAmm ammAdapter;
+     AdaptAmmAccettati ammAdapter2;
      ArrayList<DatabaseUtente> utenti = new ArrayList<DatabaseUtente>();
      DatabaseReference databaseReferenceutente;
      DatabaseReference databaseReference;
      AdaptAmm.OnItemClickListener itemClickListener;
+     AdaptAmmAccettati.OnItemClickListener itemClickListener2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -40,19 +43,18 @@ public class ActivityDettagliAmm extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.elenco_richieste);
 
+        accettati=findViewById(R.id.accettati);
+        prenotati=findViewById(R.id.prenotati);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
-        elencoAccettati.findViewById(R.id.elencoAccettati);
+        elencoAccettati=findViewById(R.id.elencoAccettati);
         elencoAccettati.setHasFixedSize(true);
         elencoAccettati.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         recyclerView.setAdapter(ammAdapter);
-        elencoAccettati.setAdapter(ammAdapter);
-
-        accettati.findViewById(R.id.accettati);
-        prenotati.findViewById(R.id.prenotati);
+        elencoAccettati.setAdapter(ammAdapter2);
 
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -67,14 +69,18 @@ public class ActivityDettagliAmm extends AppCompatActivity {
         linearLayoutManager1.setStackFromEnd(true);
         elencoAccettati.setLayoutManager(linearLayoutManager1);
         utenti = new ArrayList<DatabaseUtente>();
+        elencoRic();
 
-
-        /*prenotati.setOnClickListener(new View.OnClickListener() {
+        prenotati.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 elencoAccettati.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+                prenotati.setBackgroundColor(Color.parseColor("#20444444"));
+                accettati.setBackgroundColor(0xDCDCDC);
                 elencoRic();
+
+
             }
         });
         accettati.setOnClickListener(new View.OnClickListener() {
@@ -82,10 +88,13 @@ public class ActivityDettagliAmm extends AppCompatActivity {
             public void onClick(View v) {
                 elencoAccettati.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
+                accettati.setBackgroundColor(Color.parseColor("#20444444"));
+                prenotati.setBackgroundColor(0xDCDCDC);
                 elencoAccetta();
 
+
             }
-        });*/
+        });
         String title = getIntent().getStringExtra("title");
         String place = getIntent().getStringExtra("description");
         String description = getIntent().getStringExtra("descrizione");
@@ -105,6 +114,7 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 // shake hands with each of them.'
                 int var = 0;
+                utenti.clear();
                 for (DataSnapshot child : children) {
                     final DatabaseUtente utente = child.getValue(DatabaseUtente.class);
                     if(utente.getCategory().equals("Utente")) {
@@ -127,16 +137,16 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                                 }
 
 
-                                ammAdapter = new AdaptAmm(getApplication(), utenti,id, itemClickListener);
+                                ammAdapter2 = new AdaptAmmAccettati(getApplication(), utenti,id, itemClickListener2);
 
                                 //listaEventiView.setAdapter(adapter);
-                                recyclerView.setAdapter(new AdaptAmm(getApplication(), utenti,id, new AdaptAmm.OnItemClickListener() {
+                                elencoAccettati.setAdapter(new AdaptAmmAccettati(getApplication(), utenti,id, new AdaptAmmAccettati.OnItemClickListener() {
                                     @Override public void onItemClick(DatabaseUtente item) {
 
                                         String mNome = item.getNome()+" "+item.getCognome();
                                         String mMail = item.getMail();
                                         String mPhone = item.getPhone();
-                                        Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliAmm.class);
+                                        Intent intent = new Intent(elencoAccettati.getContext(), ActivityDettagliAmm.class);
                                         intent.putExtra("nome", mNome);
                                         intent.putExtra("mail", mMail);
                                         intent.putExtra("phone", mPhone);
@@ -173,6 +183,7 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                 Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                 // shake hands with each of them.'
                 int var = 0;
+                utenti.clear();
                 for (DataSnapshot child : children) {
                     final DatabaseUtente utente = child.getValue(DatabaseUtente.class);
                     if(utente.getCategory().equals("Utente")) {
