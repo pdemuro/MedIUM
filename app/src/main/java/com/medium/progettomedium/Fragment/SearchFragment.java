@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -71,7 +72,7 @@ public class SearchFragment extends Fragment implements LocationListener {
 
     private RecyclerView recyclerView,recyclerView2;
     private Toolbar toolbar;
-    private ConstraintLayout icone;
+    private ConstraintLayout icone,iconeFiltro;
     private AdaptEvento eventAdapter;
     private List<DatabaseEvento> eventList;
     private List<DatabaseUtente> userList;
@@ -81,18 +82,18 @@ public class SearchFragment extends Fragment implements LocationListener {
     private AdaptEvento.OnItemClickListener itemClickListener;
     DatabaseReference mRef;
     private DatabaseReference databaseReference;
-    ImageView menoDistante,calendario,mappa,questaSettimana;
+    ConstraintLayout menoDistante,calendario,mappa,questaSettimana;
     public AdaptCalendario adaptCalendario;
     EditText search_bar;
     ImageButton previous ;
-    TextView testo_mese,testoFiltroAttivo,menoDista;
+    TextView testo_mese,nomeFiltro,testoFiltroAttivo,menoDista;
     ImageButton next;
     LinearLayout layoutCalendario;
     RelativeLayout giorni;
     GridView gridview;
     LinearLayout filtroAttivo;
     public GregorianCalendar mese_calendario;
-
+    Button close;
     public Double tvLongi;
     public Double tvLati;
     LocationManager locationManager;
@@ -114,6 +115,9 @@ public class SearchFragment extends Fragment implements LocationListener {
         recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
 
         search_bar = view.findViewById(R.id.search_bar);
+        iconeFiltro = view.findViewById(R.id.IconsFiltro);
+        close = view.findViewById(R.id.close);
+        nomeFiltro = view.findViewById(R.id.nomeFiltro);
 
 
 
@@ -219,6 +223,18 @@ public class SearchFragment extends Fragment implements LocationListener {
 
             }
         });
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iconeFiltro.setVisibility(View.GONE);
+                icone.setVisibility(View.VISIBLE);
+                layoutCalendario.setVisibility(View.GONE);
+                giorni.setVisibility(View.GONE);
+                recyclerView2.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+
+            }
+        });
 
         mappa.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,13 +256,13 @@ public class SearchFragment extends Fragment implements LocationListener {
         calendario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                nomeFiltro.setText("Calendario");
+                iconeFiltro.setVisibility(View.VISIBLE);
                 layoutCalendario.setVisibility(View.VISIBLE);
                 giorni.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
                 recyclerView2.setVisibility(View.GONE);
-                icone.setVisibility(View.GONE);
+                icone.setVisibility(View.INVISIBLE);
 
                 Calendario();
             }
@@ -254,6 +270,9 @@ public class SearchFragment extends Fragment implements LocationListener {
         questaSettimana.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                nomeFiltro.setText("Recente");
+                iconeFiltro.setVisibility(View.VISIBLE);
+                icone.setVisibility(View.INVISIBLE);
                 eventisettimana(eventi);
             }
         });
@@ -261,18 +280,16 @@ public class SearchFragment extends Fragment implements LocationListener {
         menoDistante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                iconeFiltro.setVisibility(View.VISIBLE);
+                icone.setVisibility(View.INVISIBLE);
+                nomeFiltro.setText("Vicino a te");
                 if(CheckPermission()) {
                     compare(tvLati, tvLongi, eventi);
                     var = 0;
                 }
             }
         });
-        questaSettimana.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eventisettimana(eventi);
-            }
-        });
+       
         return view;
     }
 

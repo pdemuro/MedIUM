@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -36,7 +37,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class ActivityPostDetail extends AppCompatActivity {
 
     String postid;
-
+    private ImageView close;
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<Post> postList;
@@ -65,8 +66,14 @@ private PostAdapter adapter;
         postAdapter = new PostAdapter(ActivityPostDetail.this, postList);
         listaEventiView.setAdapter(postAdapter);
 
+        close = findViewById(R.id.close);
 
-
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         FirebaseMessaging.getInstance().subscribeToTopic("MyTopic");
 
         DatabaseEvento.date_collection_arr = new ArrayList<DatabaseEvento>();
