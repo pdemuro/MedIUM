@@ -202,7 +202,11 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton("Esci", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+
+                    System.exit(0);
                     finish();
+
+
                 }
             });
             builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {

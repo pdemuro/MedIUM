@@ -289,7 +289,7 @@ public class SearchFragment extends Fragment implements LocationListener {
                 }
             }
         });
-       
+
         return view;
     }
 
@@ -331,7 +331,7 @@ public class SearchFragment extends Fragment implements LocationListener {
                         String mImage = item.getImmagine();
                         String mData= item.getDate();
                         String mId = item.getId();
-                        Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliEvento.class);
+                        Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
                         intent.putExtra("title", mTitolo);
                         intent.putExtra("description", mLuogo);
                         intent.putExtra("descrizione", mDescrizione);
@@ -442,7 +442,7 @@ public class SearchFragment extends Fragment implements LocationListener {
                 String mImage = item.getImmagine();
                 String mData= item.getDate();
                 String mId = item.getId();
-                Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliEvento.class);
+                Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
                 intent.putExtra("title", mTitolo);
                 intent.putExtra("description", mLuogo);
                 intent.putExtra("descrizione", mDescrizione);
@@ -694,7 +694,7 @@ public class SearchFragment extends Fragment implements LocationListener {
                 String mImage = item.getImmagine();
                 String mData= item.getDate();
                 String mId = item.getId();
-                Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliEvento.class);
+                Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
                 intent.putExtra("title", mTitolo);
                 intent.putExtra("description", mLuogo);
                 intent.putExtra("descrizione", mDescrizione);
@@ -768,7 +768,7 @@ public class SearchFragment extends Fragment implements LocationListener {
                         String mImage = item.getImmagine();
                         String mData= item.getDate();
                         String mId = item.getId();
-                        Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliEvento.class);
+                        Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
                         intent.putExtra("title", mTitolo);
                         intent.putExtra("description", mLuogo);
                         intent.putExtra("descrizione", mDescrizione);
@@ -836,7 +836,7 @@ public class SearchFragment extends Fragment implements LocationListener {
                 String mImage = item.getImmagine();
                 String mData = item.getDate();
                 String mId = item.getId();
-                Intent intent = new Intent(recyclerView2.getContext(), ActivityDettagliEvento.class);
+                Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
                 intent.putExtra("title", mTitolo);
                 intent.putExtra("description", mLuogo);
                 intent.putExtra("descrizione", mDescrizione);
@@ -864,7 +864,6 @@ public class SearchFragment extends Fragment implements LocationListener {
             dialogs.show();
 
         }*/
-
 
 
     }

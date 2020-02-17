@@ -236,7 +236,7 @@ public class AddEventFragment extends Fragment implements View.OnClickListener{
         if(view == scegliSfondo){
             CropImage.activity()
                     .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(432,180)
+                    .setAspectRatio(230,180)
                     .start(getContext(),this);
         }
 
