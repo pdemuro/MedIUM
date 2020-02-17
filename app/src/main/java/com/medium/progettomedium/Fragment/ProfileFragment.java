@@ -415,9 +415,9 @@ public class ProfileFragment extends Fragment {
                     //saved_fotos.setVisibility(View.GONE);
                 }
                 FirebaseUser photoUser= firebaseAuth.getCurrentUser();
-                if (photoUser.getPhotoUrl() != null) {
-                    Glide.with(getContext()).load(photoUser.getPhotoUrl()).into(image_profile);
-                }
+
+                Glide.with(getContext()).load(user.getImageUrl()).into(image_profile);
+
                 image_profile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -513,7 +513,11 @@ public class ProfileFragment extends Fragment {
 
                         FirebaseUser user2 = firebaseAuth.getCurrentUser();
                         if (nome.equals(user2.getDisplayName())) {
-                            user.setImageUrl(image_url);
+                            //user.setImageUrl(image_url);
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome);
+                            HashMap<String, Object> map1 = new HashMap<>();
+                            map1.put("imageUrl", ""+image_url);
+                            reference.updateChildren(map1);
                         }
                     }
                 }
@@ -523,20 +527,7 @@ public class ProfileFragment extends Fragment {
 
                 }
             });
-            user.updateProfile(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                        if (user.getPhotoUrl() != null) {
-                            Glide.with(getContext()).load(user.getPhotoUrl()).into(image_profile);
-
-                        }
-
-                    }
-                }
-            });
         }
     }
 
