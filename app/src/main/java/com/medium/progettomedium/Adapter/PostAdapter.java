@@ -339,9 +339,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
-                Glide.with(mContext).load(user.getImageUrl()).into(image_profile);
+                Glide.with(mContext.getApplicationContext()).load(user.getImageUrl()).into(image_profile);
                 username.setText(user.getNome());
                 publisher.setText(user.getNome());
+
             }
 
             @Override
