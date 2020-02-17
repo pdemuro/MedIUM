@@ -49,7 +49,7 @@ public class ActivityDettagliEvento extends AppCompatActivity {
 
 
 
-        String title = getIntent().getStringExtra("title");
+        final String title = getIntent().getStringExtra("title");
         String place = getIntent().getStringExtra("description");
         String description = getIntent().getStringExtra("descrizione");
         String image = getIntent().getStringExtra("image");
@@ -131,14 +131,12 @@ public class ActivityDettagliEvento extends AppCompatActivity {
 
             }
         });
-        final FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-        final String nome1= firebaseUser.getDisplayName().replaceAll("%20" ," ");
 
         prenota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                final FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+                final String nome1= firebaseUser.getDisplayName().replaceAll("%20" ," ");
                 databaseReference.child("UserID").child("Utenti").child(nome1).child("prenotazioni").addValueEventListener(new ValueEventListener() {
 
                     /**
@@ -153,17 +151,19 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                         // shake hands with each of them.'
                         int var = 0;
                         for (DataSnapshot child : children) {
-                            if(id.equals(child.getValue())) {
+                            String ciao=child.getKey();
+                            if(id.equals(ciao)) {
                                 var =1;
                             }
                         }
                         if(var == 1){
                             prenota.setEnabled(false);
 
-                            prenota.setText("In attesa");
-                            prenota.setBackgroundColor(Color.YELLOW);
                         }
                         else{
+
+                            final FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+                            final String nome1= firebaseUser.getDisplayName().replaceAll("%20" ," ");
                             AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDettagliEvento.this);
                             builder.setTitle("Conferma Prenotazione");
                             builder.setMessage("Vuoi confermare la prenotazione per questo evento?");
@@ -191,6 +191,14 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                             AlertDialog dialog = builder.create();
                             dialog.show();
 
+
+
+                                /*FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti")
+                                        .child(nome1).child("prenotazioni").child(evento.getId()).setValue(2);
+                                stato.setEnabled(false);
+
+                                stato.setText("In attesa");
+                                stato.setBackgroundColor(Color.YELLOW);*/
                         }
                     }
 
@@ -204,7 +212,6 @@ public class ActivityDettagliEvento extends AppCompatActivity {
             }
         });
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

@@ -35,6 +35,48 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/IconsFiltro"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/close"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_close"
+            tools:layout_editor_absoluteX="22dp"
+            tools:layout_editor_absoluteY="8dp">
+
+        </Button>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24dp"
+            android:background="@drawable/gradiusfiltri"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="Recente"
+            android:textSize="17dp"
+            android:id="@+id/nomeFiltro"
+            app:layout_constraintLeft_toRightOf="@+id/close"
+            tools:layout_editor_absoluteY="3dp"></TextView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -68,10 +110,13 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+
+                android:id="@+id/buttonQuestaSettimana">
 
                 <ImageView
-                    android:id="@+id/buttonQuestaSettimana"
+
+                    android:id="@+id/buttonQuestaSettimana2"
                     android:layout_width="35dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="5dp"
@@ -95,7 +140,7 @@
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/buttonQuestaSettimana" />
+                    app:layout_constraintTop_toBottomOf="@+id/buttonQuestaSettimana2" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -113,7 +158,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/buttonMenoDistante">
 
                 <TextView
                     android:id="@+id/textView3"
@@ -125,10 +171,10 @@
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/buttonMenoDistante" />
+                    app:layout_constraintTop_toBottomOf="@+id/buttonMenoDistante2" />
 
                 <ImageView
-                    android:id="@+id/buttonMenoDistante"
+                    android:id="@+id/buttonMenoDistante2"
                     android:layout_width="35dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="5dp"
@@ -157,10 +203,12 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+
+                android:id="@+id/buttonCalendario">
 
                 <ImageView
-                    android:id="@+id/buttonCalendario"
+                    android:id="@+id/buttonCalendario2"
                     android:layout_width="35dp"
                     android:layout_height="30dp"
                     android:layout_marginTop="5dp"
@@ -178,7 +226,7 @@
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/buttonCalendario" />
+                    app:layout_constraintTop_toBottomOf="@+id/buttonCalendario2" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -196,10 +244,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id="@+id/buttonMap">
 
                 <ImageView
-                    android:id="@+id/buttonMap"
+                    android:id="@+id/buttonMap2"
                     android:layout_width="35dp"
                     android:layout_height="30dp"
                     android:layout_marginStart="5dp"
@@ -219,7 +268,7 @@
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/buttonMap" />
+                    app:layout_constraintTop_toBottomOf="@+id/buttonMap2" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -229,7 +278,7 @@
         android:id="@+id/ll_calendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
+        android:layout_below="@+id/IconsFiltro"
         android:layout_margin="4dp"
         android:background="#343434"
         android:orientation="vertical"
