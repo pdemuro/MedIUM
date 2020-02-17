@@ -6,28 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".ActivityDettagliAmm">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/windowBackground">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_freccia"
+                    android:id="@+id/close"
+
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lista Utenti"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_toRightOf="@+id/close"></TextView>
+
+
+            </RelativeLayout>
+
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
     <LinearLayout
         android:id="@+id/last_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="-5dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginRight="-5dp"
         android:background="@drawable/button_black"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/bar" >
 
 
         <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
             android:id="@+id/prenotati"
-            android:hint="Lista prenotati"
-            android:textColorHint="@color/colorBlack"
             style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="1dp"
+            android:layout_weight="1"
             android:background="@color/ripple_material_light"
-            />
+            android:hint="Lista prenotati"
+            android:textColorHint="@color/colorBlack" />
+
         <Button
             android:id="@+id/accettati"
             style="?android:attr/buttonBarButtonStyle"
@@ -48,24 +90,16 @@
         android:id="@+id/elenco_richieste"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.103" />
+         app:layout_constraintTop_toBottomOf="@id/last_bar"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/elencoAccettati"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="541dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/last_bar"
-        app:layout_constraintVertical_bias="0.0" />
+
+        app:layout_constraintTop_toBottomOf="@id/last_bar"
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

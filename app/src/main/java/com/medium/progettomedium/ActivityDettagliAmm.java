@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -35,16 +36,25 @@ public class ActivityDettagliAmm extends AppCompatActivity {
      DatabaseReference databaseReference;
      AdaptAmm.OnItemClickListener itemClickListener;
      AdaptAmmAccettati.OnItemClickListener itemClickListener2;
+     ImageView close;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettagli_amm);
 
+        String title = getIntent().getStringExtra("title");
+        String place = getIntent().getStringExtra("description");
+        String description = getIntent().getStringExtra("descrizione");
+        String image = getIntent().getStringExtra("image");
+        String data1 = getIntent().getStringExtra("date");
+        final String id = getIntent().getStringExtra("id");
+
         recyclerView = findViewById(R.id.elenco_richieste);
 
         accettati=findViewById(R.id.accettati);
         prenotati=findViewById(R.id.prenotati);
+        close=findViewById(R.id.close);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -95,12 +105,13 @@ public class ActivityDettagliAmm extends AppCompatActivity {
 
             }
         });
-        String title = getIntent().getStringExtra("title");
-        String place = getIntent().getStringExtra("description");
-        String description = getIntent().getStringExtra("descrizione");
-        String image = getIntent().getStringExtra("image");
-        String data1 = getIntent().getStringExtra("date");
-        final String id = getIntent().getStringExtra("id");
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
 
 
     }
