@@ -62,60 +62,113 @@
         </androidx.appcompat.widget.Toolbar>
 </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-
-            android:layout_gravity="center"
             android:id="@+id/image_profile"
+            android:layout_width="80dp"
+
+            android:layout_height="80dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="4dp"
+
+
+            android:layout_marginBottom="10dp"
             android:background="@drawable/ic_add_utente"
-            android:layout_margin="10dp"/>
+            app:layout_constraintBottom_toTopOf="@+id/tv_change"
+            app:layout_constraintEnd_toEndOf="@+id/tv_change"
+            app:layout_constraintStart_toStartOf="@+id/tv_change"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_change"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="153dp"
+            android:layout_marginLeft="153dp"
+            android:layout_marginEnd="153dp"
+            android:layout_marginRight="153dp"
+            android:layout_marginBottom="20dp"
             android:text="Cambia foto"
-            android:layout_gravity="center"
-            android:id="@+id/tv_change"
             android:textColor="@color/colorPrimary"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/nomeU"
+            app:layout_constraintEnd_toEndOf="@+id/cognomeU"
+            app:layout_constraintStart_toStartOf="@+id/nomeU"
+            app:layout_constraintTop_toBottomOf="@+id/image_profile" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Nome"
             android:id="@+id/nomeU"
-            app:met_floatingLabel="normal"/>
+            style="@style/Base.Widget.AppCompat.EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="12dp"
+            android:hint="Nome"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_change"
+            app:met_floatingLabel="normal" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="Cognome"
             android:id="@+id/cognomeU"
-            app:met_floatingLabel="normal"/>
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Cognome"
+            app:layout_constraintEnd_toEndOf="@+id/nomeU"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/nomeU"
+            app:layout_constraintTop_toBottomOf="@+id/nomeU"
+            app:met_floatingLabel="normal" />
 
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
             android:id="@+id/email"
-            app:met_floatingLabel="normal"/>
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Email"
+            app:layout_constraintEnd_toEndOf="@+id/cognomeU"
+            app:layout_constraintStart_toStartOf="@+id/cognomeU"
+            app:layout_constraintTop_toBottomOf="@+id/cognomeU"
+            app:met_floatingLabel="normal" />
 
-       <!-- <com.rengwuxian.materialedittext.MaterialEditText
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Password"
+            app:layout_constraintEnd_toEndOf="@+id/email"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/email"
+            app:layout_constraintTop_toBottomOf="@+id/email"
+            app:met_floatingLabel="normal" />
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:id="@+id/password2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Conferma Password"
+            app:layout_constraintEnd_toEndOf="@+id/password"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/password"
+            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:met_floatingLabel="normal" />
+
+        <!-- <com.rengwuxian.materialedittext.MaterialEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Bio"
             android:id="@+id/bio"
             app:met_floatingLabel="normal"/> -->
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

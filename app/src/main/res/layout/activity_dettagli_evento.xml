@@ -80,9 +80,9 @@
             android:hint="Prenota ora"
             android:textColor="#ffc6dafc"
             android:textColorHint="@color/material_blue_500"
-            app:cornerRadius="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/cardView8"
+            app:layout_constraintStart_toStartOf="@+id/cardView8"
             app:layout_constraintTop_toBottomOf="@+id/cardView8" />
 
         <androidx.cardview.widget.CardView
@@ -155,6 +155,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="180dp"
+            android:animationCache="false"
+            android:clickable="false"
             app:cardCornerRadius="10dp"
             app:layout_constraintStart_toStartOf="@+id/cardView7"
             app:layout_constraintTop_toTopOf="@+id/cardView7">
