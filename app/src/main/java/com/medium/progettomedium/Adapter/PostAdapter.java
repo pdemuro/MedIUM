@@ -17,10 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-<<<<<<< Updated upstream
-=======
-import androidx.fragment.app.FragmentActivity;
->>>>>>> Stashed changes
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -35,21 +31,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.medium.progettomedium.ActivityPostDetail;
-<<<<<<< Updated upstream
 import com.medium.progettomedium.Fragment.HomeFragment;
 import com.medium.progettomedium.Fragment.ProfileFragment;
 import com.medium.progettomedium.MainActivity;
-=======
-import com.medium.progettomedium.Fragment.ProfileFragment;
->>>>>>> Stashed changes
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.medium.progettomedium.Model.Post;
 import com.medium.progettomedium.R;
 
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 import java.util.HashMap;
 import java.util.List;
 
@@ -94,7 +83,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
         publisherInfo(holder.image_profile, holder.username, holder.publisher, post.getPublisher());
         //isLiked(post.getPostid(), holder.like);
         //isSaved(post.getPostid(), holder.save);
-<<<<<<< Updated upstream
         //nrLikes(holder.likes, post.getPostid());
         //getCommetns(post.getPostid(), holder.comments);
 
@@ -125,12 +113,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
             }
         });
 */
-=======
-        nrLikes(holder.likes, post.getPostid());
-        getCommetns(post.getPostid(), holder.comments);
-
-
->>>>>>> Stashed changes
         holder.image_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,13 +120,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
                 editor.putString("profileid", post.getPublisher());
                 editor.apply();
 
-<<<<<<< Updated upstream
                 mContext.startActivity(new Intent(mContext, MainActivity.class));
                 /*((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ProfileFragment()).commit();*/
-=======
-                mContext.startActivity(new Intent(mContext, ActivityPostDetail.class));
->>>>>>> Stashed changes
             }
         });
 
@@ -154,15 +132,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
                 SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", MODE_PRIVATE).edit();
                 editor.putString("profileid", post.getPublisher());
                 editor.apply();
-<<<<<<< Updated upstream
                 mContext.startActivity(new Intent(mContext, MainActivity.class));
                 /*((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ProfileFragment()).commit();*/
-=======
-
-                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ProfileFragment()).commit();
->>>>>>> Stashed changes
             }
         });
 
@@ -173,7 +145,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
                 editor.putString("profileid", post.getPublisher());
                 editor.apply();
 
-<<<<<<< Updated upstream
                 mContext.startActivity(new Intent(mContext, MainActivity.class));
                 /*((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ProfileFragment()).commit();*/
@@ -200,21 +171,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
             }
         });
 */
-=======
-                ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ProfileFragment()).commit();
-            }
-        });
-//
-
->>>>>>> Stashed changes
         holder.post_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", MODE_PRIVATE).edit();
                 editor.putString("postid", post.getPostid());
                 editor.apply();
-<<<<<<< Updated upstream
                 mContext.startActivity(new Intent(mContext, ActivityPostDetail.class));
 
                 /*((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -272,13 +234,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
                 popupMenu.show();
             }
         });*/
-=======
-
-                mContext.startActivity(new Intent(mContext, ActivityPostDetail.class));
-            }
-        });
-
->>>>>>> Stashed changes
     }
 
     @Override
@@ -300,17 +255,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
             //like = itemView.findViewById(R.id.like);
             //comment = itemView.findViewById(R.id.comment);
             save = itemView.findViewById(R.id.save);
-<<<<<<< Updated upstream
             //likes = itemView.findViewById(R.id.likes);
             publisher = itemView.findViewById(R.id.publisher);
             description = itemView.findViewById(R.id.description);
             //comments = itemView.findViewById(R.id.comments);
-=======
-            likes = itemView.findViewById(R.id.likes);
-            publisher = itemView.findViewById(R.id.publisher);
-            description = itemView.findViewById(R.id.description);
-            comments = itemView.findViewById(R.id.comments);
->>>>>>> Stashed changes
             //more = itemView.findViewById(R.id.more);
         }
     }
@@ -351,7 +299,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
             }
         });
     }
-<<<<<<< Updated upstream
 
     /*private void nrLikes(final TextView likes, String postId){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes").child(postId);
@@ -395,56 +342,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
                 Glide.with(mContext).load(user.getImageUrl()).into(image_profile);
                 username.setText(user.getNome());
                 publisher.setText(user.getNome());
-=======
-    private void publisherInfo(final ImageView image_profile, final TextView username, final TextView publisher, final String userid){
-
-        DatabaseReference reference2 = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti");
-
-        reference2.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
-
-                String nomeutente="";
-                if(user.getId().equals(userid)){
-                    nomeutente=user.getNome()+" "+user.getCognome();
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                            .child("UserID").child("Utenti").child(nomeutente);
-
-                    reference.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
-                            Glide.with(mContext).load(user.getImageUrl()).into(image_profile);
-                            username.setText(user.getNome());
-                            String fullname = user.getNome()+" "+user.getCognome();
-                            publisher.setText(fullname);
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-
-    }
-
-    private void nrLikes(final TextView likes, String postId){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Likes").child(postId);
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                likes.setText(dataSnapshot.getChildrenCount()+" likes");
->>>>>>> Stashed changes
             }
 
             @Override
@@ -452,7 +349,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
 
             }
         });
-<<<<<<< Updated upstream
     }
 
    /* private void isLiked(final String postid, final ImageView imageView){
@@ -471,17 +367,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
                     imageView.setImageResource(R.drawable.ic_like);
                     imageView.setTag("like");
                 }
-=======
-
-    }
-
-    private void getCommetns(String postId, final TextView comments){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Comments").child(postId);
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                comments.setText("View All "+dataSnapshot.getChildrenCount()+" Comments");
->>>>>>> Stashed changes
             }
 
             @Override
@@ -491,7 +376,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
         });
     }
 
-<<<<<<< Updated upstream
     private void isSaved(final String postid, final ImageView imageView){
 
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -508,19 +392,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
                     imageView.setImageResource(R.drawable.ic_savee_black);
                     imageView.setTag("save");
                 }
-=======
-    /*private void publisherInfo(final ImageView image_profile, final TextView username, final TextView publisher, final String userid){
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                .child("Users").child(userid);
-
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                Glide.with(mContext).load(user.getImageurl()).into(image_profile);
-                username.setText(user.getUsername());
-                publisher.setText(user.getUsername());
->>>>>>> Stashed changes
             }
 
             @Override
@@ -528,14 +399,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
 
             }
         });
-<<<<<<< Updated upstream
     }
 */
-=======
-    }*/
-
-
->>>>>>> Stashed changes
     private void editPost(final String postid){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
         alertDialog.setTitle("Edit Post");

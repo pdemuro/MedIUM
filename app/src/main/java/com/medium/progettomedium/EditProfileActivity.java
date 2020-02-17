@@ -205,7 +205,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome1);
                         HashMap<String, Object> map1 = new HashMap<>();
-                        map1.put("imageurl", ""+miUrlOk);
+                        map1.put("imageUrl", ""+miUrlOk);
                         reference.updateChildren(map1);
 
                         pd.dismiss();
