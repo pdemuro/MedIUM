@@ -24,7 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.medium.progettomedium.ActivityDettagliAmm;
 import com.medium.progettomedium.ActivityDettagliEvento;
+import com.medium.progettomedium.ActivityModificaEvento;
 import com.medium.progettomedium.Adapter.AdaptEvento;
 import com.medium.progettomedium.Adapter.MyFotosAdapter;
 import com.medium.progettomedium.EditProfileActivity;
@@ -91,8 +93,11 @@ public class ProfileFragment extends Fragment {
     private List<Post> postList;
     ImageButton my_fotos, saved_fotos;
     TextView logout;
-
+    private DatabaseReference databaseReferenceutente;
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference2;
+    private DatabaseReference databaseReference3;
+
     private AdaptEvento adapter;
     private RecyclerView listaEventiView;
 
@@ -140,11 +145,63 @@ public class ProfileFragment extends Fragment {
         DatabaseEvento.date_collection_arr = new ArrayList<DatabaseEvento>();
 
         userInfo();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        final String nome1= user.getDisplayName().replaceAll("%20" ," ");
+        databaseReferenceutente = FirebaseDatabase.getInstance().getReference();
+        databaseReferenceutente.child("UserID").child("Utenti").child(nome1).child("category").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.getValue().equals("Utente")){
+                    myFotos();
+                    postEvent();
+                    mySaves();
+                    my_fotos.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            recyclerView.setVisibility(View.VISIBLE);
+                            listaEventiView.setVisibility(View.GONE);
+                            my_fotos.setBackgroundColor(Color.parseColor("#20444444"));
+                            saved_fotos.setBackgroundColor(0xDCDCDC);
+                            myFotos();
+                        }
+                    });
+
+                    saved_fotos.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            recyclerView.setVisibility(View.GONE);
+                            listaEventiView.setVisibility(View.VISIBLE);
+                            saved_fotos.setBackgroundColor(Color.parseColor("#20444444"));
+                            my_fotos.setBackgroundColor(0xDCDCDC);
+                            postEvent();
+                        }
+                    });
+                }
+                else{
+                    postEvent();
+                    listaEventiView.setVisibility(View.VISIBLE);
+                    my_fotos.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
+
+
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+
+
+        });
+
+
         //getFollowers();
         //getNrPosts();
-        myFotos();
-        postEvent();
-        mySaves();
 
 
         edit_profile.setOnClickListener(new View.OnClickListener() {
@@ -162,27 +219,7 @@ public class ProfileFragment extends Fragment {
 
 
 
-        my_fotos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recyclerView.setVisibility(View.VISIBLE);
-                listaEventiView.setVisibility(View.GONE);
-                my_fotos.setBackgroundColor(Color.parseColor("#20444444"));
-                saved_fotos.setBackgroundColor(0xDCDCDC);
-                myFotos();
-            }
-        });
 
-        saved_fotos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recyclerView.setVisibility(View.GONE);
-                listaEventiView.setVisibility(View.VISIBLE);
-                saved_fotos.setBackgroundColor(Color.parseColor("#20444444"));
-                my_fotos.setBackgroundColor(0xDCDCDC);
-                postEvent();
-            }
-        });
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
@@ -279,7 +316,6 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-
     public void loadData(DataSnapshot dataSnapshot) {
         // get all of the children at this level.
 
@@ -290,9 +326,10 @@ public class ProfileFragment extends Fragment {
         final FirebaseUser user = firebaseAuth.getCurrentUser();
         final String nome1= user.getDisplayName().replaceAll("%20" ," ");
         databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference2 = FirebaseDatabase.getInstance().getReference();
+        databaseReference3 = FirebaseDatabase.getInstance().getReference();
 
-
-        databaseReference.child("UserID").child("Utenti").child(nome1).child("prenotazioni").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("UserID").child("Utenti").child(nome1).addValueEventListener(new ValueEventListener() {
 
             /**
              * This method will be invoked any time the data on the database changes.
@@ -302,79 +339,139 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // get all of the children at this level.
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                // shake hands with each of them.'
-                int var = 0;
-                for (DataSnapshot child : children) {
+                DatabaseUtente databaseUtente = dataSnapshot.getValue(DatabaseUtente.class);
+                String tipo = databaseUtente.getCategory();
+                if(tipo.equals("Utente")){
+                    databaseReference2.child("UserID").child("Utenti").child(nome1).child("prenotazioni").addValueEventListener(new ValueEventListener() {
 
-                    if (doc.getId().equals(child.getKey())){
-                        var = 1;
-                    }
+                        /**
+                         * This method will be invoked any time the data on the database changes.
+                         * Additionally, it will be invoked as soon as we connect the listener, so that we can get an initial snapshot of the data on the database.
+                         *
+                         * @param dataSnapshot
+                         */
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // get all of the children at this level.
+                            DatabaseUtente databaseUtente = dataSnapshot.getValue(DatabaseUtente.class);
+                            String tipo = databaseUtente.getCategory();
+                            Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                            // shake hands with each of them.'
+                            int var = 0;
+                            for (DataSnapshot child : children) {
+
+                                if (doc.getId().equals(child.getKey())) {
+                                    var = 1;
+                                }
+
+                            }
+                            if (var == 1) {
+                                DatabaseEvento.date_collection_arr.add(eve);
+                                eventi.add(doc);
+                            }
+                            adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+
+                            //listaEventiView.setAdapter(adapter);
+                            listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(DatabaseEvento item) {
+
+                                    String mTitolo = item.getTitolo();
+                                    String mLuogo = item.getLuogo();
+                                    String mDescrizione = item.getDescrizione();
+                                    String mImage = item.getImmagine();
+                                    String mData = item.getDate();
+                                    String mId = item.getId();
+                                    Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliEvento.class);
+                                    intent.putExtra("title", mTitolo);
+                                    intent.putExtra("description", mLuogo);
+                                    intent.putExtra("descrizione", mDescrizione);
+                                    intent.putExtra("image", mImage);
+                                    intent.putExtra("date", mData);
+                                    intent.putExtra("id", mId);
+                                    startActivity(intent);
+                                }
+
+
+                            }));
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }else{
+                    databaseReference3.child("UserID").child("Utenti").child(nome1).child("Eventi Creati").addValueEventListener(new ValueEventListener() {
+
+                        /**
+                         * This method will be invoked any time the data on the database changes.
+                         * Additionally, it will be invoked as soon as we connect the listener, so that we can get an initial snapshot of the data on the database.
+                         *
+                         * @param dataSnapshot
+                         */
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            // get all of the children at this level.
+                            DatabaseUtente databaseUtente = dataSnapshot.getValue(DatabaseUtente.class);
+                            String tipo = databaseUtente.getCategory();
+                            Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                            // shake hands with each of them.'
+                            int var = 0;
+                            for (DataSnapshot child : children) {
+
+                                if (doc.getId().equals(child.getKey())) {
+                                    var = 1;
+                                }
+
+                            }
+                            if (var == 1) {
+                                DatabaseEvento.date_collection_arr.add(eve);
+                                eventi.add(doc);
+                            }
+                            adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+
+                            //listaEventiView.setAdapter(adapter);
+                            listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(DatabaseEvento item) {
+
+                                    String mTitolo = item.getTitolo();
+                                    String mLuogo = item.getLuogo();
+                                    String mDescrizione = item.getDescrizione();
+                                    String mImage = item.getImmagine();
+                                    String mData = item.getDate();
+                                    String mId = item.getId();
+                                    Intent intent = new Intent(recyclerView.getContext(), ActivityModificaEvento.class);
+                                    intent.putExtra("title", mTitolo);
+                                    intent.putExtra("description", mLuogo);
+                                    intent.putExtra("descrizione", mDescrizione);
+                                    intent.putExtra("image", mImage);
+                                    intent.putExtra("date", mData);
+                                    intent.putExtra("id", mId);
+                                    startActivity(intent);
+                                }
+
+
+                            }));
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
 
                 }
-                if(var == 1) {
-                    DatabaseEvento.date_collection_arr.add(eve);
-                    eventi.add(doc);
-                }
-                adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
-
-                //listaEventiView.setAdapter(adapter);
-                listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
-                    @Override public void onItemClick(DatabaseEvento item) {
-
-                        String mTitolo = item.getTitolo();
-                        String mLuogo = item.getLuogo();
-                        String mDescrizione = item.getDescrizione();
-                        String mImage = item.getImmagine();
-                        String mData= item.getDate();
-                        String mId = item.getId();
-                        Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliEvento.class);
-                        intent.putExtra("title", mTitolo);
-                        intent.putExtra("description", mLuogo);
-                        intent.putExtra("descrizione", mDescrizione);
-                        intent.putExtra("image", mImage);
-                        intent.putExtra("date", mData);
-                        intent.putExtra("id",mId);
-                        startActivity(intent);
-                    }
-
-
-                }));
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
 
-
         });
-
-
-        adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
-
-        //listaEventiView.setAdapter(adapter);
-        listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
-            @Override public void onItemClick(DatabaseEvento item) {
-                String mTitolo = item.getTitolo();
-                String mLuogo = item.getLuogo();
-                String mDescrizione = item.getDescrizione();
-                String mImage = item.getImmagine();
-                String mData= item.getDate();
-                String mId = item.getId();
-                Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliEvento.class);
-                intent.putExtra("title", mTitolo);
-                intent.putExtra("description", mLuogo);
-                intent.putExtra("descrizione", mDescrizione);
-                intent.putExtra("image", mImage);
-                intent.putExtra("date", mData);
-                intent.putExtra("id",mId);
-                startActivity(intent);
-            }
-
-
-        }));
 
         eventi.clear();
     }
@@ -516,11 +613,10 @@ public class ProfileFragment extends Fragment {
                         FirebaseUser user2 = firebaseAuth.getCurrentUser();
                         if (nome.equals(user2.getDisplayName())) {
                             //user.setImageUrl(image_url);
-                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome);
-                            Map<String, Object> hopperUpdates = new HashMap<>();
-                            hopperUpdates.put("imageUrl", image_url);
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome).child("imageUrl");
 
-                            reference.updateChildren(hopperUpdates);
+
+                            reference.setValue(image_url);
 
                             //getContext().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                                    // new ProfileFragment()).commit();

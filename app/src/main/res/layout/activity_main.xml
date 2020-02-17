@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/bottom"
         android:layout_alignParentBottom="true"
-
+        android:gravity="bottom"
         >
 
 
