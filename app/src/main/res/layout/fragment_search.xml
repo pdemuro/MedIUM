@@ -39,15 +39,15 @@
 
         android:id="@+id/IconsFiltro"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/IconsId"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginEnd="0dp"
+        android:layout_marginTop="45dp"
         android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
         android:orientation="horizontal"
         android:visibility="gone">
 
@@ -55,24 +55,32 @@
             android:id="@+id/close"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:background="@drawable/ic_close"
-            tools:layout_editor_absoluteX="22dp"
-            tools:layout_editor_absoluteY="8dp">
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         </Button>
 
         <TextView
+            android:id="@+id/nomeFiltro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="24dp"
-            android:background="@drawable/gradiusfiltri"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/gradius_rifiutato"
             android:gravity="center"
             android:padding="6dp"
             android:text="Recente"
-            android:textSize="17dp"
-            android:id="@+id/nomeFiltro"
-            app:layout_constraintLeft_toRightOf="@+id/close"
-            tools:layout_editor_absoluteY="3dp"></TextView>
+            android:textColor="@color/material_red_A200"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/close"
+            app:layout_constraintTop_toTopOf="parent"></TextView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -109,10 +117,10 @@
             app:layout_constraintVertical_bias="0.0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/buttonQuestaSettimana"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
 
-                android:id="@+id/buttonQuestaSettimana">
+                android:layout_height="match_parent">
 
                 <ImageView
 
@@ -157,9 +165,9 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/buttonMenoDistante"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/buttonMenoDistante">
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/textView3"
@@ -202,10 +210,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/buttonCalendario"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
 
-                android:id="@+id/buttonCalendario">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/buttonCalendario2"
@@ -243,9 +251,9 @@
             app:layout_constraintVertical_bias="0.0">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/buttonMap"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/buttonMap">
+                android:layout_height="match_parent">
 
                 <ImageView
                     android:id="@+id/buttonMap2"
