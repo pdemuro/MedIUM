@@ -86,8 +86,8 @@ public class EditProfileActivity extends AppCompatActivity {
                 cognome.setText(user.getCognome());
                 email.setText(user.getMail());
                 //bio.setText(user.getCategory());
-                if (photoUser.getPhotoUrl() != null) {
-                    Glide.with(getApplicationContext()).load(photoUser.getPhotoUrl()).into(image_profile);
+                if (user.getImageUrl() != null) {
+                    Glide.with(EditProfileActivity.this).load(user.getImageUrl()).into(image_profile);
 
                 }
                 image_profile.setOnClickListener(new View.OnClickListener() {
@@ -209,6 +209,10 @@ public class EditProfileActivity extends AppCompatActivity {
                         reference.updateChildren(map1);
 
                         pd.dismiss();
+                        String id = reference.child("id").toString();
+                        Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                        intent.putExtra("profileid",id);
+                        startActivity(intent);
 
                     } else {
                         Toast.makeText(EditProfileActivity.this, "Failed", Toast.LENGTH_SHORT).show();
@@ -236,6 +240,7 @@ public class EditProfileActivity extends AppCompatActivity {
             mImageUri = result.getUri();
 
             uploadImage();
+
 
         } else {
             Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();

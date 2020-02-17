@@ -40,7 +40,7 @@ public class ActivityPostDetail extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PostAdapter postAdapter;
     private List<Post> postList;
-    private MyFotosAdapter adapter;
+private PostAdapter adapter;
     private ArrayList<Post> posts = new ArrayList<Post>();
     private RecyclerView listaEventiView;
     DatabaseReference mRef;
@@ -61,7 +61,9 @@ public class ActivityPostDetail extends AppCompatActivity {
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         listaEventiView.setLayoutManager(linearLayoutManager);
-
+        postList = new ArrayList<Post>();
+        postAdapter = new PostAdapter(ActivityPostDetail.this, postList);
+        listaEventiView.setAdapter(postAdapter);
 
 
 
@@ -71,12 +73,7 @@ public class ActivityPostDetail extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-
-        postList = new ArrayList<>();
-        postAdapter = new PostAdapter(ActivityPostDetail.this, postList);
-        listaEventiView.setAdapter(postAdapter);
-
-        readPost();
+       readPost();
 
     }
 
@@ -89,7 +86,7 @@ public class ActivityPostDetail extends AppCompatActivity {
                 postList.clear();
                 Post post = dataSnapshot.getValue(Post.class);
                 postList.add(post);
-
+                
                 postAdapter.notifyDataSetChanged();
             }
 

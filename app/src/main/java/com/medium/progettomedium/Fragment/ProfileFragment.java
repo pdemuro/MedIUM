@@ -29,6 +29,7 @@ import com.medium.progettomedium.Adapter.AdaptEvento;
 import com.medium.progettomedium.Adapter.MyFotosAdapter;
 import com.medium.progettomedium.EditProfileActivity;
 import com.medium.progettomedium.LoginActivity;
+import com.medium.progettomedium.MainActivity;
 import com.medium.progettomedium.MapActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
@@ -55,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
@@ -515,9 +517,16 @@ public class ProfileFragment extends Fragment {
                         if (nome.equals(user2.getDisplayName())) {
                             //user.setImageUrl(image_url);
                             DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome);
-                            HashMap<String, Object> map1 = new HashMap<>();
-                            map1.put("imageUrl", ""+image_url);
-                            reference.updateChildren(map1);
+                            Map<String, Object> hopperUpdates = new HashMap<>();
+                            hopperUpdates.put("imageUrl", image_url);
+
+                            reference.updateChildren(hopperUpdates);
+
+                            //getContext().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                   // new ProfileFragment()).commit();
+                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            intent.putExtra("profileid",user.getId());
+                            startActivity(intent);
                         }
                     }
                 }

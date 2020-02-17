@@ -99,8 +99,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
                 }
             }
         });
-
-        holder.save.setOnClickListener(new View.OnClickListener() {
+holder.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (holder.save.getTag().equals("save")){
@@ -183,8 +182,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
                         new PostDetailFragment()).commit();*/
             }
         });
-
-     /*   holder.likes.setOnClickListener(new View.OnClickListener() {
+/*   holder.likes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, FollowersActivity.class);
@@ -265,7 +263,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
 
     private void addNotification(String userid, String postid){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(userid);
-
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("userid", firebaseUser.getUid());
         hashMap.put("text", "liked your post");
@@ -352,56 +349,55 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
         });
     }
 
-   /* private void isLiked(final String postid, final ImageView imageView){
+    /* private void isLiked(final String postid, final ImageView imageView){
 
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+ DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                 .child("Likes").child(postid);
+         reference.addValueEventListener(new ValueEventListener() {
+             @Override
+             public void onDataChange(DataSnapshot dataSnapshot) {
+                 if (dataSnapshot.child(firebaseUser.getUid()).exists()){
+                     imageView.setImageResource(R.drawable.ic_liked);
+                     imageView.setTag("liked");
+                 } else{
+                     imageView.setImageResource(R.drawable.ic_like);
+                     imageView.setTag("like");
+                 }
+             }
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                .child("Likes").child(postid);
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(firebaseUser.getUid()).exists()){
-                    imageView.setImageResource(R.drawable.ic_liked);
-                    imageView.setTag("liked");
-                } else{
-                    imageView.setImageResource(R.drawable.ic_like);
-                    imageView.setTag("like");
-                }
-            }
+             @Override
+             public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+             }
+         });
+     }
 
-            }
-        });
-    }
+     private void isSaved(final String postid, final ImageView imageView){
 
-    private void isSaved(final String postid, final ImageView imageView){
+         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                 .child("Saves").child(firebaseUser.getUid());
+         reference.addValueEventListener(new ValueEventListener() {
+             @Override
+             public void onDataChange(DataSnapshot dataSnapshot) {
+                 if (dataSnapshot.child(postid).exists()){
+                     imageView.setImageResource(R.drawable.ic_save_black);
+                     imageView.setTag("saved");
+                 } else{
+                     imageView.setImageResource(R.drawable.ic_savee_black);
+                     imageView.setTag("save");
+                 }
+             }
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                .child("Saves").child(firebaseUser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(postid).exists()){
-                    imageView.setImageResource(R.drawable.ic_save_black);
-                    imageView.setTag("saved");
-                } else{
-                    imageView.setImageResource(R.drawable.ic_savee_black);
-                    imageView.setTag("save");
-                }
-            }
+             @Override
+             public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-*/
+             }
+         });
+     }
+ */
     private void editPost(final String postid){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
         alertDialog.setTitle("Edit Post");
