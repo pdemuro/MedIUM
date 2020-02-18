@@ -72,7 +72,7 @@
 
             <ImageView
                 android:id="@+id/immagine"
-                android:layout_width="170dp"
+                android:layout_width="150dp"
                 android:layout_height="0dp"
                 android:background="#515d7fd3"
                 android:scaleType="fitXY"
@@ -92,6 +92,7 @@
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/immagine" />
+
             <Button
                 android:id="@+id/rifiuta"
                 android:layout_width="wrap_content"
@@ -103,6 +104,8 @@
                 android:textColor="@color/material_blue_A200"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/accetta" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

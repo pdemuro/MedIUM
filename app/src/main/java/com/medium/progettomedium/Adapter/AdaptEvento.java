@@ -279,7 +279,20 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                 @Override
                 public void onClick(View v) {
 
-                    context.startActivity(new Intent(context, ActivityModificaEvento.class));
+                    String mTitolo = evento.getTitolo();
+                    String mLuogo = evento.getLuogo();
+                    String mDescrizione = evento.getDescrizione();
+                    String mImage = evento.getImmagine();
+                    String mData = evento.getDate();
+                    String mId = evento.getId();
+                    Intent intent = new Intent(context, ActivityModificaEvento.class);
+                    intent.putExtra("title", mTitolo);
+                    intent.putExtra("description", mLuogo);
+                    intent.putExtra("descrizione", mDescrizione);
+                    intent.putExtra("image", mImage);
+                    intent.putExtra("date", mData);
+                    intent.putExtra("id", mId);
+                    context.startActivity(intent);
 
 
                 }

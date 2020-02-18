@@ -17,6 +17,7 @@ public class DatabaseUtente {
     public String residenza;
     public String indirizzo;
     public String cap;
+    public String descrizione;
 
 
 
@@ -25,13 +26,14 @@ public class DatabaseUtente {
     }
 
     public static ArrayList<DatabaseUtente> date_collection_arr;
-    public DatabaseUtente(String nome, String cognome, String mail,String id, String category,String imageUrl) {
+    public DatabaseUtente(String nome, String cognome, String mail,String id, String category,String imageUrl,String descrizione) {
         this.nome = nome;
         this.cognome = cognome;
         this.mail = mail;
         this.id=id;
         this.category = category;
         this.imageUrl =imageUrl;
+        this.descrizione=descrizione;
     }
 
     public DatabaseUtente(String nome,String cognome, String mail, String id, String category, String phone, String data, String luogo, String residenza, String indirizzo, String cap,String imageUrl) {
@@ -49,6 +51,22 @@ public class DatabaseUtente {
 
         this.imageUrl =imageUrl;
 
+    }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
+    public void setDescrizione(String descrizione) {
+        this.descrizione = descrizione;
+    }
+
+    public static ArrayList<DatabaseUtente> getDate_collection_arr() {
+        return date_collection_arr;
+    }
+
+    public static void setDate_collection_arr(ArrayList<DatabaseUtente> date_collection_arr) {
+        DatabaseUtente.date_collection_arr = date_collection_arr;
     }
 
     public String getNome() {
