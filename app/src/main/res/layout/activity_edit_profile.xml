@@ -78,7 +78,7 @@
 
 
             android:layout_marginBottom="10dp"
-            android:background="@drawable/ic_add_utente"
+
             app:layout_constraintBottom_toTopOf="@+id/tv_change"
             app:layout_constraintEnd_toEndOf="@+id/tv_change"
             app:layout_constraintStart_toStartOf="@+id/tv_change"
@@ -138,36 +138,17 @@
             app:layout_constraintTop_toBottomOf="@+id/cognomeU"
             app:met_floatingLabel="normal" />
 
+
         <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Password"
+            android:hint="Descrizione"
+            android:id="@+id/bio"
             app:layout_constraintEnd_toEndOf="@+id/email"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/email"
             app:layout_constraintTop_toBottomOf="@+id/email"
-            app:met_floatingLabel="normal" />
 
-        <com.rengwuxian.materialedittext.MaterialEditText
-            android:id="@+id/password2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Conferma Password"
-            app:layout_constraintEnd_toEndOf="@+id/password"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/password"
-            app:layout_constraintTop_toBottomOf="@+id/password"
-            app:met_floatingLabel="normal" />
-
-        <!-- <com.rengwuxian.materialedittext.MaterialEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Bio"
-            android:id="@+id/bio"
-            app:met_floatingLabel="normal"/> -->
+            app:met_floatingLabel="normal"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

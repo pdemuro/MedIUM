@@ -66,7 +66,7 @@ public class EditProfileActivity extends AppCompatActivity {
         nomeU = findViewById(R.id.nomeU);
         cognome = findViewById(R.id.cognomeU);
         email = findViewById(R.id.email);
-        //bio = findViewById(R.id.bio);
+        bio = findViewById(R.id.bio);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         firebaseAuth=FirebaseAuth.getInstance();
@@ -85,7 +85,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 nomeU.setText(user.getNome());
                 cognome.setText(user.getCognome());
                 email.setText(user.getMail());
-                //bio.setText(user.getCategory());
+                bio.setText(user.getDescrizione());
                 if (user.getImageUrl() != null) {
                     Glide.with(EditProfileActivity.this).load(user.getImageUrl()).into(image_profile);
 
@@ -120,7 +120,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateProfile(nomeU.getText().toString(),cognome.getText().toString(),
-                        email.getText().toString());
+                        email.getText().toString(),bio.getText().toString());
             }
 
 
@@ -147,7 +147,7 @@ public class EditProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void updateProfile(String nomeU, String cognome, String email){
+    private void updateProfile(String nomeU, String cognome, String email,String bio){
         FirebaseUser nome = firebaseAuth.getCurrentUser();
         String nome1= nome.getDisplayName().replaceAll("%20" ," ");
 
@@ -157,7 +157,7 @@ public class EditProfileActivity extends AppCompatActivity {
         map.put("nome", nomeU);
         map.put("cognome", cognome);
         map.put("mail", email);
-       // map.put("bio", bio);
+        map.put("descrizione", bio);
 
         reference.updateChildren(map);
 
