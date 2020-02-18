@@ -115,6 +115,19 @@
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/immagine" />
+            <Button
+                android:id="@+id/modifica"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/gradius_image"
+                android:text="Modifica"
+                android:textColor="@color/material_blue_A200"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone"
+                app:layout_constraintStart_toEndOf="@+id/immagine" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

@@ -29,7 +29,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Adapter.AdaptAmmAccettati"></activity>
+        <activity android:name=".ActivityModificaEvento"></activity>
+        <activity android:name=".Adapter.AdaptAmmAccettati" />
         <activity android:name=".ActivityDettagliAmm" />
         <activity android:name=".AddPostActivity" />
 
