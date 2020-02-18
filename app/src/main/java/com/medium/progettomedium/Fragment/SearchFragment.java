@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.FloatMath;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ import com.medium.progettomedium.ActivityDettagliEvento;
 import com.medium.progettomedium.Adapter.AdaptCalendario;
 import com.medium.progettomedium.Adapter.AdaptEvento;
 import com.medium.progettomedium.Adapter.UserAdapter;
+import com.medium.progettomedium.GPSTracker;
 import com.medium.progettomedium.MapActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
@@ -67,12 +69,14 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 public class SearchFragment extends Fragment implements LocationListener {
 
-    private RecyclerView recyclerView,recyclerView2;
+    private RecyclerView recyclerView, recyclerView2;
     private Toolbar toolbar;
-    private ConstraintLayout icone,iconeFiltro;
+    private ConstraintLayout icone, iconeFiltro;
     private AdaptEvento eventAdapter;
     private List<DatabaseEvento> eventList;
     private List<DatabaseUtente> userList;
@@ -82,11 +86,11 @@ public class SearchFragment extends Fragment implements LocationListener {
     private AdaptEvento.OnItemClickListener itemClickListener;
     DatabaseReference mRef;
     private DatabaseReference databaseReference;
-    ConstraintLayout menoDistante,calendario,mappa,questaSettimana;
+    ConstraintLayout menoDistante, calendario, mappa, questaSettimana;
     public AdaptCalendario adaptCalendario;
     EditText search_bar;
-    ImageButton previous ;
-    TextView testo_mese,nomeFiltro,testoFiltroAttivo,menoDista;
+    ImageButton previous;
+    TextView testo_mese, nomeFiltro, testoFiltroAttivo, menoDista;
     ImageButton next;
     LinearLayout layoutCalendario;
     RelativeLayout giorni;
@@ -97,7 +101,11 @@ public class SearchFragment extends Fragment implements LocationListener {
     public Double tvLongi;
     public Double tvLati;
     LocationManager locationManager;
-    public int var=0;
+    public int var = 0;
+    Button btnShowLocation;
+
+    // GPSTracker class
+    GPSTracker gps;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReferenceutente;
     private DatabaseReference getDatabaseReferencevento;
@@ -120,8 +128,6 @@ public class SearchFragment extends Fragment implements LocationListener {
         nomeFiltro = view.findViewById(R.id.nomeFiltro);
 
 
-
-
         userList = new ArrayList<>();
 
         recyclerView.setAdapter(eventAdapter);
@@ -134,10 +140,10 @@ public class SearchFragment extends Fragment implements LocationListener {
         icone = view.findViewById(R.id.IconsId);
         //filtroAttivo=view.findViewById(R.id.filtroAttivo);
         //testoFiltroAttivo=view.findViewById(R.id.textFiltroAttivo);
-        testo_mese= view.findViewById(R.id.tv_month);
+        testo_mese = view.findViewById(R.id.tv_month);
         previous = (ImageButton) view.findViewById(R.id.ib_prev);
-        layoutCalendario =  view.findViewById(R.id.ll_calendar);
-        giorni =  view.findViewById(R.id.giorni);
+        layoutCalendario = view.findViewById(R.id.ll_calendar);
+        giorni = view.findViewById(R.id.giorni);
         gridview = (GridView) view.findViewById(R.id.gv_calendar);
         next = (ImageButton) view.findViewById(R.id.Ib_next);
         //readUsers();
@@ -183,9 +189,6 @@ public class SearchFragment extends Fragment implements LocationListener {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         eventi = new ArrayList<DatabaseEvento>();
-
-
-
 
 
         FirebaseMessaging.getInstance().subscribeToTopic("MyTopic");
@@ -239,7 +242,7 @@ public class SearchFragment extends Fragment implements LocationListener {
         mappa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(CheckPermission()) {
+                if (CheckPermission()) {
 
                     icone.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
@@ -283,9 +286,24 @@ public class SearchFragment extends Fragment implements LocationListener {
                 iconeFiltro.setVisibility(View.VISIBLE);
                 icone.setVisibility(View.INVISIBLE);
                 nomeFiltro.setText("Vicino a te");
-                if(CheckPermission()) {
-                    compare(tvLati, tvLongi, eventi);
-                    var = 0;
+
+                // Create class object
+                gps = new GPSTracker(getContext());
+
+                // Check if GPS enabled
+                if (gps.canGetLocation()) {
+
+                    final double latitudePos = gps.getLatitude();
+                    final double longitudePos = gps.getLongitude();
+                    compare(tvLongi, tvLati, eventi);
+                    var=0;
+                    // \n is for new line
+                   // Toast.makeText(getContext(), "Your Location is - \nLat: " + latitudePos + "\nLong: " + longitudePos, Toast.LENGTH_LONG).show();
+                } else {
+                    // Can't get location.
+                    // GPS or network is not enabled.
+                    // Ask user to enable GPS/network in settings.
+                    gps.showSettingsAlert();
                 }
             }
         });
@@ -306,12 +324,12 @@ public class SearchFragment extends Fragment implements LocationListener {
         ValueEventListener firebaseSearchQuery = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChildren()){
+                if (dataSnapshot.hasChildren()) {
                     eventi.clear();
-                    for(DataSnapshot dss : dataSnapshot.getChildren()){
+                    for (DataSnapshot dss : dataSnapshot.getChildren()) {
                         String titolo = dss.child("titolo").getValue(String.class);
                         String luogo = dss.child("luogo").getValue(String.class);
-                        if(luogo.contains(query) || titolo.contains(query)) {
+                        if (luogo.contains(query) || titolo.contains(query)) {
                             final DatabaseEvento databaseEvento = dss.getValue(DatabaseEvento.class);
                             eventi.add(databaseEvento);
                         }
@@ -322,14 +340,15 @@ public class SearchFragment extends Fragment implements LocationListener {
                 //listaEventiView.setAdapter(adapter);
                 recyclerView2.setVisibility(View.GONE);
                 recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
-                    @Override public void onItemClick(DatabaseEvento item) {
+                    @Override
+                    public void onItemClick(DatabaseEvento item) {
 
 
                         String mTitolo = item.getTitolo();
                         String mLuogo = item.getLuogo();
                         String mDescrizione = item.getDescrizione();
                         String mImage = item.getImmagine();
-                        String mData= item.getDate();
+                        String mData = item.getDate();
                         String mId = item.getId();
                         Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
                         intent.putExtra("title", mTitolo);
@@ -337,7 +356,7 @@ public class SearchFragment extends Fragment implements LocationListener {
                         intent.putExtra("descrizione", mDescrizione);
                         intent.putExtra("image", mImage);
                         intent.putExtra("date", mData);
-                        intent.putExtra("id",mId);
+                        intent.putExtra("id", mId);
                         startActivity(intent);
                     }
 
@@ -362,13 +381,13 @@ public class SearchFragment extends Fragment implements LocationListener {
 
         Query query = FirebaseDatabase.getInstance().getReference("UserID").child("Utenti").orderByChild("username")
                 .startAt(s)
-                .endAt(s+"\uf8ff");
+                .endAt(s + "\uf8ff");
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     DatabaseUtente user = snapshot.getValue(DatabaseUtente.class);
                     userList.add(user);
                 }
@@ -420,12 +439,12 @@ public class SearchFragment extends Fragment implements LocationListener {
         final DatabaseEvento doc = dataSnapshot.getValue(DatabaseEvento.class);
         final DatabaseEvento eve = dataSnapshot.getValue(DatabaseEvento.class);
 
-        for(DatabaseEvento eventi: eventi){
-            if(eventi.getTitolo().equals(doc.getTitolo())){
+        for (DatabaseEvento eventi : eventi) {
+            if (eventi.getTitolo().equals(doc.getTitolo())) {
                 flag = 1;
             }
         }
-        if(flag == 0) {
+        if (flag == 0) {
             DatabaseEvento.date_collection_arr.add(eve);
             eventi.add(doc);
         }
@@ -433,14 +452,15 @@ public class SearchFragment extends Fragment implements LocationListener {
 
         //listaEventiView.setAdapter(adapter);
         recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
-            @Override public void onItemClick(DatabaseEvento item) {
+            @Override
+            public void onItemClick(DatabaseEvento item) {
 
 
                 String mTitolo = item.getTitolo();
                 String mLuogo = item.getLuogo();
                 String mDescrizione = item.getDescrizione();
                 String mImage = item.getImmagine();
-                String mData= item.getDate();
+                String mData = item.getDate();
                 String mId = item.getId();
                 Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
                 intent.putExtra("title", mTitolo);
@@ -448,13 +468,14 @@ public class SearchFragment extends Fragment implements LocationListener {
                 intent.putExtra("descrizione", mDescrizione);
                 intent.putExtra("image", mImage);
                 intent.putExtra("date", mData);
-                intent.putExtra("id",mId);
+                intent.putExtra("id", mId);
                 startActivity(intent);
             }
 
 
         }));
     }
+
     public void removeData(DataSnapshot dataSnapshot) {
         // get all of the children at this level.
 
@@ -476,7 +497,6 @@ public class SearchFragment extends Fragment implements LocationListener {
         }
     }
 */
-
 
 
     protected void setNextMonth() {
@@ -502,7 +522,7 @@ public class SearchFragment extends Fragment implements LocationListener {
         testo_mese.setText(android.text.format.DateFormat.format("MMMM yyyy", mese_calendario));
     }
 
-    public void Calendario(){
+    public void Calendario() {
         mese_calendario = (GregorianCalendar) GregorianCalendar.getInstance();
         //mese_calendario_copia = (GregorianCalendar) mese_calendario.clone();
         adaptCalendario = new AdaptCalendario(getContext(), mese_calendario, DatabaseEvento.date_collection_arr);
@@ -528,7 +548,7 @@ public class SearchFragment extends Fragment implements LocationListener {
 
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 String selectedGridDate = AdaptCalendario.day_string.get(position);
-                getPositionList(selectedGridDate,getContext());
+                getPositionList(selectedGridDate, getContext());
             }
 
         });
@@ -541,6 +561,7 @@ public class SearchFragment extends Fragment implements LocationListener {
 
 
     }
+
     /* Request updates at startup */
     @Override
     public void onResume() {
@@ -570,7 +591,7 @@ public class SearchFragment extends Fragment implements LocationListener {
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext().getApplicationContext(), ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, 101);
-        }else{
+        } else {
             return true;
         }
         return false;
@@ -579,13 +600,13 @@ public class SearchFragment extends Fragment implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
 
-        if(var == 0) {
+        if(var==0) {
             tvLongi = location.getLongitude();
             tvLati = location.getLatitude();
-            var=1;
-        }
-        // Toast.makeText(getContext(), tvLongi+ " "+ tvLati, Toast.LENGTH_SHORT).show();
+            var = 1;
 
+            //Toast.makeText(getContext(), tvLongi + " " + tvLati, Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -603,38 +624,38 @@ public class SearchFragment extends Fragment implements LocationListener {
     public void onProviderEnabled(String provider) {
     }
 
-    public void eventisettimana(ArrayList<DatabaseEvento> lista1){
+    public void eventisettimana(ArrayList<DatabaseEvento> lista1) {
 
         final Date currentTime = Calendar.getInstance().getTime();
-        String tempo = currentTime.toString().substring(8,10);
+        String tempo = currentTime.toString().substring(8, 10);
 
         final int lunghmese = YearMonth.now()
                 .lengthOfMonth();
-        String mese = currentTime.toString().substring(4,7);
+        String mese = currentTime.toString().substring(4, 7);
         int valmese = 0;
-        if(mese.equals("Jan")){
+        if (mese.equals("Jan")) {
             valmese = 1;
-        } else if(mese.equals("Feb")){
+        } else if (mese.equals("Feb")) {
             valmese = 2;
-        } else if(mese.equals("Mar")){
+        } else if (mese.equals("Mar")) {
             valmese = 3;
-        } else if(mese.equals("Apr")){
+        } else if (mese.equals("Apr")) {
             valmese = 4;
-        } else if(mese.equals("May")){
+        } else if (mese.equals("May")) {
             valmese = 5;
-        } else if(mese.equals("Jun")){
+        } else if (mese.equals("Jun")) {
             valmese = 6;
-        } else if(mese.equals("Jul")){
+        } else if (mese.equals("Jul")) {
             valmese = 7;
-        } else if(mese.equals("Aug")){
+        } else if (mese.equals("Aug")) {
             valmese = 8;
-        } else if(mese.equals("Sep")){
+        } else if (mese.equals("Sep")) {
             valmese = 9;
-        } else if(mese.equals("Oct")){
+        } else if (mese.equals("Oct")) {
             valmese = 10;
-        } else if(mese.equals("Nov")){
+        } else if (mese.equals("Nov")) {
             valmese = 11;
-        } else if(mese.equals("Dec")){
+        } else if (mese.equals("Dec")) {
             valmese = 12;
         }
         final int ggmese = valmese;
@@ -652,21 +673,20 @@ public class SearchFragment extends Fragment implements LocationListener {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String dataD = snapshot.child("date").getValue(String.class);
-                    String tempo2 = dataD.substring(0,2);
-                    String mese2 = dataD.substring(3,5);
+                    String tempo2 = dataD.substring(0, 2);
+                    String mese2 = dataD.substring(3, 5);
                     int valmese2 = Integer.parseInt(mese2);
                     int gsetti2 = Integer.parseInt(tempo2);
 
-                    if(ggmese == valmese2) {
-                        if ((gsetti2 - gsetti) <= 7 && (gsetti2 - gsetti)>=0) {
+                    if (ggmese == valmese2) {
+                        if ((gsetti2 - gsetti) <= 7 && (gsetti2 - gsetti) >= 0) {
                             //ouble distanceToPlace1 = distance(latitude, longitude, latCurrent1, longCurrent1);
 
                             DatabaseEvento databaseEvento = snapshot.getValue(DatabaseEvento.class);
                             eventi.add(databaseEvento);
                         }
-                    }
-                    else if((lunghmese - gsetti)< 7){
-                        if(( gsetti2 < (7- (lunghmese - gsetti)))){
+                    } else if ((lunghmese - gsetti) < 7) {
+                        if ((gsetti2 < (7 - (lunghmese - gsetti)))) {
                             DatabaseEvento databaseEvento = snapshot.getValue(DatabaseEvento.class);
                             eventi.add(databaseEvento);
                         }
@@ -676,14 +696,15 @@ public class SearchFragment extends Fragment implements LocationListener {
                 Collections.reverse(eventi);
                 adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
                 recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
-                    @Override public void onItemClick(DatabaseEvento item) {
+                    @Override
+                    public void onItemClick(DatabaseEvento item) {
 
 
                         String mTitolo = item.getTitolo();
                         String mLuogo = item.getLuogo();
                         String mDescrizione = item.getDescrizione();
                         String mImage = item.getImmagine();
-                        String mData= item.getDate();
+                        String mData = item.getDate();
                         String mId = item.getId();
                         Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
                         intent.putExtra("title", mTitolo);
@@ -691,7 +712,7 @@ public class SearchFragment extends Fragment implements LocationListener {
                         intent.putExtra("descrizione", mDescrizione);
                         intent.putExtra("image", mImage);
                         intent.putExtra("date", mData);
-                        intent.putExtra("id",mId);
+                        intent.putExtra("id", mId);
                         startActivity(intent);
                     }
 
@@ -714,7 +735,7 @@ public class SearchFragment extends Fragment implements LocationListener {
     }
 
 
-    public void compare(final Double latCurrent1, final Double longCurrent1,ArrayList<DatabaseEvento> lista1){
+    public void compare(final Double latCurrent1, final Double longCurrent1, ArrayList<DatabaseEvento> lista1) {
 
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Eventi");
@@ -723,22 +744,66 @@ public class SearchFragment extends Fragment implements LocationListener {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                eventi.clear();
-                if(latCurrent1 != null && longCurrent1 != null) {
+
+                if (latCurrent1 != null && longCurrent1 != null) {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         double latitude = snapshot.child("latitude").getValue(Double.class);
                         double longitude = snapshot.child("longitude").getValue(Double.class);
-                        double distanceToPlace1 = distance(latitude, longitude, latCurrent1, longCurrent1);
+                        double distanceToPlace1 = distance_in_meter(latitude, longitude, latCurrent1, longCurrent1);
 
 
                         snapshot.getRef().child("distanza").setValue(distanceToPlace1);
 
                         DatabaseEvento databaseEvento = snapshot.getValue(DatabaseEvento.class);
                         databaseEvento.setDistanza(distanceToPlace1);
-                        eventi.add(databaseEvento);
+
 
                     }
                 }
+
+                Query query = FirebaseDatabase.getInstance().getReference("Eventi").orderByChild("distanza");
+                query.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        eventi.clear();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            DatabaseEvento evento = snapshot.getValue(DatabaseEvento.class);
+                            eventi.add(evento);
+
+                        }
+                        Collections.reverse(eventi);
+                        adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+                        recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(DatabaseEvento item) {
+
+
+                                String mTitolo = item.getTitolo();
+                                String mLuogo = item.getLuogo();
+                                String mDescrizione = item.getDescrizione();
+                                String mImage = item.getImmagine();
+                                String mData = item.getDate();
+                                String mId = item.getId();
+                                Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
+                                intent.putExtra("title", mTitolo);
+                                intent.putExtra("description", mLuogo);
+                                intent.putExtra("descrizione", mDescrizione);
+                                intent.putExtra("image", mImage);
+                                intent.putExtra("date", mData);
+                                intent.putExtra("id", mId);
+                                startActivity(intent);
+                            }
+
+
+                        }));
+                        //adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
             }
 
@@ -748,48 +813,6 @@ public class SearchFragment extends Fragment implements LocationListener {
             }
         });
 
-        Query query = FirebaseDatabase.getInstance().getReference("Eventi").orderByChild("distanza");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                eventi.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    DatabaseEvento evento = snapshot.getValue(DatabaseEvento.class);
-                    eventi.add(evento);
-
-                }
-                Collections.reverse(eventi);
-                adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
-                recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
-                    @Override public void onItemClick(DatabaseEvento item) {
-
-
-                        String mTitolo = item.getTitolo();
-                        String mLuogo = item.getLuogo();
-                        String mDescrizione = item.getDescrizione();
-                        String mImage = item.getImmagine();
-                        String mData= item.getDate();
-                        String mId = item.getId();
-                        Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
-                        intent.putExtra("title", mTitolo);
-                        intent.putExtra("description", mLuogo);
-                        intent.putExtra("descrizione", mDescrizione);
-                        intent.putExtra("image", mImage);
-                        intent.putExtra("date", mData);
-                        intent.putExtra("id",mId);
-                        startActivity(intent);
-                    }
-
-
-                }));
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
 
@@ -797,28 +820,29 @@ public class SearchFragment extends Fragment implements LocationListener {
         double radius = 6378137;   // approximate Earth radius, *in meters*
         double deltaLat = toLat - fromLat;
         double deltaLon = toLon - fromLon;
-        double angle = 2 * Math.asin( Math.sqrt(
-                Math.pow(Math.sin(deltaLat/2), 2) +
-                        Math.cos(fromLat) * Math.cos(toLat) *
-                                Math.pow(Math.sin(deltaLon/2), 2) ) );
+        double angle = 2 * Math.asin(Math.sqrt(
+                Math.pow(sin(deltaLat / 2), 2) +
+                        cos(fromLat) * cos(toLat) *
+                                Math.pow(sin(deltaLon / 2), 2)));
         return radius * angle;
     }
-    public void getPositionList(String date,final Context act){
 
-        int len= DatabaseEvento.date_collection_arr.size();
-        JSONArray jbarrays=new JSONArray();
+    public void getPositionList(String date, final Context act) {
+
+        int len = DatabaseEvento.date_collection_arr.size();
+        JSONArray jbarrays = new JSONArray();
 
         DatabaseEvento evento = new DatabaseEvento();
         eventi.clear();
-        for (int j=0; j<len; j++){
-            if (DatabaseEvento.date_collection_arr.get(j).date.equals(date) && ! DatabaseEvento.date_collection_arr.get(j).id.equals(evento.id) ){
+        for (int j = 0; j < len; j++) {
+            if (DatabaseEvento.date_collection_arr.get(j).date.equals(date) && !DatabaseEvento.date_collection_arr.get(j).id.equals(evento.id)) {
               /*  HashMap<String, String> maplist = new HashMap<String, String>();
                 maplist.put("hnames", DatabaseEvento.date_collection_arr.get(j).date);
                 maplist.put("hsubject", DatabaseEvento.date_collection_arr.get(j).titolo);
                 maplist.put("descript", DatabaseEvento.date_collection_arr.get(j).luogo);
                 JSONObject json1 = new JSONObject(maplist);
                 jbarrays.put(json1);*/
-                evento=DatabaseEvento.date_collection_arr.get(j);
+                evento = DatabaseEvento.date_collection_arr.get(j);
 
                 eventi.add(DatabaseEvento.date_collection_arr.get(j));
             }
@@ -844,12 +868,13 @@ public class SearchFragment extends Fragment implements LocationListener {
                 intent.putExtra("descrizione", mDescrizione);
                 intent.putExtra("image", mImage);
                 intent.putExtra("date", mData);
-                intent.putExtra("id",mId);
+                intent.putExtra("id", mId);
                 startActivity(intent);
             }
 
 
         }));
+
 
 
             /*final Dialog dialogs = new Dialog(context);
@@ -869,7 +894,20 @@ public class SearchFragment extends Fragment implements LocationListener {
 
 
     }
+    private static double distance_in_meter(final double lat1, final double lon1, final double lat2, final double lon2) {
+        float pk = (float) (180/3.14169);
+        double a1 = lat1 / pk;
+        double a2 = lon1 / pk;
+        double b1 = lat2 / pk;
+        double b2 = lon2 / pk;
 
+        double t1 = cos(a1) * cos(a2) * cos(b1) * cos(b2);
+        double t2 = cos(a1) * sin(a2) * cos(b1) * sin(b2);
+        double t3 = sin(a1) * sin(b1);
+        double tt = Math.acos(t1 + t2 + t3);
+
+        return 6366000*tt;
+    }
 
    /* @Override
     public void onBackPressed() {
