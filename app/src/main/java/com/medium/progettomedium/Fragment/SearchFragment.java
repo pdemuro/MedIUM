@@ -641,7 +641,8 @@ public class SearchFragment extends Fragment implements LocationListener {
         final int gsetti = Integer.parseInt(tempo);
 
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Eventi");
+
+        final Query reference = FirebaseDatabase.getInstance().getReference("Eventi").orderByChild("date");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -672,6 +673,30 @@ public class SearchFragment extends Fragment implements LocationListener {
                     }
 
                 }
+                Collections.reverse(eventi);
+                adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+                recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                    @Override public void onItemClick(DatabaseEvento item) {
+
+
+                        String mTitolo = item.getTitolo();
+                        String mLuogo = item.getLuogo();
+                        String mDescrizione = item.getDescrizione();
+                        String mImage = item.getImmagine();
+                        String mData= item.getDate();
+                        String mId = item.getId();
+                        Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
+                        intent.putExtra("title", mTitolo);
+                        intent.putExtra("description", mLuogo);
+                        intent.putExtra("descrizione", mDescrizione);
+                        intent.putExtra("image", mImage);
+                        intent.putExtra("date", mData);
+                        intent.putExtra("id",mId);
+                        startActivity(intent);
+                    }
+
+
+                }));
 
 
             }
@@ -682,31 +707,8 @@ public class SearchFragment extends Fragment implements LocationListener {
             }
         });
 
-        Collections.reverse(eventi);
-        adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
-        recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
-            @Override public void onItemClick(DatabaseEvento item) {
 
-
-                String mTitolo = item.getTitolo();
-                String mLuogo = item.getLuogo();
-                String mDescrizione = item.getDescrizione();
-                String mImage = item.getImmagine();
-                String mData= item.getDate();
-                String mId = item.getId();
-                Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
-                intent.putExtra("title", mTitolo);
-                intent.putExtra("description", mLuogo);
-                intent.putExtra("descrizione", mDescrizione);
-                intent.putExtra("image", mImage);
-                intent.putExtra("date", mData);
-                intent.putExtra("id",mId);
-                startActivity(intent);
-            }
-
-
-        }));
-        adapter.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged();
 
 
     }
