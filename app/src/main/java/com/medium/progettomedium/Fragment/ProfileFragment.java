@@ -436,21 +436,7 @@ public class ProfileFragment extends Fragment {
                             listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(DatabaseEvento item) {
-
-                                    String mTitolo = item.getTitolo();
-                                    String mLuogo = item.getLuogo();
-                                    String mDescrizione = item.getDescrizione();
-                                    String mImage = item.getImmagine();
-                                    String mData = item.getDate();
-                                    String mId = item.getId();
-                                    Intent intent = new Intent(recyclerView.getContext(), ActivityModificaEvento.class);
-                                    intent.putExtra("title", mTitolo);
-                                    intent.putExtra("description", mLuogo);
-                                    intent.putExtra("descrizione", mDescrizione);
-                                    intent.putExtra("image", mImage);
-                                    intent.putExtra("date", mData);
-                                    intent.putExtra("id", mId);
-                                    startActivity(intent);
+                                    
                                 }
 
 
