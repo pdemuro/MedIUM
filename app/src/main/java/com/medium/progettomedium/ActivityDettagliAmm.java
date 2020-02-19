@@ -164,10 +164,16 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                                         String mNome = item.getNome()+" "+item.getCognome();
                                         String mMail = item.getMail();
                                         String mPhone = item.getPhone();
-                                        Intent intent = new Intent(elencoAccettati.getContext(), ActivityDettagliAmm.class);
+                                        String mId = item.getId();
+                                        String mImage = item.getImageUrl();
+                                        String mCategoria = item.getCategory();
+                                        Intent intent = new Intent(getApplicationContext(), ActivityVisualizzaUtente.class);
                                         intent.putExtra("nome", mNome);
                                         intent.putExtra("mail", mMail);
                                         intent.putExtra("phone", mPhone);
+                                        intent.putExtra("id",mId);
+                                        intent.putExtra("immagine",mImage);
+                                        intent.putExtra("category",mCategoria);
                                         startActivity(intent);
                                     }
 
@@ -258,10 +264,16 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                                         String mNome = item.getNome()+" "+item.getCognome();
                                         String mMail = item.getMail();
                                         String mPhone = item.getPhone();
-                                        Intent intent = new Intent(recyclerView.getContext(), ActivityDettagliAmm.class);
+                                        String mId = item.getId();
+                                        String mImage = item.getImageUrl();
+                                        String mCategoria = item.getCategory();
+                                        Intent intent = new Intent(getApplicationContext(), ActivityVisualizzaUtente.class);
                                         intent.putExtra("nome", mNome);
                                         intent.putExtra("mail", mMail);
                                         intent.putExtra("phone", mPhone);
+                                        intent.putExtra("id",mId);
+                                        intent.putExtra("immagine",mImage);
+                                        intent.putExtra("category",mCategoria);
                                         startActivity(intent);
                                     }
 

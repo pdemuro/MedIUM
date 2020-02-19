@@ -204,7 +204,10 @@ public class ActivityModificaEvento extends AppCompatActivity {
         final HashMap<String, Object> map = new HashMap<>();
         map.put("titolo",titolo);
         map.put("descrizione",descrizione);
-        map.put("date",data2);
+        if(data2 != null){
+            map.put("date",data2);
+        }
+
         if(luogo2 != null) {
             map.put("luogo", luogo2.toLowerCase());
         }

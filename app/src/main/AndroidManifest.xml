@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <meta-data
         android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyDGne1lI_eHGtUSwhLsbkuCtpsvJADo834" />
@@ -30,7 +29,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityModificaEvento"></activity>
+        <activity android:name=".ActivityVisualizzaUtente"></activity>
+        <activity android:name=".ActivityModificaEvento" />
         <activity android:name=".Adapter.AdaptAmmAccettati" />
         <activity android:name=".ActivityDettagliAmm" />
         <activity android:name=".AddPostActivity" />

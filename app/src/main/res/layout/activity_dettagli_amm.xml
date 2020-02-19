@@ -7,10 +7,15 @@
     tools:context=".ActivityDettagliAmm">
 
     <com.google.android.material.appbar.AppBarLayout
+
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground">
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toTopOf="@+id/last_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -23,25 +28,25 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_freccia"
-                    android:id="@+id/close"
+                    android:layout_alignParentStart="true"
 
-                    android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"/>
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_freccia" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lista Utenti"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
+                    android:layout_toRightOf="@+id/close"
+                    android:text="Lista Utenti"
                     android:textColor="@color/colorPrimaryDark"
-                    android:layout_toRightOf="@+id/close"></TextView>
+                    android:textSize="18sp"
+                    android:textStyle="bold"></TextView>
 
 
             </RelativeLayout>
