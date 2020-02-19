@@ -258,7 +258,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String email = editTextEmail.getEditText().getText().toString().trim();
             String userID = firebaseAuth.getUid();
             String category = "Utente";
-            DatabaseUtente databaseUtente = new DatabaseUtente(name,cognome, email,userID, category,"https://firebasestorage.googleapis.com/v0/b/progettomedium-76d21.appspot.com/o/immaginiprofilo%2Fprofilo-png-2.png?alt=media&token=54d738cc-06f1-41c6-9f33-541b391b12ba");
+            DatabaseUtente databaseUtente = new DatabaseUtente(name,cognome, email,userID, category,"https://firebasestorage.googleapis.com/v0/b/progettomedium-76d21.appspot.com/o/immaginiprofilo%2Fprofilo-png-2.png?alt=media&token=54d738cc-06f1-41c6-9f33-541b391b12ba","");
 
 
             FirebaseUser user = firebaseAuth.getCurrentUser();
