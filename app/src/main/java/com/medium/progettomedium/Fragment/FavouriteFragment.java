@@ -1,7 +1,6 @@
 package com.medium.progettomedium.Fragment;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.medium.progettomedium.ActivityDettagliEvento;
-import com.medium.progettomedium.Adapter.AdaptEvento;
+import com.medium.progettomedium.Adapter.AdaptEventoAmm;
 import com.medium.progettomedium.Model.DatabaseEvento;
-import com.medium.progettomedium.Model.DatabaseUtente;
 import com.medium.progettomedium.R;
 
 import java.util.ArrayList;
@@ -33,8 +31,8 @@ public class FavouriteFragment extends Fragment {
 
     boolean doubleTap = false;
     private ArrayList<DatabaseEvento> eventi = new ArrayList<DatabaseEvento>();
-    private AdaptEvento adapter;
-    private AdaptEvento.OnItemClickListener itemClickListener;
+    private AdaptEventoAmm adapter;
+    private AdaptEventoAmm.OnItemClickListener itemClickListener;
     private RecyclerView listaEventiView;
     DatabaseReference mRef;
     private DatabaseReference databaseReference;
@@ -128,10 +126,10 @@ public class FavouriteFragment extends Fragment {
                     DatabaseEvento.date_collection_arr.add(eve);
                     eventi.add(doc);
                 }
-                adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+                adapter = new AdaptEventoAmm(getContext(), eventi, itemClickListener);
 
                 //listaEventiView.setAdapter(adapter);
-                listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                listaEventiView.setAdapter(new AdaptEventoAmm(getContext(), eventi, new AdaptEventoAmm.OnItemClickListener() {
                     @Override public void onItemClick(DatabaseEvento item) {
 
                         String mTitolo = item.getTitolo();
@@ -160,10 +158,10 @@ public class FavouriteFragment extends Fragment {
             });
 
 
-        adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+        adapter = new AdaptEventoAmm(getContext(), eventi, itemClickListener);
 
         //listaEventiView.setAdapter(adapter);
-        listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+        listaEventiView.setAdapter(new AdaptEventoAmm(getContext(), eventi, new AdaptEventoAmm.OnItemClickListener() {
             @Override public void onItemClick(DatabaseEvento item) {
 
                 String mTitolo = item.getTitolo();
@@ -189,7 +187,7 @@ public class FavouriteFragment extends Fragment {
         DatabaseEvento.date_collection_arr.remove(eve);
         eventi.remove(doc);
 
-        adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+        adapter = new AdaptEventoAmm(getContext(), eventi, itemClickListener);
         listaEventiView.setAdapter(adapter);
     }
 }

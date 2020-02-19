@@ -17,8 +17,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.medium.progettomedium.Fragment.HomeFragment;
-import com.medium.progettomedium.Fragment.ProfileFragment;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;

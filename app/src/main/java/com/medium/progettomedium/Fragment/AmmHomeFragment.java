@@ -16,8 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ValueEventListener;
 import com.medium.progettomedium.ActivityDettagliAmm;
-import com.medium.progettomedium.ActivityDettagliEvento;
-import com.medium.progettomedium.Adapter.AdaptEvento;
+import com.medium.progettomedium.Adapter.AdaptEventoAmm;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.R;
 import com.google.firebase.database.ChildEventListener;
@@ -29,11 +28,11 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment{
+public class AmmHomeFragment extends Fragment{
     boolean doubleTap = false;
     private ArrayList<DatabaseEvento> eventi = new ArrayList<DatabaseEvento>();
-    private AdaptEvento adapter;
-    private AdaptEvento.OnItemClickListener itemClickListener;
+    private AdaptEventoAmm adapter;
+    private AdaptEventoAmm.OnItemClickListener itemClickListener;
     private RecyclerView listaEventiView;
     DatabaseReference mRef;
     private DatabaseReference databaseReference;
@@ -129,10 +128,10 @@ public class HomeFragment extends Fragment{
                     }
 
                 }
-                adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+                adapter = new AdaptEventoAmm(getContext(), eventi, itemClickListener);
 
                 //listaEventiView.setAdapter(adapter);
-                listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                listaEventiView.setAdapter(new AdaptEventoAmm(getContext(), eventi, new AdaptEventoAmm.OnItemClickListener() {
                     @Override public void onItemClick(DatabaseEvento item) {
 
                         String mTitolo = item.getTitolo();
@@ -175,7 +174,7 @@ public class HomeFragment extends Fragment{
         DatabaseEvento.date_collection_arr.remove(eve);
         eventi.remove(doc);
 
-        adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+        adapter = new AdaptEventoAmm(getContext(), eventi, itemClickListener);
         listaEventiView.setAdapter(adapter);
     }
 }

@@ -1,9 +1,6 @@
 package com.medium.progettomedium.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.medium.progettomedium.ActivityDettagliAmm;
-import com.medium.progettomedium.Fragment.HomeFragment;
-import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.medium.progettomedium.R;
 import com.squareup.picasso.Picasso;
@@ -130,7 +121,7 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
 
 
                     databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(3);
-                    //Intent intent = new Intent(c, HomeFragment.class);
+                    //Intent intent = new Intent(c, AmmHomeFragment.class);
                     //c.startActivity(intent);
                 }
 
@@ -141,7 +132,7 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
 
 
                     databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(4);
-                    //Intent intent = new Intent(c, HomeFragment.class);
+                    //Intent intent = new Intent(c, AmmHomeFragment.class);
                     //c.startActivity(intent);
                 }
 

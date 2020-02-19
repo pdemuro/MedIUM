@@ -1,31 +1,22 @@
 package com.medium.progettomedium.Adapter;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.medium.progettomedium.ActivityDettagliEvento;
 import com.medium.progettomedium.EventoPrenotabile;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -47,7 +38,7 @@ public class AdaptCalendario extends BaseAdapter {
     String itemvalue, curentDateString;
     DateFormat df;
     private ArrayList<DatabaseEvento> eventi = new ArrayList<DatabaseEvento>();
-    private AdaptEvento adapter;
+    private AdaptEventoAmm adapter;
     private ArrayList<String> items;
     public static List<String> day_string;
     public ArrayList<DatabaseEvento>  date_collection_arr;

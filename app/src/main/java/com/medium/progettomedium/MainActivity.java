@@ -4,10 +4,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -17,10 +15,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.medium.progettomedium.Fragment.AddEventFragment;
-import com.medium.progettomedium.Fragment.FavouriteFragment;
-import com.medium.progettomedium.Fragment.HomeFragment;
+import com.medium.progettomedium.Fragment.AmmHomeFragment;
 import com.medium.progettomedium.Fragment.ProfileFragment;
-import com.medium.progettomedium.Fragment.SearchFragment;
+import com.medium.progettomedium.Fragment.UtenteHomeFragment;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     bottomNavigationView = findViewById(R.id.bottom_navigation);
                     bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
                     bottomNavigationView.setVisibility(View.VISIBLE);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new SearchFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new UtenteHomeFragment()).commit();
 
                     Bundle intent = getIntent().getExtras();
                     if (intent != null){
@@ -78,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         bottomNavigationView.getMenu().getItem(0).setChecked(true);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new SearchFragment()).commit();
+                                new UtenteHomeFragment()).commit();
 
                     }
                 }
@@ -86,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     bottomNavigationViewOrga = findViewById(R.id.bottom_navigation_amm);
                     bottomNavigationViewOrga.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
                     bottomNavigationViewOrga.setVisibility(View.VISIBLE);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AmmHomeFragment()).commit();
 
                     Bundle intent = getIntent().getExtras();
                     if (intent != null){
@@ -103,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         bottomNavigationViewOrga.getMenu().getItem(0).setChecked(true);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                new HomeFragment()).commit();
+                                new AmmHomeFragment()).commit();
 
                     }
                 }
@@ -141,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
             switch (menuItem.getItemId()){
                 case R.id.nav_home:
-                    selectedFragment= new SearchFragment();
+                    selectedFragment= new UtenteHomeFragment();
                     break;
                 case R.id.nav_addpost:
                     startActivity( new Intent(MainActivity.this, AddPostActivity.class));
@@ -154,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment= new ProfileFragment();
                     break;
                 case R.id.nav_richieste:
-                    selectedFragment= new HomeFragment();
+                    selectedFragment= new AmmHomeFragment();
                     break;
                 case R.id.nav_add:
                     selectedFragment= new AddEventFragment();
@@ -237,11 +234,11 @@ public class MainActivity extends AppCompatActivity {
                             DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
                             if (user.category.equals("Utente")) {
                                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                        new SearchFragment()).commit();
+                                        new UtenteHomeFragment()).commit();
                             }
                             else  if (user.category.equals("Organizzatore")){
                                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                        new HomeFragment()).commit();
+                                        new AmmHomeFragment()).commit();
                             }
                         }
 
@@ -252,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
                         });
 
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            new HomeFragment()).commit();
+                            new AmmHomeFragment()).commit();
                 }
             }, 500);
         }

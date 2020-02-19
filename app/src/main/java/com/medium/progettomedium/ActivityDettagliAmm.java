@@ -19,8 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.medium.progettomedium.Adapter.AdaptAmm;
 import com.medium.progettomedium.Adapter.AdaptAmmAccettati;
-import com.medium.progettomedium.Adapter.AdaptEvento;
-import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
 
 import java.util.ArrayList;

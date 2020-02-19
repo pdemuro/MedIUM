@@ -27,7 +27,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.medium.progettomedium.ActivityDettagliAmm;
 import com.medium.progettomedium.ActivityDettagliEvento;
 import com.medium.progettomedium.ActivityModificaEvento;
-import com.medium.progettomedium.Adapter.AdaptEvento;
+import com.medium.progettomedium.Adapter.AdaptEventoModificabile;
+import com.medium.progettomedium.Adapter.AdaptEventoUtente;
 import com.medium.progettomedium.Adapter.MyFotosAdapter;
 import com.medium.progettomedium.EditProfileActivity;
 import com.medium.progettomedium.LoginActivity;
@@ -82,14 +83,14 @@ public class ProfileFragment extends Fragment {
     private MyFotosAdapter myFotosAdapter;
     private List<DatabaseEvento> eventi = new ArrayList<DatabaseEvento>();
     private RecyclerView recyclerView_saves;
-    private AdaptEvento myFotosAdapter_saves;
     private List<DatabaseEvento> postList_saves;
     private Uri mImageUri;
     private String image_url;
     private FirebaseStorage mStorage;
     private UploadTask mUploadTask;
     FirebaseAuth firebaseAuth;
-    private AdaptEvento.OnItemClickListener itemClickListener;
+    private AdaptEventoModificabile.OnItemClickListener itemClickListener2;
+    private AdaptEventoUtente.OnItemClickListener itemClickListenerutente;
     private List<Post> postList;
     ImageButton my_fotos, saved_fotos;
     TextView logout;
@@ -98,7 +99,8 @@ public class ProfileFragment extends Fragment {
     private DatabaseReference databaseReference2;
     private DatabaseReference databaseReference3;
 
-    private AdaptEvento adapter;
+    private AdaptEventoModificabile adaptEventoModificabile;
+    private AdaptEventoUtente adapterutente;
     private RecyclerView listaEventiView;
 
     @Override
@@ -369,10 +371,10 @@ public class ProfileFragment extends Fragment {
                                 DatabaseEvento.date_collection_arr.add(eve);
                                 eventi.add(doc);
                             }
-                            adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+                            adapterutente = new AdaptEventoUtente(getContext(), eventi, itemClickListenerutente);
 
                             //listaEventiView.setAdapter(adapter);
-                            listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                            listaEventiView.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(DatabaseEvento item) {
 
@@ -430,13 +432,13 @@ public class ProfileFragment extends Fragment {
                                 DatabaseEvento.date_collection_arr.add(eve);
                                 eventi.add(doc);
                             }
-                            adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+                            adaptEventoModificabile = new AdaptEventoModificabile(getContext(), eventi, itemClickListener2);
 
                             //listaEventiView.setAdapter(adapter);
-                            listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                            listaEventiView.setAdapter(new AdaptEventoModificabile(getContext(), eventi, new AdaptEventoModificabile.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(DatabaseEvento item) {
-                                    
+
                                 }
 
 
@@ -464,13 +466,6 @@ public class ProfileFragment extends Fragment {
     public void removeData(DataSnapshot dataSnapshot) {
         // get all of the children at this level.
 
-        DatabaseEvento doc = dataSnapshot.getValue(DatabaseEvento.class);
-        DatabaseEvento eve = dataSnapshot.getValue(DatabaseEvento.class);
-        DatabaseEvento.date_collection_arr.remove(eve);
-        eventi.remove(doc);
-
-        adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
-        listaEventiView.setAdapter(adapter);
     }
     private void addNotification(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(profileid);
@@ -734,10 +729,10 @@ public class ProfileFragment extends Fragment {
 
                 }
 
-                adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+                adapterutente = new AdaptEventoUtente(getContext(), eventi, itemClickListenerutente);
 
                 //listaEventiView.setAdapter(adapter);
-                listaEventiView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                listaEventiView.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
                     @Override public void onItemClick(DatabaseEvento item) {
 
                         String mTitolo = item.getTitolo();

@@ -13,14 +13,13 @@ public class DatabaseEvento {
     public String immagine;
     public String descrizione;
     public Double distanza;
-    public HashMap<String, String> prenotazioni;
     public String stato;
     public DatabaseEvento(){
 
     }
 
     public static ArrayList<DatabaseEvento> date_collection_arr;
-    public DatabaseEvento( String id,String date, String titolo, Double latitude, Double longitude, String luogo, HashMap<String,String> prenotazioni, String immagine, String descrizione,Double distanza, String stato){
+    public DatabaseEvento( String id,String date, String titolo, Double latitude, Double longitude, String luogo, String immagine, String descrizione,Double distanza, String stato){
         this.id=id;
         this.date=date;
         this.titolo=titolo;
@@ -29,7 +28,6 @@ public class DatabaseEvento {
         this.luogo = luogo;
         this.immagine = immagine;
         this.descrizione = descrizione;
-        this.prenotazioni = prenotazioni;
         this.distanza = distanza;
         this.stato = stato;
     }
@@ -112,13 +110,6 @@ public class DatabaseEvento {
 
     public static void setDate_collection_arr(ArrayList<DatabaseEvento> date_collection_arr) {
         DatabaseEvento.date_collection_arr = date_collection_arr;
-    }
-    public HashMap<String, String> getPrenotazioni() {
-        return prenotazioni;
-    }
-
-    public void setPrenotazioni(HashMap<String, String> prenotazioni) {
-        this.prenotazioni = prenotazioni;
     }
 
     public Double getDistanza() {

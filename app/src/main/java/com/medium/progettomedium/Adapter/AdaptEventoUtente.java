@@ -3,7 +3,6 @@ package com.medium.progettomedium.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.medium.progettomedium.ActivityModificaEvento;
-import com.medium.progettomedium.AddPostActivity;
-import com.medium.progettomedium.MainActivity;
-import com.medium.progettomedium.Model.DatabaseEvento;
-import com.medium.progettomedium.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -27,11 +21,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.medium.progettomedium.Model.DatabaseEvento;
+import com.medium.progettomedium.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
+public class AdaptEventoUtente extends RecyclerView.Adapter<AdaptEventoUtente.ViewHolder>{
     private    Context c;
     List<DatabaseEvento> eventi;
     View mView;
@@ -48,7 +44,7 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
     private OnItemClickListener listener;
 
 
-    public AdaptEvento(Context c, List<DatabaseEvento> listaEventi, OnItemClickListener listener) {
+    public AdaptEventoUtente(Context c, List<DatabaseEvento> listaEventi, OnItemClickListener listener) {
         this.c = c;
         this.listaEventi = listaEventi;
         this.listener = listener;
@@ -183,11 +179,6 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
 
                             });
                         }
-                        else if(child.getValue().equals("Organizzatore")){
-
-                            modifica.setVisibility(View.VISIBLE);
-                            stato.setVisibility(View.GONE);
-                        }
                     }
                 }
                 @Override
@@ -275,28 +266,7 @@ public class AdaptEvento extends RecyclerView.Adapter<AdaptEvento.ViewHolder>{
                     });
                 }
             });
-            modifica.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                    String mTitolo = evento.getTitolo();
-                    String mLuogo = evento.getLuogo();
-                    String mDescrizione = evento.getDescrizione();
-                    String mImage = evento.getImmagine();
-                    String mData = evento.getDate();
-                    String mId = evento.getId();
-                    Intent intent = new Intent(context, ActivityModificaEvento.class);
-                    intent.putExtra("title", mTitolo);
-                    intent.putExtra("description", mLuogo);
-                    intent.putExtra("descrizione", mDescrizione);
-                    intent.putExtra("image", mImage);
-                    intent.putExtra("date", mData);
-                    intent.putExtra("id", mId);
-                    context.startActivity(intent);
-
-
-                }
-            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     listener.onItemClick(evento);
