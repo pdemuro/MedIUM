@@ -16,6 +16,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -93,6 +95,7 @@ public class ProfileFragment extends Fragment {
     private AdaptEventoUtente.OnItemClickListener itemClickListenerutente;
     private List<Post> postList;
     ImageButton my_fotos, saved_fotos;
+    CardView iMieiPost, iMieiEventi;
     TextView logout;
     private DatabaseReference databaseReferenceutente;
     private DatabaseReference databaseReference;
@@ -106,7 +109,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        final View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -122,8 +125,12 @@ public class ProfileFragment extends Fragment {
         category = view.findViewById(R.id.category);
         edit_profile = view.findViewById(R.id.edit_profile);
         //username = view.findViewById(R.id.username);
-        my_fotos = view.findViewById(R.id.my_fotos);
-        saved_fotos = view.findViewById(R.id.saved_fotos);
+     //   my_fotos = view.findViewById(R.id.my_fotos);
+
+        iMieiPost = view.findViewById(R.id.iMieiPost);
+        iMieiEventi = view.findViewById(R.id.iMieiEventi);
+
+      //  saved_fotos = view.findViewById(R.id.saved_fotos);
         logout=view.findViewById(R.id.logout);
         options = view.findViewById(R.id.options);
 
@@ -154,36 +161,39 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if(dataSnapshot.getValue().equals("Utente")){
+                if(dataSnapshot.getValue().equals("Utente")) {
                     myFotos();
                     postEvent();
                     mySaves();
-                    my_fotos.setOnClickListener(new View.OnClickListener() {
+
+                    iMieiPost.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View view) {
+                        public void onClick(View v) {
                             recyclerView.setVisibility(View.VISIBLE);
                             listaEventiView.setVisibility(View.GONE);
-                            my_fotos.setBackgroundColor(Color.parseColor("#20444444"));
-                            saved_fotos.setBackgroundColor(0xDCDCDC);
+                            iMieiPost.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.material_blue_300)));
+                            iMieiEventi.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.colorWhite)));
                             myFotos();
                         }
                     });
 
-                    saved_fotos.setOnClickListener(new View.OnClickListener() {
+
+                    iMieiEventi.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View view) {
+                        public void onClick(View v) {
                             recyclerView.setVisibility(View.GONE);
                             listaEventiView.setVisibility(View.VISIBLE);
-                            saved_fotos.setBackgroundColor(Color.parseColor("#20444444"));
-                            my_fotos.setBackgroundColor(0xDCDCDC);
+                            iMieiEventi.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.material_blue_300)));
+                            iMieiPost.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.colorWhite)));
                             postEvent();
                         }
                     });
-                }
-                else{
+
+
+                }else{
                     postEvent();
                     listaEventiView.setVisibility(View.VISIBLE);
-                    my_fotos.setVisibility(View.GONE);
+                    iMieiEventi.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
 
 
