@@ -3,21 +3,28 @@ package com.medium.progettomedium;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.Continuation;
@@ -41,6 +48,7 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -48,16 +56,23 @@ public class ActivityModificaEvento extends AppCompatActivity {
 
     MaterialEditText titoloE, descrizione;
 
+    public String luogo2;
+    private String data2;
     TextView luogo, data;
     ImageView foto;
     TextView salva;
     ImageView close;
-
+    ConstraintLayout posizione;
+    ConstraintLayout dataC;
+    public Double latitude;
+    public Double longitude;
+    int PLACE_PICKER_REQUEST = 1;
     String idEvento;
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
     private Uri mImageUri;
     private StorageTask<UploadTask.TaskSnapshot> uploadTask;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
     StorageReference storageRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +91,8 @@ public class ActivityModificaEvento extends AppCompatActivity {
         data = findViewById(R.id.data_modifica_evento);
         salva = findViewById(R.id.save);
         close = findViewById(R.id.close);
+        posizione = findViewById(R.id.posizione);
+        dataC = findViewById(R.id.data);
 
         String title = getIntent().getStringExtra("title");
         String place = getIntent().getStringExtra("description");
@@ -109,6 +126,67 @@ public class ActivityModificaEvento extends AppCompatActivity {
 
 
         });
+        dataC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        ActivityModificaEvento.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mDateSetListener,
+                        year,month,day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                //Log.d(TAG, "onDateSet: dd/mm/yyyy: " + month + "-" + day + "-" + year);
+                String date;
+                if(month>9 && day > 9) {
+                    date = day + "-" + month + "-" + year;
+                    data2 = date;
+                }else if(month > 9 && day < 10){
+
+                    date = day + "-" + month + "-" + year;
+                    data2 = "0"+day + "-" + month + "-" + year;
+                }
+                else if(month < 10 && day > 9){
+                    date = day + "-" + month + "-" + year;
+                    data2 = day + "-" + "0"+ month + "-" + year;
+                }else{
+                    date = day + "-" + month + "-" + year;
+                    data2 = "0"+day + "-" + "0"+ month + "-" + year;
+                }
+
+                data.setText(date);
+
+
+            }
+        };
+        posizione.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+
+                try{
+                    startActivityForResult(builder.build(ActivityModificaEvento.this), PLACE_PICKER_REQUEST);
+                }
+                catch(GooglePlayServicesRepairableException e){
+                    e.printStackTrace();
+                }
+                catch (GooglePlayServicesNotAvailableException e ){
+                    e.printStackTrace();
+                }
+            }
+        });
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +204,10 @@ public class ActivityModificaEvento extends AppCompatActivity {
         final HashMap<String, Object> map = new HashMap<>();
         map.put("titolo",titolo);
         map.put("descrizione",descrizione);
-
+        map.put("date",data2);
+        if(luogo2 != null) {
+            map.put("luogo", luogo2.toLowerCase());
+        }
         //CARICAMENTO EVENTO
         if (mImageUri != null) {
             final StorageReference ref = FirebaseStorage.getInstance().getReference("immaginiEventi/" + System.currentTimeMillis() + ".jpg");
@@ -180,8 +261,17 @@ public class ActivityModificaEvento extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         //VENGONO ASSEGNATI I VALORI DEL LUOGO
         //VIENE ASSEGNATO IL LINK DELL'IMMAGINE
+        if(requestCode == PLACE_PICKER_REQUEST){
+            Place place = PlacePicker.getPlace(getApplicationContext(), data);
+            latitude = place.getLatLng().latitude;
+            longitude = place.getLatLng().longitude;
+            luogo2 = (String) place.getName();
+            luogo.setText(luogo2);
+
+        }
         if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
+
             if (resultCode == RESULT_OK) {
                 mImageUri = result.getUri();
                 Picasso.get().load(mImageUri).into(foto);

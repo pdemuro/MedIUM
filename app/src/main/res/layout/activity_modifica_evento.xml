@@ -161,7 +161,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/posizione">
 
             <TextView
                 android:id="@+id/luogo_modifica_evento"
@@ -175,12 +176,12 @@
                 android:textColor="@color/secondary_text_material_light"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/imageView"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewLuogo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageViewLuogo"
                 android:layout_width="13dp"
                 android:layout_height="17dp"
                 android:layout_marginEnd="8dp"
@@ -202,7 +203,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/data">
 
             <TextView
                 android:id="@+id/data_modifica_evento"
