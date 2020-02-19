@@ -40,7 +40,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.medium.progettomedium.ActivityDettagliEvento;
 import com.medium.progettomedium.Adapter.AdaptCalendario;
-import com.medium.progettomedium.Adapter.AdaptEvento;
+import com.medium.progettomedium.Adapter.AdaptEventoUtente;
 import com.medium.progettomedium.Adapter.UserAdapter;
 import com.medium.progettomedium.GPSTracker;
 import com.medium.progettomedium.MapActivity;
@@ -72,18 +72,18 @@ import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
-public class SearchFragment extends Fragment implements LocationListener {
+public class UtenteHomeFragment extends Fragment implements LocationListener {
 
     private RecyclerView recyclerView, recyclerView2;
     private Toolbar toolbar;
     private ConstraintLayout icone, iconeFiltro;
-    private AdaptEvento eventAdapter;
+    private AdaptEventoUtente eventAdapter;
     private List<DatabaseEvento> eventList;
     private List<DatabaseUtente> userList;
     private UserAdapter userAdapter;
     private ArrayList<DatabaseEvento> eventi = new ArrayList<DatabaseEvento>();
-    private AdaptEvento adapter;
-    private AdaptEvento.OnItemClickListener itemClickListener;
+    private AdaptEventoUtente adapter;
+    private AdaptEventoUtente.OnItemClickListener itemClickListener;
     DatabaseReference mRef;
     private DatabaseReference databaseReference;
     ConstraintLayout menoDistante, calendario, mappa, questaSettimana;
@@ -335,11 +335,11 @@ public class SearchFragment extends Fragment implements LocationListener {
                         }
                     }
                 }
-                adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+                adapter = new AdaptEventoUtente(getContext(), eventi, itemClickListener);
 
                 //listaEventiView.setAdapter(adapter);
                 recyclerView2.setVisibility(View.GONE);
-                recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                recyclerView.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
                     @Override
                     public void onItemClick(DatabaseEvento item) {
 
@@ -448,10 +448,10 @@ public class SearchFragment extends Fragment implements LocationListener {
             DatabaseEvento.date_collection_arr.add(eve);
             eventi.add(doc);
         }
-        adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+        adapter = new AdaptEventoUtente(getContext(), eventi, itemClickListener);
 
         //listaEventiView.setAdapter(adapter);
-        recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+        recyclerView.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
             @Override
             public void onItemClick(DatabaseEvento item) {
 
@@ -484,7 +484,7 @@ public class SearchFragment extends Fragment implements LocationListener {
         DatabaseEvento.date_collection_arr.remove(eve);
         eventi.remove(doc);
 
-        adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+        adapter = new AdaptEventoUtente(getContext(), eventi, itemClickListener);
         recyclerView.setAdapter(adapter);
     }
    /* @Override
@@ -694,8 +694,8 @@ public class SearchFragment extends Fragment implements LocationListener {
 
                 }
                 Collections.reverse(eventi);
-                adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
-                recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                adapter = new AdaptEventoUtente(getContext(), eventi, itemClickListener);
+                recyclerView.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
                     @Override
                     public void onItemClick(DatabaseEvento item) {
 
@@ -772,8 +772,8 @@ public class SearchFragment extends Fragment implements LocationListener {
 
                         }
                         Collections.reverse(eventi);
-                        adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
-                        recyclerView.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+                        adapter = new AdaptEventoUtente(getContext(), eventi, itemClickListener);
+                        recyclerView.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
                             @Override
                             public void onItemClick(DatabaseEvento item) {
 
@@ -848,10 +848,10 @@ public class SearchFragment extends Fragment implements LocationListener {
             }
         }
 
-        adapter = new AdaptEvento(getContext(), eventi, itemClickListener);
+        adapter = new AdaptEventoUtente(getContext(), eventi, itemClickListener);
         recyclerView2.setVisibility(View.VISIBLE);
         //listaEventiView.setAdapter(adapter);
-        recyclerView2.setAdapter(new AdaptEvento(getContext(), eventi, new AdaptEvento.OnItemClickListener() {
+        recyclerView2.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
             @Override
             public void onItemClick(DatabaseEvento item) {
 
