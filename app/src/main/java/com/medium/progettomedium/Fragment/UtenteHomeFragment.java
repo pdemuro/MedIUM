@@ -360,7 +360,6 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
                         startActivity(intent);
                     }
 
-
                 }));
 
             }
