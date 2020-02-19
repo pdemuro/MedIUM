@@ -2,15 +2,19 @@ package com.medium.progettomedium;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GestureDetectorCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.medium.progettomedium.Adapter.AdaptAmm;
 import com.medium.progettomedium.Adapter.AdaptAmmAccettati;
 import com.medium.progettomedium.Model.DatabaseUtente;
+import com.yalantis.ucrop.view.GestureCropImageView;
 
 import java.util.ArrayList;
 
@@ -35,11 +40,13 @@ public class ActivityDettagliAmm extends AppCompatActivity {
      AdaptAmm.OnItemClickListener itemClickListener;
      AdaptAmmAccettati.OnItemClickListener itemClickListener2;
      ImageView close;
+     private GestureDetectorCompat mGestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dettagli_amm);
+
 
         String title = getIntent().getStringExtra("title");
         String place = getIntent().getStringExtra("description");
@@ -47,6 +54,8 @@ public class ActivityDettagliAmm extends AppCompatActivity {
         String image = getIntent().getStringExtra("image");
         String data1 = getIntent().getStringExtra("date");
         final String id = getIntent().getStringExtra("id");
+
+        mGestureDetector= new GestureDetectorCompat(this, new GestureListener()) ;
 
         recyclerView = findViewById(R.id.elenco_richieste);
 
@@ -181,6 +190,31 @@ public class ActivityDettagliAmm extends AppCompatActivity {
 
             }
         });
+    }
+    private class GestureListener  extends GestureDetector.SimpleOnGestureListener{
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+          if(velocityX < 0) {
+              elencoAccettati.setVisibility(View.VISIBLE);
+              recyclerView.setVisibility(View.GONE);
+              accettati.setBackgroundColor(Color.parseColor("#20444444"));
+              prenotati.setBackgroundColor(0xDCDCDC);
+              elencoAccetta();
+          }else{
+              elencoAccettati.setVisibility(View.GONE);
+              recyclerView.setVisibility(View.VISIBLE);
+              prenotati.setBackgroundColor(Color.parseColor("#20444444"));
+              accettati.setBackgroundColor(0xDCDCDC);
+              elencoRic();
+
+          }
+           // Toast.makeText(ActivityDettagliAmm.this,"%f" ,velocityX,Toast.LENGTH_SHORT).show();
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+    }
+    public boolean onTouchEvent(MotionEvent event){
+        mGestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
     }
     public void elencoRic(){
         final String id = getIntent().getStringExtra("id");
