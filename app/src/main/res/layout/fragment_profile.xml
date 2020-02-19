@@ -5,7 +5,7 @@
     android:id="@+id/relativeLayout4"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:backgroundTint="@color/material_blue_grey_300"
+    android:backgroundTint="@color/colorWhite"
     tools:context=".Fragment.ProfileFragment">
 
 
@@ -14,9 +14,9 @@
         android:layout_width="150dp"
         android:layout_height="130dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        app:civ_border_width="1.5dp"
+        android:layout_marginTop="24dp"
         app:civ_border_color="@color/material_red_300"
+        app:civ_border_width="1.5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:maxLines="1"
         android:text="Profilo"
         android:textColor="@color/colorPrimaryDark"
@@ -63,10 +63,12 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/gradius_prenotato"
-        android:fontFamily="@font/roboto_thin"
+        android:layout_marginEnd="42dp"
+        android:background="@drawable/button_profilo"
+        android:elevation="2dp"
+        android:fontFamily="sans-serif"
         android:text="Modifica Profilo"
+        android:textColor="@color/background_material_dark"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/image_profile"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +107,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iMieiPost">
+        app:layout_constraintTop_toBottomOf="@+id/divider">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -115,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:cardBackgroundColor="@color/material_red_300"
+        app:cardBackgroundColor="@color/colorWhite"
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -157,7 +159,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         app:cardBackgroundColor="@color/material_blue_300"
         app:cardCornerRadius="10dp"
@@ -197,7 +199,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -230,6 +232,37 @@
                 app:layout_constraintStart_toEndOf="@+id/iMieiEventiText" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iMieiEventi" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/iMieiPost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/cardView17"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
