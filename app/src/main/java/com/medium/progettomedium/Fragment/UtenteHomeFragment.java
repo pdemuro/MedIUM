@@ -283,9 +283,6 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
         menoDistante.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                iconeFiltro.setVisibility(View.VISIBLE);
-                icone.setVisibility(View.INVISIBLE);
-                nomeFiltro.setText("Vicino a te");
 
                 // Create class object
                 gps = new GPSTracker(getContext());
@@ -295,6 +292,10 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
 
                     final double latitudePos = gps.getLatitude();
                     final double longitudePos = gps.getLongitude();
+                    iconeFiltro.setVisibility(View.VISIBLE);
+                    icone.setVisibility(View.INVISIBLE);
+                    nomeFiltro.setText("Vicino a te");
+
                     compare(tvLongi, tvLati, eventi);
                     var=0;
                     // \n is for new line
@@ -749,7 +750,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         double latitude = snapshot.child("latitude").getValue(Double.class);
                         double longitude = snapshot.child("longitude").getValue(Double.class);
-                        double distanceToPlace1 = distance_in_meter(latitude, longitude, latCurrent1, longCurrent1);
+                        double distanceToPlace1 = distance2(latitude, longitude, latCurrent1, longCurrent1);
 
 
                         snapshot.getRef().child("distanza").setValue(distanceToPlace1);
@@ -894,6 +895,19 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
 
 
     }
+    public static double getDistance(double lat_a, double lng_a, double lat_b, double lng_b) {
+        // earth radius is in mile
+        double earthRadius = 3958.75;
+        double latDiff = Math.toRadians(lat_b - lat_a);
+        double lngDiff = Math.toRadians(lng_b - lng_a);
+        double a = Math.sin(latDiff / 2) * Math.sin(latDiff / 2) + Math.cos(Math.toRadians(lat_a)) * Math.cos(Math.toRadians(lat_b)) * Math.sin(lngDiff / 2)
+                * Math.sin(lngDiff / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = earthRadius * c; int meterConversion = 1609;
+        double kmConvertion = 1.6093; // return
+        new Float(distance * meterConversion).floatValue();
+        return new Float(distance * kmConvertion).floatValue() ; // return String.format("%.2f", distance)+" m";
+    }
     private static double distance_in_meter(final double lat1, final double lon1, final double lat2, final double lon2) {
         float pk = (float) (180/3.14169);
         double a1 = lat1 / pk;
@@ -908,6 +922,12 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
 
         return 6366000*tt;
     }
+
+    private double distance2(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta)); dist = Math.acos(dist);
+                dist = rad2deg(dist); dist = dist * 60 * 1.1515; return (dist); } private double deg2rad(double deg) { return (deg * Math.PI / 180.0); } private double rad2deg(double rad) { return (rad * 180.0 / Math.PI); }
 
    /* @Override
     public void onBackPressed() {
