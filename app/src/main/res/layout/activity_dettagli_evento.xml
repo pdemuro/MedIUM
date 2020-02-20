@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
     tools:context="com.medium.progettomedium.ActivityDettagliEvento">
 
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/bar"
@@ -59,31 +61,18 @@
 
         <TextView
             android:id="@+id/titolo_dettagli_evento"
-            android:layout_width="wrap_content"
+            android:layout_width="330dp"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:layout_marginTop="16dp"
             android:text="Nome evento"
             android:textAllCaps="true"
             android:textColor="@color/primary_text_default_material_light"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="@id/cardView7"
+            app:layout_constraintStart_toStartOf="@id/cardView7"
             app:layout_constraintTop_toBottomOf="@+id/bar" />
 
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/gradius_image"
-            android:hint="Prenota ora"
-            android:textColor="#ffc6dafc"
-            android:textColorHint="@color/material_blue_500"
-            app:cornerRadius="10dp"
-            app:layout_constraintEnd_toEndOf="@+id/cardView8"
-            app:layout_constraintStart_toStartOf="@+id/cardView8"
-            app:layout_constraintTop_toBottomOf="@+id/cardView8" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView7"
@@ -112,25 +101,27 @@
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintVertical_bias="1.0"
                             tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView8"
-            android:layout_width="200dp"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="55dp"
-            android:layout_marginEnd="32dp"
+
+            android:layout_marginTop="30dp"
+
             app:cardCornerRadius="10dp"
-            app:layout_constraintEnd_toEndOf="@+id/cardView7"
-            app:layout_constraintStart_toStartOf="@+id/cardView7"
-            app:layout_constraintTop_toBottomOf="@+id/cardView7">
+
+            app:layout_constraintEnd_toEndOf="@+id/button"
+            app:layout_constraintStart_toStartOf="@+id/button"
+            app:layout_constraintTop_toBottomOf="@+id/button">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/descrizione_dettagli_evento"
@@ -138,8 +129,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
+
                             android:text="Breve descrizione dell' evento.."
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -153,16 +144,18 @@
             android:id="@+id/cardView9"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="260dp"
+            android:layout_marginStart="10dp"
+           android:layout_marginTop="260dp"
             android:animationCache="false"
             android:clickable="false"
+
             app:cardCornerRadius="10dp"
+
             app:layout_constraintStart_toStartOf="@+id/cardView7"
             app:layout_constraintTop_toTopOf="@+id/cardView7">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="120dp"
                     android:layout_height="match_parent">
 
                         <TextView
@@ -196,14 +189,15 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="260dp"
-            android:layout_marginEnd="8dp"
             app:cardCornerRadius="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="260dp"
             app:layout_constraintEnd_toEndOf="@+id/cardView7"
-            app:layout_constraintTop_toTopOf="@+id/cardView7">
+            app:layout_constraintTop_toTopOf="@+id/cardView7"
+           >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="120dp"
                     android:layout_height="match_parent">
 
                         <TextView
@@ -220,8 +214,10 @@
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/imageView3"
+                            app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="1.0" />
 
                         <ImageView
                             android:id="@+id/imageView3"
@@ -234,5 +230,20 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
+        <Button
+            android:id="@+id/button"
+            android:layout_marginTop="30dp"
+            android:layout_width="310dp"
+            android:layout_height="40dp"
+            android:background="@drawable/gradius_image"
+            android:hint="Prenota ora"
+            android:textColor="#ffc6dafc"
+            android:textColorHint="@color/material_blue_500"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/cardView7"
+            app:layout_constraintStart_toStartOf="@+id/cardView7"
+            app:layout_constraintTop_toBottomOf="@+id/cardView7"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
