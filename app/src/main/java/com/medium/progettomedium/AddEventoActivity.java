@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
@@ -17,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AddEventoActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
+    ImageView close, image_profile;
+    TextView save, tv_change;
     private EditText editTitolo;
     private EditText editDescrizione;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -30,6 +34,9 @@ public class AddEventoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_add_event);
 
+        close = findViewById(R.id.close);
+        save = findViewById(R.id.save);
+
         final String titolo = getIntent().getStringExtra("titolo");
         final  String descrizione = getIntent().getStringExtra("descrizione");
         final String data = getIntent().getStringExtra("data");
@@ -42,8 +49,6 @@ public class AddEventoActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference(); //carica database
         editTitolo = (EditText) findViewById(R.id.editTitolo);
         editDescrizione = (EditText) findViewById(R.id.editDescrizione);
-        buttonAnnulla = (Button) findViewById(R.id.buttonAnnulla);
-        buttonAvanti = (Button) findViewById(R.id.buttonAvanti);
 
         if(titolo != null){
             editTitolo.setText(titolo);
@@ -52,7 +57,8 @@ public class AddEventoActivity extends AppCompatActivity {
             editDescrizione.setText(descrizione);
         }
 
-        buttonAvanti.setOnClickListener(new View.OnClickListener() {
+
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(! editTitolo.getText().toString().equals("") &&! editDescrizione.getText().toString().equals("")){
@@ -73,7 +79,7 @@ public class AddEventoActivity extends AppCompatActivity {
             }
         });
 
-        buttonAnnulla.setOnClickListener(new View.OnClickListener() {
+        close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AddEventoActivity.this,MainActivity.class));

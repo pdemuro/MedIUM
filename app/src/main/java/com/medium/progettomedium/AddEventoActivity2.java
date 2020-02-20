@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,10 +42,15 @@ public class AddEventoActivity2 extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReferenceutente;
     Button buttonAvanti,buttonAnnulla;
+    ImageView close, image_profile;
+    TextView save, tv_change;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_add_event2);
+
+        close = findViewById(R.id.close);
+        save = findViewById(R.id.save);
 
         final String titolo = getIntent().getStringExtra("titolo");
        final  String descrizione = getIntent().getStringExtra("descrizione");
@@ -57,9 +63,8 @@ public class AddEventoActivity2 extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference(); //carica database
         boxData = (TextView) findViewById(R.id.editDate);
-        buttonAvanti =  findViewById(R.id.buttonAvanti);
+
         getPlace =  findViewById(R.id.getPlace);
-        buttonAnnulla = (Button) findViewById(R.id.buttonIndietro);
 
         if(data != null){
             boxData.setText(data);
@@ -69,7 +74,7 @@ public class AddEventoActivity2 extends AppCompatActivity {
         }
 
 
-        buttonAnnulla.setOnClickListener(new View.OnClickListener() {
+        close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String titolo = getIntent().getStringExtra("titolo");
@@ -147,7 +152,7 @@ public class AddEventoActivity2 extends AppCompatActivity {
             }
         });
 
-        buttonAvanti.setOnClickListener(new View.OnClickListener() {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String titolo = getIntent().getStringExtra("titolo");

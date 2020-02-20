@@ -97,16 +97,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
             }
         });
 
-        holder.publisher.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", MODE_PRIVATE).edit();
-                editor.putString("profileid", post.getPublisher());
-                editor.apply();
-
-                mContext.startActivity(new Intent(mContext, MainActivity.class));
-            }
-        });
 
 
     }
@@ -128,7 +118,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
             username = itemView.findViewById(R.id.username);
             post_image = itemView.findViewById(R.id.post_image);
             save = itemView.findViewById(R.id.save);
-            publisher = itemView.findViewById(R.id.publisher);
             description = itemView.findViewById(R.id.description);
         }
     }
@@ -143,7 +132,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
                 DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
                 Glide.with(mContext.getApplicationContext()).load(user.getImageUrl()).into(image_profile);
                 username.setText(user.getNome() + " " + user.getCognome());
-                publisher.setText(user.getNome());
 
             }
 

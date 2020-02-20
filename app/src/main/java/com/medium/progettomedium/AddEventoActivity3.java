@@ -48,7 +48,6 @@ import com.medium.progettomedium.MainActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.medium.progettomedium.R;
-import com.r0adkll.slidr.model.SlidrInterface;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -61,7 +60,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddEventoActivity3 extends AppCompatActivity {
     private DatabaseReference databaseReference;
-    private Button buttonEvent,scegliSfondo,buttonAnnulla;
+    private Button scegliSfondo;
     private Uri mImageUri;
     private StorageReference mStorageRef;
     private UploadTask mUploadTask;
@@ -70,10 +69,16 @@ public class AddEventoActivity3 extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReferenceutente;
 ImageView vediImage;
+    ImageView close, image_profile;
+    TextView save, tv_change;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_add_event3);
+
+        close = findViewById(R.id.close);
+        save = findViewById(R.id.save);
 
         final String titolo = getIntent().getStringExtra("titolo");
         final String descrizione = getIntent().getStringExtra("descrizione");
@@ -89,7 +94,7 @@ ImageView vediImage;
 
         //Slidr.attach(getActivity());
         databaseReference = FirebaseDatabase.getInstance().getReference(); //carica database
-        buttonEvent = (Button) findViewById(R.id.buttonInvia);
+
 
         scegliSfondo = (Button) findViewById(R.id.sfondo);
 
@@ -97,17 +102,17 @@ ImageView vediImage;
 /*
         buttonEvent.setOnClickListener(this);
         scegliSfondo.setOnClickListener(this);*/
-        buttonAnnulla = (Button) findViewById(R.id.buttonIndietro);
+
         vediImage = findViewById(R.id.addPost);
 
-        buttonAnnulla = (Button) findViewById(R.id.buttonIndietro);
+
 
         if(immagine != null){
 
             Picasso.get().load(mImageUri).into(vediImage);
         }
 
-        buttonAnnulla.setOnClickListener(new View.OnClickListener() {
+        close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddEventoActivity3.this, AddEventoActivity2.class);
@@ -134,7 +139,7 @@ ImageView vediImage;
         });
 
 
-        buttonEvent.setOnClickListener(new View.OnClickListener() {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 admin();

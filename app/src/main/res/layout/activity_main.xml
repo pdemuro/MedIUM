@@ -24,17 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:layout_above="@+id/bottom" >
-
-
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"></androidx.viewpager.widget.ViewPager>
-
-
-    </FrameLayout>
-
+        android:layout_above="@+id/bottom"
+        android:background="@color/colorWhite"/>
 
 
     <com.google.android.material.appbar.AppBarLayout
@@ -51,12 +42,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:background="?android:attr/windowBackground"
+            android:background="@drawable/gradius_image2"
             android:visibility="gone"
             app:itemIconSize="22dp"
             app:itemIconTint="@color/selector"
+
             app:labelVisibilityMode="unlabeled"
-            app:menu="@menu/bottom_navigation" />
+            app:menu="@menu/bottom_navigation"
+            app:elevation="16dp"/>
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
