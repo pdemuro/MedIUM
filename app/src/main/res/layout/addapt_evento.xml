@@ -28,7 +28,7 @@
 
             <TextView
                 android:id="@+id/titolo"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
                 android:layout_marginStart="15dp"
@@ -36,11 +36,12 @@
                 android:autoSizeMaxTextSize="20sp"
                 android:autoSizeStepGranularity="2sp"
                 android:autoSizeTextType="uniform"
-                android:maxLines="2"
+                android:maxLines="1"
                 android:text="Nome evento"
                 android:textAllCaps="true"
                 android:textColor="@color/primary_text_default_material_light"
                 android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/immagine"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -110,8 +111,9 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/gradius_image"
+                android:fontFamily="sans-serif"
                 android:text="Prenota"
-                android:textColor="@color/material_blue_A200"
+                android:textColor="#263238"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/immagine" />
