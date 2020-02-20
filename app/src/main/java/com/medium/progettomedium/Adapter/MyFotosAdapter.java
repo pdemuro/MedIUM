@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.medium.progettomedium.ActivityPostDetail;
+import com.medium.progettomedium.ActivityVisualizzaUtente;
 import com.medium.progettomedium.MapActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.Post;
@@ -55,9 +56,9 @@ public class MyFotosAdapter extends RecyclerView.Adapter<MyFotosAdapter.ImageVie
                 editor.putString("postid", post.getPostid());
                 editor.apply();
 
-                mContext.startActivity(new Intent(mContext, ActivityPostDetail.class));
-               /* ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ActivityPostDetail()).commit();*/
+                Intent i = new Intent(mContext, ActivityPostDetail.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(i);
             }
         });
 

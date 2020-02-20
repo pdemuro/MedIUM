@@ -68,11 +68,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                 android:background="@color/rossoButton"
+                 android:background="@drawable/gradius_accedi"
                 android:text="@string/accedi"
                 android:textColor="@android:color/white"
                 android:textSize="14sp"
-                app:fontFamily="Heebo" />
+                app:fontFamily="Heebo"
+                />
     </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
