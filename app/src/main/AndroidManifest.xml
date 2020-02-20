@@ -29,7 +29,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityVisualizzaUtente"></activity>
+        <activity android:name=".AddEventoActivity"></activity>
+        <activity android:name=".ActivityVisualizzaUtente" />
         <activity android:name=".ActivityModificaEvento" />
         <activity android:name=".Adapter.AdaptAmmAccettati" />
         <activity android:name=".ActivityDettagliAmm" />
@@ -50,6 +51,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".EditProfileActivity" />
         <activity android:name=".ActivityPostDetail" />
+        <activity android:name=".AddEventoActivity2" />
+        <activity android:name=".AddEventoActivity3" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -64,6 +67,13 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
+
+        <receiver android:name=".MyReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

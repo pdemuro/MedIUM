@@ -24,7 +24,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:layout_above="@+id/bottom" />
+        android:layout_above="@+id/bottom" >
+
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></androidx.viewpager.widget.ViewPager>
+
+
+    </FrameLayout>
+
 
 
     <com.google.android.material.appbar.AppBarLayout

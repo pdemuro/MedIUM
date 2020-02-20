@@ -13,8 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
-import com.medium.progettomedium.Fragment.AddEventFragment;
+import com.google.android.material.tabs.TabLayout;
 import com.medium.progettomedium.Fragment.AmmHomeFragment;
 import com.medium.progettomedium.Fragment.ProfileFragment;
 import com.medium.progettomedium.Fragment.UtenteHomeFragment;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     Fragment selectedFragment = null;
     boolean doubleTap = false;
     FirebaseAuth firebaseAuth;
+    TabLayout mTabLayout;
+    ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +91,17 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AmmHomeFragment()).commit();
 
                     Bundle intent = getIntent().getExtras();
-                    if (intent != null){
+
+
+                    if (intent != null ){
+/*
+                        mViewPager = findViewById(R.id.view_pager);
+                        mFragmentTabAdapter= new FragmentTabAdapter(getSupportFragmentManager());
+                        mViewPager.setAdapter(mFragmentTabAdapter);
+                        mTabLayout.setupWithViewPager(mViewPager);
+
+*/
+
                         String publisher = intent.getString("publisherid");
 
                         SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
@@ -99,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
                                 new ProfileFragment()).commit();
                         bottomNavigationViewOrga.getMenu().getItem(2).setChecked(true);
 
-                    } else {
                         bottomNavigationViewOrga.getMenu().getItem(0).setChecked(true);
                         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                                 new AmmHomeFragment()).commit();
@@ -156,7 +168,9 @@ public class MainActivity extends AppCompatActivity {
                     selectedFragment= new AmmHomeFragment();
                     break;
                 case R.id.nav_add:
-                    selectedFragment= new AddEventFragment();
+                    startActivity( new Intent(MainActivity.this, AddEventoActivity.class));
+
+
             }
             if(selectedFragment != null){
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
@@ -169,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    @Override
+
     /*public void onBackPressed() {
         if (doubleTap) {
             moveTaskToBack(true);
@@ -191,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, LoginActivity.class));
         }
     }*/
+
+
     public void onBackPressed() {
         if (doubleTap) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
