@@ -37,7 +37,8 @@ public class AddPostActivity extends AppCompatActivity {
     private StorageTask uploadTask;
     StorageReference storageRef;
 
-    ImageView  image_added,close;
+    ImageView  image_added;
+            ImageView close;
     TextView post,pubblica;
     EditText description;
     @Override
