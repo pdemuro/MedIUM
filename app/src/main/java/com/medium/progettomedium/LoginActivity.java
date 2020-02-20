@@ -2,6 +2,9 @@ package com.medium.progettomedium;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,8 +34,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button buttonSignIn, buttonAdmin;
     private TextInputLayout editTextEmail;
     private TextInputLayout editTextPassword;
+    private EditText pass;
     private TextView textViewSignUp;
     private ProgressDialog progressDialog;
+    private VideoView videoView;
+    MediaPlayer mediaPlayer;
+    int mCurrentVideoPosition;
 
     private FirebaseAuth firebaseAuth;
 
@@ -39,6 +47,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        videoView = (VideoView) findViewById(R.id.videoView);
+        Uri uri = Uri.parse("android.resource://"
+        + getPackageName() + "/" + R.raw.video2);
+
+        videoView.setVideoURI(uri);
+        videoView.start();
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mediaPlayer = mp;
+                mediaPlayer.setLooping(true);
+                if(mCurrentVideoPosition != 0){
+                    mediaPlayer.seekTo(mCurrentVideoPosition);
+                    mediaPlayer.start();
+                }
+            }
+        });
 
         firebaseAuth = FirebaseAuth.getInstance();
 

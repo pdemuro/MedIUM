@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,85 +8,114 @@
     android:gravity="bottom"
     tools:context=".LoginActivity">
 
-    <LinearLayout
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="-66dp">
+
+    </VideoView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:paddingLeft="60dp"
         android:paddingRight="60dp"
-        android:paddingBottom="80dp">
+        android:layout_marginTop="420dp"
+        app:errorEnabled="true"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColorHint="@color/colorWhite"
+        >
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/editTextEmail"
+        <com.google.android.material.textfield.TextInputEditText
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:errorEnabled="true">
+            android:layout_marginTop="20dp"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:padding="10dp"
 
-            <com.google.android.material.textfield.TextInputEditText
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
+            android:color="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:backgroundTint="@color/colorWhite"
+            >
 
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:padding="10dp"
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
 
-                android:textColor="@android:color/darker_gray"
-                android:textColorHint="@android:color/black">
+    <com.google.android.material.textfield.TextInputLayout
 
-            </com.google.android.material.textfield.TextInputEditText>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-
-            android:id="@+id/editTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-
-            android:textColor="@color/colorBlack"
-            app:errorEnabled="true"
-            app:passwordToggleEnabled="true">
-
-            <EditText
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                android:textColorHint="@android:color/darker_gray" />
-
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    <LinearLayout
+        android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/buttonSignIn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                 android:background="@drawable/gradius_accedi"
-                android:text="@string/accedi"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                app:fontFamily="Heebo"
-                />
-    </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_marginTop="15dp"
-                android:id="@+id/textViewSignUp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/non_ti_sei_registrato_premi_qui"
-                android:textAlignment="center"
-                android:textColor="@android:color/black" />
-        </LinearLayout>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
 
-</LinearLayout>
+        android:layout_marginBottom="641dp"
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp"
+
+        app:errorEnabled="true"
+        app:layout_constraintTop_toBottomOf="@id/editTextEmail"
+
+        app:layout_constraintStart_toStartOf="@id/editTextEmail"
+        app:passwordToggleEnabled="true"
+        android:textColorHint="@color/colorWhite"
+        app:passwordToggleTint="@color/colorWhite">
+
+        <EditText
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:padding="10dp"
+            android:paddingLeft="60dp"
+            android:paddingRight="60dp"
+            android:paddingBottom="80dp"
+            android:textCursorDrawable="@drawable/edittextwhite"
+            android:backgroundTint="@color/colorWhite"/>
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/buttonSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/rossoButton"
+        android:text="@string/accedi"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:fontFamily="Heebo"
+        android:layout_marginLeft= "60dp"
+        android:layout_marginRight="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
+        app:layout_constraintStart_toStartOf="@id/editTextPassword"
+     />
+
+    <TextView
+        android:id="@+id/textViewSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft= "60dp"
+        android:layout_marginRight="60dp"
+        android:text="@string/non_ti_sei_registrato_premi_qui"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSignIn"
+
+        app:layout_constraintStart_toStartOf="@id/buttonSignIn" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

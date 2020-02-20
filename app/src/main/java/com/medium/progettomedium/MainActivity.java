@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+
+
         firebaseAuth=FirebaseAuth.getInstance();
         FirebaseUser nome = firebaseAuth.getCurrentUser();
         String nome1= nome.getDisplayName().replaceAll("%20" ," ");
