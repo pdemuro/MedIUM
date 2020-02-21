@@ -119,6 +119,9 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 updateProfile(nomeU.getText().toString(),cognome.getText().toString(),
                         email.getText().toString(),bio.getText().toString());
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("publisherid", firebaseUser.getUid());
+                startActivity(intent);
             }
 
 
@@ -160,9 +163,7 @@ public class EditProfileActivity extends AppCompatActivity {
         reference.updateChildren(map);
 
         Toast.makeText(EditProfileActivity.this, "Informazioni Aggiornate!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("publisherid", firebaseUser.getUid());
-        this.startActivity(intent);
+
         //startActivity(new Intent(this, MainActivity.class));
     }
 

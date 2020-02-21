@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/nav_richieste"
-        android:icon="@drawable/ic_richieste"
+        android:icon="@drawable/ic_list"
         android:title=""
         />
 

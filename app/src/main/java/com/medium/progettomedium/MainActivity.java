@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     bottomNavigationView = findViewById(R.id.bottom_navigation);
                     bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
                     bottomNavigationView.setVisibility(View.VISIBLE);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new UtenteHomeFragment()).commit();
+
 
                     Bundle intent = getIntent().getExtras();
                     if (intent != null){
@@ -88,19 +88,12 @@ public class MainActivity extends AppCompatActivity {
                     bottomNavigationViewOrga = findViewById(R.id.bottom_navigation_amm);
                     bottomNavigationViewOrga.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
                     bottomNavigationViewOrga.setVisibility(View.VISIBLE);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new AmmHomeFragment()).commit();
+
 
                     Bundle intent = getIntent().getExtras();
 
 
                     if (intent != null ){
-/*
-                        mViewPager = findViewById(R.id.view_pager);
-                        mFragmentTabAdapter= new FragmentTabAdapter(getSupportFragmentManager());
-                        mViewPager.setAdapter(mFragmentTabAdapter);
-                        mTabLayout.setupWithViewPager(mViewPager);
-
-*/
 
                         String publisher = intent.getString("publisherid");
 
@@ -112,10 +105,10 @@ public class MainActivity extends AppCompatActivity {
                                 new ProfileFragment()).commit();
                         bottomNavigationViewOrga.getMenu().getItem(2).setChecked(true);
 
+                    }else{
                         bottomNavigationViewOrga.getMenu().getItem(0).setChecked(true);
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
                                 new AmmHomeFragment()).commit();
-
                     }
                 }
 
