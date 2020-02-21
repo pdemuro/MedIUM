@@ -94,11 +94,11 @@ public class ActivityModificaEvento extends AppCompatActivity {
         posizione = findViewById(R.id.posizione);
         dataC = findViewById(R.id.data);
 
-        String title = getIntent().getStringExtra("title");
-        String place = getIntent().getStringExtra("description");
+        String title = getIntent().getStringExtra("titolo");
+        String place = getIntent().getStringExtra("luogo");
         String description = getIntent().getStringExtra("descrizione");
-        String image = getIntent().getStringExtra("image");
-        String data1 = getIntent().getStringExtra("date");
+        String image = getIntent().getStringExtra("immagine");
+        String data1 = getIntent().getStringExtra("data");
         final String id = getIntent().getStringExtra("id");
 
         idEvento=id;
@@ -192,7 +192,7 @@ public class ActivityModificaEvento extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                //startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
             }
         });

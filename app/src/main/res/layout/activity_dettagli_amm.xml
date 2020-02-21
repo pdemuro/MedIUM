@@ -6,45 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".ActivityDettagliAmm">
 
-    <Button
-        android:id="@+id/prenotati"
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:layout_weight="1"
-        android:background="@color/ripple_material_light"
-        android:fontFamily="sans-serif"
-        android:hint="Lista prenotati"
-        android:textColorHint="@color/button_material_dark"
-        app:layout_constraintBottom_toTopOf="@+id/divider5"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bar" />
-
-    <Button
-        android:id="@+id/accettati"
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:layout_weight="0"
-        android:fontFamily="serif"
-        android:hint="Utenti accettati"
-        android:textAlignment="center"
-        android:textColorHint="@color/button_material_dark"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/elenco_richieste"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/bar" />
-
     <com.google.android.material.appbar.AppBarLayout
 
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toTopOf="@+id/evento"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -75,7 +43,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toRightOf="@+id/close"
-                    android:text="Lista Utenti"
+                    android:text="Gestione Evento"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="18sp"
                     android:textStyle="bold"></TextView>
@@ -85,48 +53,199 @@
 
 
         </androidx.appcompat.widget.Toolbar>
-
-        <View
-            android:id="@+id/divider4"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="?android:attr/listDivider" />
     </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/evento"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        app:layout_constraintTop_toBottomOf="@id/bar"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:focusable="auto"
+            android:longClickable="false"
+            app:cardCornerRadius="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <TextView
+                    android:id="@+id/titolo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="16dp"
+                    android:autoSizeMaxTextSize="20sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:autoSizeTextType="uniform"
+                    android:maxLines="1"
+                    android:text="Nome evento"
+                    android:textAllCaps="true"
+                    android:textColor="@color/primary_text_default_material_light"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/immagine"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/luogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:autoSizeMaxTextSize="30sp"
+                    android:autoSizeMinTextSize="2sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:autoSizeTextType="uniform"
+                    android:text="Luogo"
+                    android:textColor="@color/secondary_text_material_light"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@+id/immagine"
+                    app:layout_constraintTop_toBottomOf="@+id/titolo" />
+
+                <TextView
+                    android:id="@+id/data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Data"
+                    android:textColor="@color/material_red_300"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@+id/immagine"
+                    app:layout_constraintTop_toBottomOf="@+id/luogo" />
+
+                <ImageView
+                    android:id="@+id/immagine"
+                    android:layout_width="170dp"
+                    android:layout_height="0dp"
+                    android:background="#515d7fd3"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="15dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toEndOf="@+id/luogo"
+                    app:layout_constraintTop_toBottomOf="@+id/titolo"
+                    app:srcCompat="@drawable/placeholder" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="13dp"
+                    android:layout_height="17dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toEndOf="@+id/data"
+                    app:layout_constraintTop_toBottomOf="@+id/luogo"
+                    app:srcCompat="@drawable/calendar" />
+
+                <Button
+                    android:id="@+id/modifica"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/ic_richieste"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#263238"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/delete"
+                    app:layout_constraintHorizontal_bias="0.509"
+                    app:layout_constraintStart_toEndOf="@+id/immagine" />
+
+                <Button
+                    android:id="@+id/delete"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/ic_close"
+                    android:fontFamily="sans-serif"
+                    android:textColor="#263238"
+                    android:textSize="12sp"
+                    android:layout_marginBottom="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.436"
+                    app:layout_constraintStart_toEndOf="@+id/immagine" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/last_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_black"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/evento" >
+
+
+        <Button
+            android:id="@+id/prenotati"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:layout_weight="1"
+            android:background="@color/ripple_material_light"
+            android:hint="Lista prenotati"
+            android:textColorHint="@color/colorBlack" />
+
+        <Button
+            android:id="@+id/accettati"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Utenti accettati"
+            android:textColorHint="@color/colorBlack"
+            android:layout_margin="1dp"
+            />
+
+
+
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/elenco_richieste"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prenotati"
-        tools:visibility="visible" />
+         app:layout_constraintTop_toBottomOf="@id/last_bar"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/elencoAccettati"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/elenco_richieste" />
 
-    <View
-        android:id="@+id/divider5"
-        android:layout_width="409dp"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prenotati" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintTop_toBottomOf="@id/last_bar"
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

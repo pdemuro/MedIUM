@@ -188,13 +188,14 @@ public class AddEventoActivity3 extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
                         Uri downloadUri = task.getResult(); //LINK SFONDO
-                        //VENGONO CARICATI TUTTI I CAMPI DELL'EVENTO
-                        DatabaseEvento upload = new DatabaseEvento(id,data, titolo, latitudine, longitude, luogo.toLowerCase(), downloadUri.toString(), descrizione,0., "1");
-                        databaseReference.child("Eventi").child(id).setValue(upload);
-
                         firebaseAuth = FirebaseAuth.getInstance();
                         FirebaseUser user = firebaseAuth.getCurrentUser();
                         final String nome1= user.getDisplayName().replaceAll("%20" ," ");
+
+                        //VENGONO CARICATI TUTTI I CAMPI DELL'EVENTO
+                        DatabaseEvento upload = new DatabaseEvento(id,data, titolo, latitudine, longitude, luogo.toLowerCase(), downloadUri.toString(), descrizione,0., "1",user.getUid());
+                        databaseReference.child("Eventi").child(id).setValue(upload);
+
                         databaseReferenceutente = FirebaseDatabase.getInstance().getReference();
                         databaseReferenceutente.child("UserID").child("Utenti").child(nome1).addValueEventListener(new ValueEventListener() {
                             @Override

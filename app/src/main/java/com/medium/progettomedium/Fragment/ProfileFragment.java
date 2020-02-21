@@ -105,6 +105,7 @@ public class ProfileFragment extends Fragment {
     private AdaptEventoModificabile adaptEventoModificabile;
     private AdaptEventoUtente adapterutente;
     private RecyclerView listaEventiView;
+    private CardView informazioni;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -129,6 +130,7 @@ public class ProfileFragment extends Fragment {
 
         iMieiPost = view.findViewById(R.id.iMieiPost);
         iMieiEventi = view.findViewById(R.id.iMieiEventi);
+        informazioni = view.findViewById(R.id.informazioni);
 
       //  saved_fotos = view.findViewById(R.id.saved_fotos);
         logout=view.findViewById(R.id.logout);
@@ -171,7 +173,7 @@ public class ProfileFragment extends Fragment {
                         public void onClick(View v) {
                             recyclerView.setVisibility(View.VISIBLE);
                             listaEventiView.setVisibility(View.GONE);
-                            iMieiPost.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.material_blue_300)));
+                            iMieiPost.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.material_blue_grey_100)));
                             iMieiEventi.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.colorWhite)));
                             myFotos();
                         }
@@ -183,7 +185,7 @@ public class ProfileFragment extends Fragment {
                         public void onClick(View v) {
                             recyclerView.setVisibility(View.GONE);
                             listaEventiView.setVisibility(View.VISIBLE);
-                            iMieiEventi.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.material_blue_300)));
+                            iMieiEventi.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.material_blue_grey_100)));
                             iMieiPost.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.colorWhite)));
                             postEvent();
                         }
@@ -192,9 +194,12 @@ public class ProfileFragment extends Fragment {
 
                 }else{
                     postEvent();
-                    listaEventiView.setVisibility(View.VISIBLE);
+                    listaEventiView.setVisibility(View.GONE);
                     iMieiEventi.setVisibility(View.GONE);
+                    iMieiPost.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
+
+                    informazioni.setVisibility(View.VISIBLE);
 
 
                 }
@@ -366,7 +371,6 @@ public class ProfileFragment extends Fragment {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             // get all of the children at this level.
                             DatabaseUtente databaseUtente = dataSnapshot.getValue(DatabaseUtente.class);
-                            String tipo = databaseUtente.getCategory();
                             Iterable<DataSnapshot> children = dataSnapshot.getChildren();
                             // shake hands with each of them.'
                             int var = 0;

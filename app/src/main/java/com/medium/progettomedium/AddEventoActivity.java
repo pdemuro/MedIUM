@@ -27,7 +27,8 @@ public class AddEventoActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReferenceutente;
     private GestureDetectorCompat mGestureDetector;
-    private Button buttonAnnulla,buttonAvanti;
+    private ImageView buttonAnnulla;
+        TextView buttonAvanti;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +43,8 @@ public class AddEventoActivity extends AppCompatActivity {
         final  String descrizione = getIntent().getStringExtra("descrizione");
         final String data = getIntent().getStringExtra("data");
         final Double latitudine =getIntent().getDoubleExtra("latitudine",0.0);
-        final Double longitude = getIntent().getDoubleExtra("longitudine",0.0);
+        final Double longitudine = getIntent().getDoubleExtra("longitudine",0.0);
         final String luogo = getIntent().getStringExtra("luogo");
-
         final String immagine = getIntent().getStringExtra("immagine");
 
         databaseReference = FirebaseDatabase.getInstance().getReference(); //carica database
@@ -80,7 +80,7 @@ public class AddEventoActivity extends AppCompatActivity {
                     intent.putExtra("descrizione", descrizione);
                     intent.putExtra("data", data);
                     intent.putExtra("latitudine", latitudine);
-                    intent.putExtra("longitudine", longitude);
+                    intent.putExtra("longitudine", longitudine);
                     intent.putExtra("luogo", luogo);
                     intent.putExtra("immagine", immagine);
                     startActivity(intent);
