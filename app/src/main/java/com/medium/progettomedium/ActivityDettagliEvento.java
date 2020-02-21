@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.medium.progettomedium.Fragment.UtenteHomeFragment;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.squareup.picasso.Picasso;
 
@@ -178,7 +179,10 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                                     prenota.setEnabled(false);
 
                                     prenota.setText("In attesa");
-                                    prenota.setBackgroundColor(Color.YELLOW);
+                                    prenota.setTextColor(Color.parseColor("#ffffbc00"));
+                                    prenota .setBackgroundResource(R.drawable.gradius_attesa);
+                                    startActivity(getIntent());
+
                                 }
                             });
                             builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {

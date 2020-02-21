@@ -56,7 +56,6 @@ public class ActivityDettagliAmm extends AppCompatActivity {
         final String id = getIntent().getStringExtra("id");
 
         mGestureDetector= new GestureDetectorCompat(this, new GestureListener()) ;
-
         recyclerView = findViewById(R.id.elenco_richieste);
 
         accettati=findViewById(R.id.accettati);
@@ -200,7 +199,7 @@ public class ActivityDettagliAmm extends AppCompatActivity {
     private class GestureListener  extends GestureDetector.SimpleOnGestureListener{
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-          if(velocityX < 0) {
+        /*  if(velocityX < 0) {
               elencoAccettati.setVisibility(View.VISIBLE);
               recyclerView.setVisibility(View.GONE);
               accettati.setBackgroundColor(Color.parseColor("#20444444"));
@@ -213,7 +212,31 @@ public class ActivityDettagliAmm extends AppCompatActivity {
               accettati.setBackgroundColor(0xDCDCDC);
               elencoRic();
 
-          }
+          }*/
+            final int SWIPE_MIN_DISTANCE = 120;
+            final int SWIPE_MAX_OFF_PATH = 250;
+            final int SWIPE_THRESHOLD_VELOCITY = 200;
+            try {
+                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                    return false;
+                if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
+                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    elencoAccettati.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                    accettati.setBackgroundColor(Color.parseColor("#20444444"));
+                    prenotati.setBackgroundColor(0xDCDCDC);
+                    elencoAccetta();
+                } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
+                        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    elencoAccettati.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    prenotati.setBackgroundColor(Color.parseColor("#20444444"));
+                    accettati.setBackgroundColor(0xDCDCDC);
+                    elencoRic();
+                }
+            } catch (Exception e) {
+                // nothing
+            }
            // Toast.makeText(ActivityDettagliAmm.this,"%f" ,velocityX,Toast.LENGTH_SHORT).show();
             return super.onFling(e1, e2, velocityX, velocityY);
         }

@@ -116,11 +116,10 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         recyclerView2 = view.findViewById(R.id.recycler_view2);
-        recyclerView2.setHasFixedSize(true);
-        recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
+         recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
 
         search_bar = view.findViewById(R.id.search_bar);
         iconeFiltro = view.findViewById(R.id.IconsFiltro);
@@ -129,7 +128,6 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
 
 
         userList = new ArrayList<>();
-
         recyclerView.setAdapter(eventAdapter);
         recyclerView2.setAdapter(eventAdapter);
 
@@ -153,7 +151,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
         DatabaseEvento.date_collection_arr = new ArrayList<DatabaseEvento>();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("Eventi");
+       databaseReference = database.getReference("Eventi");
         //POPOLAZIONE EVENTI DA DATABASE
         databaseReference.addChildEventListener(new ChildEventListener() {
 
@@ -165,7 +163,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                loadData(dataSnapshot);
+               loadData(dataSnapshot);
             }
 
             public void onChildRemoved(DataSnapshot dataSnapshot) {
@@ -193,7 +191,6 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
 
         FirebaseMessaging.getInstance().subscribeToTopic("MyTopic");
 
-        databaseReference = database.getReference("Eventi");
         //POPOLAZIONE EVENTI DA DATABASE
         search_bar.setOnClickListener(new View.OnClickListener() {
             @Override
