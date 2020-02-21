@@ -42,8 +42,8 @@ public class AddEventoActivity2 extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReferenceutente;
     Button buttonAvanti,buttonAnnulla;
-    ImageView close, image_profile;
-    TextView save, tv_change;
+    ImageView close, image_profile, exit, save;
+    TextView tv_change;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +51,7 @@ public class AddEventoActivity2 extends AppCompatActivity {
 
         close = findViewById(R.id.close);
         save = findViewById(R.id.save);
+        exit = findViewById(R.id.exit);
 
         final String titolo = getIntent().getStringExtra("titolo");
        final  String descrizione = getIntent().getStringExtra("descrizione");
@@ -73,6 +74,13 @@ public class AddEventoActivity2 extends AppCompatActivity {
             getPlace.setText(luogo);
         }
 
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AddEventoActivity2.this,MainActivity.class));
+                finish();
+            }
+        });
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override

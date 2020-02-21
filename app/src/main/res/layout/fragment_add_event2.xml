@@ -30,37 +30,26 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/close"
+                    android:id="@+id/exit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
 
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/ic_freccia" />
+                    android:src="@drawable/ic_close" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@id/close"
+                    android:layout_toEndOf="@id/exit"
                     android:text="Nuovo Evento"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:text="Avanti"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
 
             </RelativeLayout>
 
@@ -68,27 +57,113 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@id/menupalle"
+        >
+
+        <ImageView
+            android:id="@+id/close"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/palline"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_freccia" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/palline"
+            >
+
+
+            <ImageView
+                android:id="@+id/pall1"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_pallino_vuoto" />
+            <ImageView
+                android:id="@+id/pall2"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintStart_toEndOf="@id/pall1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_pallino_pieno" />
+
+
+            <ImageView
+                android:id="@+id/pall3"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/pall2"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_pallino_vuoto" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/save"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/palline"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_freccia_avanti" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="612dp"
-        android:layout_marginEnd="172dp"
-        android:text="Fase 2 di 3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintTop_toBottomOf="@id/bar"
+        app:layout_constraintBottom_toTopOf="@id/menupalle">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textAlignment="center"
+            android:textSize="25sp"
+            android:text="Inserisci il luogo e la data dell'evento"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView16"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="24dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/textView9">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -99,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="Scegli  la posizione dell'evento"
+                android:text="Inserisci qua la posizione"
                 app:layout_constraintEnd_toEndOf="@+id/getPlace"
                 app:layout_constraintStart_toStartOf="@+id/getPlace"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -187,5 +262,6 @@
                 app:layout_constraintStart_toEndOf="@+id/textView12" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,19 +21,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/image_profile2"
-        android:layout_width="30dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="124dp"
-        android:elevation="3dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/edit_profile"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_conversion_absoluteHeight="40dp"
-        tools:layout_conversion_absoluteWidth="40dp"
-        tools:src="@drawable/ic_add" />
-
     <TextView
         android:id="@+id/profilo"
         android:layout_width="wrap_content"
@@ -171,7 +158,7 @@
         android:id="@+id/iMieiPost"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:cardBackgroundColor="@color/material_blue_300"
+        app:cardBackgroundColor="@color/selector"
         app:cardCornerRadius="0dp"
         app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -186,7 +173,7 @@
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="55dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="I miei post"
@@ -223,7 +210,7 @@
                 android:id="@+id/iMieiEventiText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
+                android:layout_marginStart="55dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="I miei eventi"

@@ -472,7 +472,7 @@
         android:layout_below="@+id/IconsId"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
-        android:background="#efefef" />
+        android:background="@drawable/shadow" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view2"

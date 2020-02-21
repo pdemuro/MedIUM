@@ -60,7 +60,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddEventoActivity3 extends AppCompatActivity {
     private DatabaseReference databaseReference;
-    private Button scegliSfondo;
+    private ImageView scegliSfondo;
     private Uri mImageUri;
     private StorageReference mStorageRef;
     private UploadTask mUploadTask;
@@ -68,9 +68,8 @@ public class AddEventoActivity3 extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReferenceutente;
-ImageView vediImage;
-    ImageView close, image_profile;
-    TextView save, tv_change;
+    ImageView close, image_profile, save;
+    TextView tv_change;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,20 +95,20 @@ ImageView vediImage;
         databaseReference = FirebaseDatabase.getInstance().getReference(); //carica database
 
 
-        scegliSfondo = (Button) findViewById(R.id.sfondo);
+        scegliSfondo = findViewById(R.id.addPost);
 
         mStorageRef = FirebaseStorage.getInstance().getReference(); //caricamento file dal database
 /*
         buttonEvent.setOnClickListener(this);
         scegliSfondo.setOnClickListener(this);*/
 
-        vediImage = findViewById(R.id.addPost);
+
 
 
 
         if(immagine != null){
 
-            Picasso.get().load(mImageUri).into(vediImage);
+            Picasso.get().load(mImageUri).into(scegliSfondo);
         }
 
         close.setOnClickListener(new View.OnClickListener() {
@@ -235,7 +234,7 @@ ImageView vediImage;
 
             if (resultCode == RESULT_OK) {
                 mImageUri = result.getUri();
-                Picasso.get().load(mImageUri).into(vediImage);
+                Picasso.get().load(mImageUri).into(scegliSfondo);
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();

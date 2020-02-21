@@ -19,8 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class AddEventoActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
-    ImageView close, image_profile;
-    TextView save, tv_change;
+    ImageView close, image_profile, exit, save;
+    TextView tv_change;
     private EditText editTitolo;
     private EditText editDescrizione;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -36,6 +36,7 @@ public class AddEventoActivity extends AppCompatActivity {
 
         close = findViewById(R.id.close);
         save = findViewById(R.id.save);
+        exit = findViewById(R.id.exit);
 
         final String titolo = getIntent().getStringExtra("titolo");
         final  String descrizione = getIntent().getStringExtra("descrizione");
@@ -56,6 +57,14 @@ public class AddEventoActivity extends AppCompatActivity {
         if(descrizione != null){
             editDescrizione.setText(descrizione);
         }
+
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AddEventoActivity.this,MainActivity.class));
+                finish();
+            }
+        });
 
 
         save.setOnClickListener(new View.OnClickListener() {
@@ -79,13 +88,7 @@ public class AddEventoActivity extends AppCompatActivity {
             }
         });
 
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AddEventoActivity.this,MainActivity.class));
-                finish();
-            }
-        });
+
     }
  /*   final GestureDetector gesture = new GestureDetector(getActivity(),
             new GestureDetector.SimpleOnGestureListener() {
