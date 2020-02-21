@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Eventi Sardegna</string>
+    <string name="app_name">EventX</string>
     <string name="email">              Email</string>
     <string name="password">           Password</string>
     <string name="login_utente">Login Utente</string>

@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.medium.progettomedium.Fragment.AmmHomeFragment;
+import com.medium.progettomedium.Fragment.AmmProfileFragment;
 import com.medium.progettomedium.Fragment.ProfileFragment;
 import com.medium.progettomedium.Fragment.UtenteHomeFragment;
 import com.medium.progettomedium.Model.DatabaseUtente;

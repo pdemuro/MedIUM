@@ -9,6 +9,7 @@
     tools:context=".LoginActivity">
 
 
+
     <VideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
@@ -17,6 +18,19 @@
         tools:layout_editor_absoluteY="-66dp">
 
     </VideoView>
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/eventx"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/editTextEmail">
+
+
+    </ImageView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextEmail"

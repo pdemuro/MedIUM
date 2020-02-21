@@ -66,54 +66,6 @@ public class AmmHomeFragment extends Fragment{
         eventi = new ArrayList<DatabaseEvento>();
 
         FirebaseMessaging.getInstance().subscribeToTopic("MyTopic");
-       /* final GestureDetector gesture = new GestureDetector(getActivity(),
-                new GestureDetector.SimpleOnGestureListener() {
-
-                    @Override
-                    public boolean onDown(MotionEvent e) {
-                        return true;
-                    }
-
-                    @Override
-                    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                                           float velocityY) {
-                        Toast.makeText(getContext(),"ciao",Toast.LENGTH_SHORT).show();
-                        final int SWIPE_MIN_DISTANCE = 120;
-                        final int SWIPE_MAX_OFF_PATH = 250;
-                        final int SWIPE_THRESHOLD_VELOCITY = 200;
-                        try {
-                            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                                return false;
-                            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
-                                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-
-
-                            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
-                                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                String var= "add";
-                                Intent intent = new Intent(getContext(), ActivityDettagliAmm.class);
-                                intent.putExtra("var", var);
-                                startActivity(intent);                            }
-                        } catch (Exception e) {
-                            // nothing
-                        }
-                        return super.onFling(e1, e2, velocityX, velocityY);
-                    }
-                });
-
-
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                // return gesture.onTouchEvent(event);
-
-                gesture.onTouchEvent(event);
-                return true; // <-- this line made the difference
-            }
-        });*/
-
-//here the rest of your code
 
         DatabaseEvento.date_collection_arr = new ArrayList<DatabaseEvento>();
 
@@ -150,26 +102,7 @@ public class AmmHomeFragment extends Fragment{
         return view;
 
     }
-/*
-    private class GestureListener  extends GestureDetector.SimpleOnGestureListener{
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if(velocityX < 0) {
-                Toast.makeText(getContext(),"ciao",Toast.LENGTH_SHORT).show();
-            }else{
 
-
-            }
-            // Toast.makeText(ActivityDettagliAmm.this,"%f" ,velocityX,Toast.LENGTH_SHORT).show();
-            return super.onFling(e1, e2, velocityX, velocityY);
-        }
-    }
-
-    public boolean onTouchEvent(MotionEvent event){
-        mGestureDetector.onTouchEvent(event);
-        //return super.onTouchEvent(event);
-        return true; // <-- this line made the difference
-    }*/
     public void loadData(DataSnapshot dataSnapshot) {
         // get all of the children at this level.
         final int flag = 0;

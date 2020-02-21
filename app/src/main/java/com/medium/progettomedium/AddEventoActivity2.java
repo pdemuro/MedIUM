@@ -67,8 +67,8 @@ public class AddEventoActivity2 extends AppCompatActivity {
 
         getPlace =  findViewById(R.id.getPlace);
 
-        if(data != null){
-            boxData.setText(data);
+        if(data2 != null){
+            boxData.setText(data2);
         }
         if(luogo != null){
             getPlace.setText(luogo);
@@ -91,7 +91,7 @@ public class AddEventoActivity2 extends AppCompatActivity {
                 Intent intent = new Intent(AddEventoActivity2.this, AddEventoActivity.class);
                 intent.putExtra("titolo", titolo);
                 intent.putExtra("descrizione", descrizione);
-                intent.putExtra("data", date);
+                intent.putExtra("data", data2);
                 intent.putExtra("latitudine", latitudine);
                 intent.putExtra("longitudine", longitudine);
                 intent.putExtra("luogo", luogo2);
@@ -139,7 +139,7 @@ public class AddEventoActivity2 extends AppCompatActivity {
                     data2 = "0" + day + "-" + "0" + month + "-" + year;
                 }
 
-                boxData.setText(date);
+                boxData.setText(data2);
 
 
             }
@@ -170,7 +170,7 @@ public class AddEventoActivity2 extends AppCompatActivity {
                     Intent intent = new Intent(AddEventoActivity2.this, AddEventoActivity3.class);
                     intent.putExtra("titolo", titolo);
                     intent.putExtra("descrizione", descrizione);
-                    intent.putExtra("data", date);
+                    intent.putExtra("data", data2);
                     intent.putExtra("latitudine", latitude);
                     intent.putExtra("longitudine", longitude);
                     intent.putExtra("luogo", luogo);
