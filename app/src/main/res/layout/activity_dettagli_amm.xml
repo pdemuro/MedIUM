@@ -198,17 +198,19 @@
         android:id="@+id/elenco_richieste"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/accettati"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        tools:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/elencoAccettati"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
 
-        tools:layout_editor_absoluteY="196dp" />
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prenotati"
+        tools:visibility="visible" />
 
     <Button
         android:id="@+id/prenotati"
