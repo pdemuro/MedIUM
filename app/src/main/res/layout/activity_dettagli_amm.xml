@@ -6,13 +6,45 @@
     android:layout_height="match_parent"
     tools:context=".ActivityDettagliAmm">
 
+    <Button
+        android:id="@+id/prenotati"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:layout_weight="1"
+        android:background="@color/ripple_material_light"
+        android:fontFamily="sans-serif"
+        android:hint="Lista prenotati"
+        android:textColorHint="@color/button_material_dark"
+        app:layout_constraintBottom_toTopOf="@+id/divider5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bar" />
+
+    <Button
+        android:id="@+id/accettati"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:layout_weight="0"
+        android:fontFamily="serif"
+        android:hint="Utenti accettati"
+        android:textAlignment="center"
+        android:textColorHint="@color/button_material_dark"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/elenco_richieste"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/bar" />
+
     <com.google.android.material.appbar.AppBarLayout
 
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
-        app:layout_constraintBottom_toTopOf="@+id/last_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -53,58 +85,48 @@
 
 
         </androidx.appcompat.widget.Toolbar>
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
     </com.google.android.material.appbar.AppBarLayout>
-
-    <LinearLayout
-        android:id="@+id/last_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_black"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/bar" >
-
-
-        <Button
-            android:id="@+id/prenotati"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="1dp"
-            android:layout_weight="1"
-            android:background="@color/ripple_material_light"
-            android:hint="Lista prenotati"
-            android:textColorHint="@color/colorBlack" />
-
-        <Button
-            android:id="@+id/accettati"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Utenti accettati"
-            android:textColorHint="@color/colorBlack"
-            android:layout_margin="1dp"
-            />
-
-
-
-
-    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/elenco_richieste"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-         app:layout_constraintTop_toBottomOf="@id/last_bar"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prenotati"
+        tools:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/elencoAccettati"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
 
-        app:layout_constraintTop_toBottomOf="@id/last_bar"
-         />
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/elenco_richieste" />
+
+    <View
+        android:id="@+id/divider5"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/prenotati" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
