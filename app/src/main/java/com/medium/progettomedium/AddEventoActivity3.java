@@ -44,6 +44,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.medium.progettomedium.EditProfileActivity;
+import com.medium.progettomedium.Fragment.AmmHomeFragment;
 import com.medium.progettomedium.MainActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
@@ -142,7 +143,9 @@ public class AddEventoActivity3 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 admin();
-                startActivity(new Intent(AddEventoActivity3.this, MainActivity.class));
+                Intent intent = new Intent(getApplication(), MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -212,8 +215,9 @@ public class AddEventoActivity3 extends AppCompatActivity {
                 }
             });
         }
-        startActivity(new Intent(AddEventoActivity3.this,MainActivity.class));
         Toast.makeText(AddEventoActivity3.this, "Informazioni Salvate", Toast.LENGTH_LONG).show();
+
+
     }
 
 

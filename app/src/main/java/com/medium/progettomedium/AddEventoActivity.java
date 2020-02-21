@@ -84,6 +84,7 @@ public class AddEventoActivity extends AppCompatActivity {
                     intent.putExtra("luogo", luogo);
                     intent.putExtra("immagine", immagine);
                     startActivity(intent);
+                    finish();
                 }
             }
         });

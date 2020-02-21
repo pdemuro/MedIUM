@@ -57,8 +57,8 @@ public class AddEventoActivity2 extends AppCompatActivity {
        final  String descrizione = getIntent().getStringExtra("descrizione");
         final String data = getIntent().getStringExtra("data");
         final Double latitudine =getIntent().getDoubleExtra("latitudine",0.0);
-        final Double longitude = getIntent().getDoubleExtra("longitudine",0.0);
-        final String luogo = getIntent().getStringExtra("luogo");
+        final Double longitudine = getIntent().getDoubleExtra("longitudine",0.0);
+        final String luogo2 = getIntent().getStringExtra("luogo");
 
         final String immagine = getIntent().getStringExtra("immagine");
 
@@ -93,8 +93,8 @@ public class AddEventoActivity2 extends AppCompatActivity {
                 intent.putExtra("descrizione", descrizione);
                 intent.putExtra("data", date);
                 intent.putExtra("latitudine", latitudine);
-                intent.putExtra("longitudine", longitude);
-                intent.putExtra("luogo", luogo);
+                intent.putExtra("longitudine", longitudine);
+                intent.putExtra("luogo", luogo2);
                 intent.putExtra("immagine", immagine);
                 startActivity(intent);
                 finish();
@@ -175,6 +175,7 @@ public class AddEventoActivity2 extends AppCompatActivity {
                     intent.putExtra("longitudine", longitude);
                     intent.putExtra("luogo", luogo);
                     startActivity(intent);
+                    finish();
                 }
             }
         });
