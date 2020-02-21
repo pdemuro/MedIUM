@@ -42,12 +42,12 @@ public class ActivityVisualizzaUtente extends AppCompatActivity {
         vu_img_profilo = findViewById(R.id.vu_img_profilo);
         vu_nome_utente = findViewById(R.id.vu_nome_utente);
         vu_categoria = findViewById(R.id.vu_categoria);
-        vu_lista_foto = findViewById(R.id.vu_lista_foto);
+       // vu_lista_foto = findViewById(R.id.vu_lista_foto);
         vu_lista_foto.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
-        vu_lista_foto.setLayoutManager(mLayoutManager);
+     //   LinearLayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
+      //  vu_lista_foto.setLayoutManager(mLayoutManager);
         postList = new ArrayList<>();
-        myFotosAdapter = new MyFotosAdapter(getApplicationContext(), postList);
+     //   myFotosAdapter = new MyFotosAdapter(getApplicationContext(), postList);
         vu_lista_foto.setAdapter(myFotosAdapter);
         postList_saves = new ArrayList<>();
 
