@@ -260,7 +260,9 @@ public class ActivityDettagliEvento extends AppCompatActivity {
 
                             final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                             final String nome1 = firebaseUser.getDisplayName().replaceAll("%20", " ");
-                            AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDettagliEvento.this);
+                            androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(ActivityDettagliEvento.this, R.style.AlertDialogStyle);
+
+                            //AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDettagliEvento.this);
                             builder.setTitle("Conferma Prenotazione");
                             builder.setMessage("Vuoi confermare la prenotazione per questo evento?");
                             builder.setCancelable(false);
@@ -288,7 +290,7 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                                 }
                             });
 
-                            AlertDialog dialog = builder.create();
+                            androidx.appcompat.app.AlertDialog dialog = builder.create();
                             dialog.show();
 
 

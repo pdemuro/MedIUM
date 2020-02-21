@@ -1,6 +1,7 @@
 package com.medium.progettomedium;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,7 +12,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -77,8 +80,42 @@ public class AddEventoActivity2 extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startActivity(new Intent(AddEventoActivity2.this,MainActivity.class));
                 finish();
+            }
+        });
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddEventoActivity2.this, R.style.AlertDialogStyle);
+                // Setting Dialog Title
+                //builder.setTitle("Internet non disponibile");
+
+                // Setting Dialog Message
+                builder.setMessage("Sei sicuro di voler uscire dalla creazione dell'evento? I dati inseriti andranno persi");
+
+                // On pressing the Settings button.
+                builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+
+                        startActivity(new Intent(AddEventoActivity2.this,MainActivity.class));
+                        finish();
+
+                    }
+                });
+
+                // On pressing the cancel button
+                builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+
+                    }
+                });
+
+                // Showing Alert Message
+                builder.show();
+
             }
         });
 
@@ -165,8 +202,9 @@ public class AddEventoActivity2 extends AppCompatActivity {
             public void onClick(View v) {
                 final String titolo = getIntent().getStringExtra("titolo");
                 String descrizione = getIntent().getStringExtra("descrizione");
-
-                if (boxData != null) {
+                String c=boxData.getText().toString();
+                String d= getPlace.getText().toString();
+                if ( ! boxData.getText().toString().equals("") && ! getPlace.getText().toString().equals("Scegli Posizione")) {
                     Intent intent = new Intent(AddEventoActivity2.this, AddEventoActivity3.class);
                     intent.putExtra("titolo", titolo);
                     intent.putExtra("descrizione", descrizione);
@@ -176,6 +214,17 @@ public class AddEventoActivity2 extends AppCompatActivity {
                     intent.putExtra("luogo", luogo);
                     startActivity(intent);
                     finish();
+                } else if( getPlace.getText().toString().equals("Scegli Posizione") && boxData.getText().toString().equals("")){
+                    boxData.setError("Non hai inserito la data");
+                    getPlace.setError("Non hai inserito la posizione");
+                }else if(boxData.getText().toString().equals("")){
+                    // Toast.makeText(AddEventoActivity.this,"Non hai inserito nessun titolo",Toast.LENGTH_SHORT).show();
+                    boxData.setError("Non hai inserito la data");
+
+                } else if(getPlace.getText().toString().equals("Scegli Posizione")){
+                    getPlace.setError("Non hai inserito nessuna posizione");
+                    //Toast.makeText(AddEventoActivity.this,"Non hai inserito nessuna descrizione",Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -187,7 +236,7 @@ public class AddEventoActivity2 extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         //VENGONO ASSEGNATI I VALORI DEL LUOGO
         if (requestCode == PLACE_PICKER_REQUEST) {
-            Place place = PlacePicker.getPlace(AddEventoActivity2.this, data);
+            Place place = PlacePicker.getPlace(getApplicationContext(), data);
             latitude = place.getLatLng().latitude;
             longitude = place.getLatLng().longitude;
             luogo = (String) place.getName();

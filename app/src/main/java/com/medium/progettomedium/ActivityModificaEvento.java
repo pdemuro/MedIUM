@@ -2,12 +2,14 @@ package com.medium.progettomedium;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -121,7 +123,36 @@ public class ActivityModificaEvento extends AppCompatActivity {
         salva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateEvento(id, titoloE.getText().toString(),descrizione.getText().toString());
+                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityModificaEvento.this, R.style.AlertDialogStyle);
+                // Setting Dialog Title
+                //builder.setTitle("Internet non disponibile");
+
+                // Setting Dialog Message
+                builder.setMessage("Sei sicuro di voler salvare la modifica dell'evento?");
+
+                // On pressing the Settings button.
+                builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+                        updateEvento(id, titoloE.getText().toString(),descrizione.getText().toString());
+                        Toast.makeText(ActivityModificaEvento.this,"Evento modificato con successo",Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(ActivityModificaEvento.this,MainActivity.class));
+                        finish();
+
+                    }
+                });
+
+                // On pressing the cancel button
+                builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+
+                    }
+                });
+
+                // Showing Alert Message
+                builder.show();
+
             }
 
 
@@ -191,7 +222,34 @@ public class ActivityModificaEvento extends AppCompatActivity {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityModificaEvento.this, R.style.AlertDialogStyle);
+                // Setting Dialog Title
+                //builder.setTitle("Internet non disponibile");
+
+                // Setting Dialog Message
+                builder.setMessage("Sei sicuro di voler uscire dalla modifica dell'evento? I dati non verranno salvati");
+
+                // On pressing the Settings button.
+                builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+                        Toast.makeText(ActivityModificaEvento.this,"Modifica annullata",Toast.LENGTH_SHORT).show();
+
+                        finish();
+
+                    }
+                });
+
+                // On pressing the cancel button
+                builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+
+                    }
+                });
+
+                // Showing Alert Message
+                builder.show();
+
                 //startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
             }

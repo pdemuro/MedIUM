@@ -1,5 +1,6 @@
 package com.medium.progettomedium.Fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -14,8 +15,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -32,6 +35,7 @@ import com.medium.progettomedium.ActivityModificaEvento;
 import com.medium.progettomedium.Adapter.AdaptEventoModificabile;
 import com.medium.progettomedium.Adapter.AdaptEventoUtente;
 import com.medium.progettomedium.Adapter.MyFotosAdapter;
+import com.medium.progettomedium.AddEventoActivity2;
 import com.medium.progettomedium.EditProfileActivity;
 import com.medium.progettomedium.LoginActivity;
 import com.medium.progettomedium.MainActivity;
@@ -240,9 +244,36 @@ public class ProfileFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                FirebaseAuth.getInstance().signOut();
 
-                startActivity(new Intent(getContext(), LoginActivity.class));
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AlertDialogStyle);
+                // Setting Dialog Title
+                //builder.setTitle("Internet non disponibile");
+
+                // Setting Dialog Message
+                builder.setMessage("Sei sicuro di voler uscire Dal profilo?");
+
+                // On pressing the Settings button.
+                builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(getContext(), LoginActivity.class));
+                       // Toast.makeText(getContext(),"Modifica annullata",Toast.LENGTH_SHORT).show();
+
+
+
+                    }
+                });
+
+                // On pressing the cancel button
+                builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+
+                    }
+                });
+
+                // Showing Alert Message
+                builder.show();
 
 
             }

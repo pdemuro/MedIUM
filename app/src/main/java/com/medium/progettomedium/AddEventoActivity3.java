@@ -3,6 +3,7 @@ package com.medium.progettomedium;
 
 import android.app.DatePickerDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -61,7 +63,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddEventoActivity3 extends AppCompatActivity {
     private DatabaseReference databaseReference;
-    private ImageView scegliSfondo;
+    private ImageView scegliSfondo,exit;
     private Uri mImageUri;
     private StorageReference mStorageRef;
     private UploadTask mUploadTask;
@@ -79,6 +81,7 @@ public class AddEventoActivity3 extends AppCompatActivity {
 
         close = findViewById(R.id.close);
         save = findViewById(R.id.save);
+        exit = findViewById(R.id.exit);
 
         final String titolo = getIntent().getStringExtra("titolo");
         final String descrizione = getIntent().getStringExtra("descrizione");
@@ -111,10 +114,45 @@ public class AddEventoActivity3 extends AppCompatActivity {
 
             Picasso.get().load(mImageUri).into(scegliSfondo);
         }
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddEventoActivity3.this, R.style.AlertDialogStyle);
+                // Setting Dialog Title
+                //builder.setTitle("Internet non disponibile");
 
+                // Setting Dialog Message
+                builder.setMessage("Sei sicuro di voler uscire dalla creazione dell'evento? I dati inseriti andranno persi");
+
+                // On pressing the Settings button.
+                builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+                        Toast.makeText(AddEventoActivity3.this,"Pubblicazione avvenuta con successo",Toast.LENGTH_SHORT).show();
+
+                        startActivity(new Intent(AddEventoActivity3.this,MainActivity.class));
+                        finish();
+
+                    }
+                });
+
+                // On pressing the cancel button
+                builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+
+                    }
+                });
+
+                // Showing Alert Message
+                builder.show();
+
+            }
+        });
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Intent intent = new Intent(AddEventoActivity3.this, AddEventoActivity2.class);
                 intent.putExtra("titolo", titolo);
                 intent.putExtra("descrizione", descrizione);
@@ -142,10 +180,40 @@ public class AddEventoActivity3 extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                admin();
-                Intent intent = new Intent(getApplication(), MainActivity.class);
-                startActivity(intent);
-                finish();
+                if(mImageUri != null) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddEventoActivity3.this, R.style.AlertDialogStyle);
+                    // Setting Dialog Title
+                    //builder.setTitle("Internet non disponibile");
+
+                    // Setting Dialog Message
+                    builder.setMessage("Sei sicuro di voler pubblicare l'evento?");
+
+                    // On pressing the Settings button.
+                    builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int which) {
+                            admin();
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                            finish();
+
+                        }
+                    });
+
+                    // On pressing the cancel button
+                    builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+
+                        }
+                    });
+
+                    // Showing Alert Message
+                    builder.show();
+
+                }else{
+                    Toast.makeText(AddEventoActivity3.this,"Non hai inserito nessuna foto",Toast.LENGTH_SHORT).show();
+
+                }
             }
         });
 
@@ -216,7 +284,7 @@ public class AddEventoActivity3 extends AppCompatActivity {
                 }
             });
         }
-        Toast.makeText(AddEventoActivity3.this, "Informazioni Salvate", Toast.LENGTH_LONG).show();
+        Toast.makeText(AddEventoActivity3.this, "Evento creato con successo", Toast.LENGTH_LONG).show();
 
 
     }

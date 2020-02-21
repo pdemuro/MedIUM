@@ -56,16 +56,16 @@ public class MyReceiver extends BroadcastReceiver {
         }
     }
     public void showSettingsAlert(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-
+       // AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.AlertDialogStyle);
         // Setting Dialog Title
-        alertDialog.setTitle("Internet non disponibile");
+        builder.setTitle("Internet non disponibile");
 
         // Setting Dialog Message
-        alertDialog.setMessage("Non hai internet attivo. Vuoi attivarlo tramite le impostazioni del cellulare?");
+        builder.setMessage("Non hai internet attivo. Vuoi attivarlo tramite le impostazioni del cellulare?");
 
         // On pressing the Settings button.
-        alertDialog.setPositiveButton("Impostazioni", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Impostazioni", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog,int which) {
                 Intent intent = new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
                 mContext.startActivity(intent);
@@ -73,14 +73,14 @@ public class MyReceiver extends BroadcastReceiver {
         });
 
         // On pressing the cancel button
-        alertDialog.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
         });
 
         // Showing Alert Message
-        alertDialog.show();
+        builder.show();
     }
 
 

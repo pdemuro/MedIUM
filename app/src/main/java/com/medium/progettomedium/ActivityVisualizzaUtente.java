@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,7 +28,7 @@ import java.util.List;
 
 public class ActivityVisualizzaUtente extends AppCompatActivity {
 
-    ImageView vu_img_profilo;
+    ImageView vu_img_profilo,close;
     TextView vu_nome_utente, vu_categoria;
     private RecyclerView vu_lista_foto;
     private List<Post> postList;
@@ -50,11 +51,18 @@ public class ActivityVisualizzaUtente extends AppCompatActivity {
        myFotosAdapter = new MyFotosAdapter(getApplicationContext(), postList);
         vu_lista_foto.setAdapter(myFotosAdapter);
         postList_saves = new ArrayList<>();
+        close=findViewById(R.id.close);
 
         String nome = getIntent().getStringExtra("nome");
         String immagine = getIntent().getStringExtra("immagine");
         String categoria = getIntent().getStringExtra("category");
 
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         vu_nome_utente.setText(nome);
         vu_categoria.setText(categoria);

@@ -1,6 +1,7 @@
 package com.medium.progettomedium;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 
@@ -61,8 +64,34 @@ public class AddEventoActivity extends AppCompatActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddEventoActivity.this,MainActivity.class));
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddEventoActivity.this, R.style.AlertDialogStyle);
+                // Setting Dialog Title
+                //builder.setTitle("Internet non disponibile");
+
+                // Setting Dialog Message
+                builder.setMessage("Sei sicuro di voler uscire dalla creazione dell'evento? I dati inseriti andranno persi");
+
+                // On pressing the Settings button.
+                builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+
+                        startActivity(new Intent(AddEventoActivity.this,MainActivity.class));
+                        finish();
+
+                    }
+                });
+
+                // On pressing the cancel button
+                builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+
+                    }
+                });
+
+                // Showing Alert Message
+                builder.show();
+
             }
         });
 
@@ -85,6 +114,18 @@ public class AddEventoActivity extends AppCompatActivity {
                     intent.putExtra("immagine", immagine);
                     startActivity(intent);
                     finish();
+                }else if( editTitolo.getText().toString().equals("") && editDescrizione.getText().toString().equals("")){
+                    editTitolo.setError("Non hai inserito nessun titolo");
+                    editDescrizione.setError("Non hai inserito nessuna descrizione");
+                }
+                else if(editTitolo.getText().toString().equals("")){
+                   // Toast.makeText(AddEventoActivity.this,"Non hai inserito nessun titolo",Toast.LENGTH_SHORT).show();
+                    editTitolo.setError("Non hai inserito nessun titolo");
+
+                } else if(editDescrizione.getText().toString().equals("")){
+                    editDescrizione.setError("Non hai inserito nessuna descrizione");
+                    //Toast.makeText(AddEventoActivity.this,"Non hai inserito nessuna descrizione",Toast.LENGTH_SHORT).show();
+
                 }
             }
         });

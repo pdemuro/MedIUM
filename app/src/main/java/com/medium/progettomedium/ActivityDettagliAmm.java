@@ -1,11 +1,13 @@
 package com.medium.progettomedium;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -83,24 +85,52 @@ public class ActivityDettagliAmm extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                Query applesQuery = ref.child("Eventi").orderByChild("id").equalTo(id);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDettagliAmm.this, R.style.AlertDialogStyle);
+                // Setting Dialog Title
+                //builder.setTitle("Internet non disponibile");
 
-                applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-                            appleSnapshot.getRef().removeValue();
-                        }
-                        Toast.makeText(ActivityDettagliAmm.this,"Evento eliminiato",Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(ActivityDettagliAmm.this, MainActivity.class));
-                    }
+                // Setting Dialog Message
+                builder.setMessage("Sei sicuro di voler eliminare definitivamente l'evento? ");
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Log.e(TAG, "Cancellato", databaseError.toException());
+                // On pressing the Settings button.
+                builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                        Query applesQuery = ref.child("Eventi").orderByChild("id").equalTo(id);
+
+                        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                                    appleSnapshot.getRef().removeValue();
+                                }
+                                Toast.makeText(ActivityDettagliAmm.this,"Evento eliminiato",Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(ActivityDettagliAmm.this, MainActivity.class));
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.e(TAG, "Cancellato", databaseError.toException());
+                            }
+                        });
+
                     }
                 });
+
+                // On pressing the cancel button
+                builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+
+                    }
+                });
+
+                // Showing Alert Message
+                builder.show();
+
+
+
             }
 
         });

@@ -1,20 +1,26 @@
 package com.medium.progettomedium.Adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.medium.progettomedium.AddEventoActivity2;
+import com.medium.progettomedium.MainActivity;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.medium.progettomedium.R;
 import com.squareup.picasso.Picasso;
@@ -119,8 +125,36 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
                 @Override
                 public void onClick(View v) {
 
+                    AlertDialog.Builder builder = new AlertDialog.Builder(c, R.style.AlertDialogStyle);
+                    // Setting Dialog Title
+                    //builder.setTitle("Internet non disponibile");
 
-                    databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(3);
+                    // Setting Dialog Message
+                    builder.setMessage("Sei sicuro di voler accettare questo utente? Hai visualizzato il suo profilo?");
+
+                    // On pressing the Settings button.
+                    builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int which) {
+
+                            databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(3);
+                            Toast.makeText(c,"Operazione avvenuta con successo",Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    });
+
+                    // On pressing the cancel button
+                    builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+
+                        }
+                    });
+
+                    // Showing Alert Message
+                    builder.show();
+
+
                     //Intent intent = new Intent(c, AmmHomeFragment.class);
                     //c.startActivity(intent);
                 }
@@ -131,7 +165,35 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
                 public void onClick(View v) {
 
 
-                    databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(4);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(c, R.style.AlertDialogStyle);
+                    // Setting Dialog Title
+                    //builder.setTitle("Internet non disponibile");
+
+                    // Setting Dialog Message
+                    builder.setMessage("Sei sicuro di voler rifiutare questo utente? Hai visualizzato il suo profilo?");
+
+                    // On pressing the Settings button.
+                    builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int which) {
+
+                            databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(4);
+                            Toast.makeText(c,"Operazione avvenuta con successo",Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    });
+
+                    // On pressing the cancel button
+                    builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+
+                        }
+                    });
+
+                    // Showing Alert Message
+                    builder.show();
+
                     //Intent intent = new Intent(c, AmmHomeFragment.class);
                     //c.startActivity(intent);
                 }

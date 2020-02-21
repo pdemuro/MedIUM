@@ -1,13 +1,16 @@
 package com.medium.progettomedium;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -58,12 +61,39 @@ public class AddPostActivity extends AppCompatActivity {
         pubblica.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                uploadImage_10();
-                FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddPostActivity.this, R.style.AlertDialogStyle);
+                // Setting Dialog Title
+                //builder.setTitle("Internet non disponibile");
 
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("publisherid", firebaseUser.getUid());
-                startActivity(intent);
+                // Setting Dialog Message
+                builder.setMessage("Sei sicuro di voler pubblicare il post?");
+
+                // On pressing the Settings button.
+                builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+
+                        Toast.makeText(AddPostActivity.this,"Creazione evento annullata",Toast.LENGTH_SHORT).show();
+                        uploadImage_10();
+                        FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+
+                       /* Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.putExtra("publisherid", firebaseUser.getUid());
+                        startActivity(intent);*/
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        finish();
+                    }
+                });
+
+                // On pressing the cancel button
+                builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                // Showing Alert Message
+                builder.show();
+
             }
         });
         image_added.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +108,32 @@ public class AddPostActivity extends AppCompatActivity {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                AlertDialog.Builder builder = new AlertDialog.Builder(AddPostActivity.this, R.style.AlertDialogStyle);
+                // Setting Dialog Title
+                //builder.setTitle("Internet non disponibile");
+
+                // Setting Dialog Message
+                builder.setMessage("Sei sicuro di voler annullare la creazione del post? I dati non verranno salvati");
+
+                // On pressing the Settings button.
+                builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int which) {
+
+                        Toast.makeText(AddPostActivity.this,"Creazione evento annullata",Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+
+                // On pressing the cancel button
+                builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                // Showing Alert Message
+                builder.show();
+
             }
         });
 

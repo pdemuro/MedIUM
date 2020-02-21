@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,7 +34,7 @@ import java.util.List;
 
 public class ActivityVisualizzaAmm extends AppCompatActivity {
 
-    ImageView vu_img_profilo;
+    ImageView vu_img_profilo,close;
     TextView vu_nome_utente, vu_categoria,email2;
     private RecyclerView vu_lista_foto;
     private List<Post> postList;
@@ -68,13 +69,19 @@ public class ActivityVisualizzaAmm extends AppCompatActivity {
         listaEventiView.setLayoutManager(linearLayoutManager);
         eventi = new ArrayList<DatabaseEvento>();
         DatabaseEvento.date_collection_arr = new ArrayList<DatabaseEvento>();
-
+        close=findViewById(R.id.close);
 
         final String nome = getIntent().getStringExtra("nome");
         String immagine = getIntent().getStringExtra("immagine");
         String categoria = getIntent().getStringExtra("category");
         String email = getIntent().getStringExtra("mail");
 
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         vu_nome_utente.setText(nome);
         vu_categoria.setText(categoria);
