@@ -146,40 +146,9 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
         next = (ImageButton) view.findViewById(R.id.Ib_next);
         //readUsers();
         // readEvent();
-
-
         DatabaseEvento.date_collection_arr = new ArrayList<DatabaseEvento>();
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-       databaseReference = database.getReference("Eventi");
-        //POPOLAZIONE EVENTI DA DATABASE
-        databaseReference.addChildEventListener(new ChildEventListener() {
-
-
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                loadData(dataSnapshot);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-               loadData(dataSnapshot);
-            }
-
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                removeData(dataSnapshot);
-            }
-
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            public void onCancelled(DatabaseError databaseError) {
-            }
-
-
-        });
-
+        Event();
         recyclerView.setHasFixedSize(true);
         recyclerView2.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -232,6 +201,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
                 giorni.setVisibility(View.GONE);
                 recyclerView2.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+                Event();
 
             }
         });
@@ -256,6 +226,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
         calendario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 nomeFiltro.setText("Calendario");
                 iconeFiltro.setVisibility(View.VISIBLE);
                 layoutCalendario.setVisibility(View.VISIBLE);
@@ -309,6 +280,41 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
         return view;
     }
 
+    private void Event(){
+
+        DatabaseEvento.date_collection_arr = new ArrayList<DatabaseEvento>();
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("Eventi");
+        //POPOLAZIONE EVENTI DA DATABASE
+        databaseReference.addChildEventListener(new ChildEventListener() {
+
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                loadData(dataSnapshot);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                loadData(dataSnapshot);
+            }
+
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                removeData(dataSnapshot);
+            }
+
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            public void onCancelled(DatabaseError databaseError) {
+            }
+
+
+        });
+
+    }
     private void firebaseSearch(String searchText) {
 
 

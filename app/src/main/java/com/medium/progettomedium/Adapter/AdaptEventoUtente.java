@@ -149,24 +149,26 @@ public class AdaptEventoUtente extends RecyclerView.Adapter<AdaptEventoUtente.Vi
                                         stato.setEnabled(false);
 
                                         stato.setText("Prenotato");
-                                        //stato.setTextColor(Color.parseColor("#ffc6ff00"));
+                                        stato.setTextColor(Color.parseColor("#000000"));
                                         stato.setBackgroundResource(R.drawable.gradius_prenotato);
                                     } else if(var == 1){
 
                                         stato.setEnabled(false);
 
                                         stato.setText("In attesa");
-                                       // stato.setTextColor(Color.parseColor("#ffffbc00"));
+                                        stato.setTextColor(Color.parseColor("#000000"));
                                         stato.setBackgroundResource(R.drawable.gradius_attesa);
                                     }else if(var == 3){
 
                                         stato.setEnabled(false);
                                         stato.setText("Rifiutato");
-                                       // stato.setTextColor(Color.parseColor("#ffff1744"));
+                                        stato.setTextColor(Color.parseColor("#000000"));
                                         stato.setBackgroundResource(R.drawable.gradius_rifiutato);
                                     }
                                     else{
                                         stato.setText("Prenota Ora");
+
+                                        stato.setTextColor(Color.parseColor("#000000"));
                                         stato.setBackgroundResource(R.drawable.gradius_image);
                                     }
                                 }

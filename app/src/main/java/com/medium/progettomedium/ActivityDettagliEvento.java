@@ -133,15 +133,15 @@ public class ActivityDettagliEvento extends AppCompatActivity {
 
                                         if (stato.equals("2")) {
                                             prenota.setText("In Attesa");
-                                            // prenota.setTextColor(Color.parseColor("#ffffbc00"));
+                                           prenota.setTextColor(Color.parseColor("#000000"));
                                             prenota.setBackgroundResource(R.drawable.gradius_attesa);
                                         } else if (stato.equals("3")) {
                                             prenota.setText("Prenotato");
-                                            //  prenota.setTextColor(Color.parseColor("#ffc6ff00"));
+                                             prenota.setTextColor(Color.parseColor("#000000"));
                                             prenota.setBackgroundResource(R.drawable.gradius_prenotato);
                                         } else if (stato.equals("4")) {
                                             prenota.setText("Rifiutato");
-                                            //  prenota.setTextColor(Color.parseColor("#ffff1744"));
+                                            prenota.setTextColor(Color.parseColor("#000000"));
                                             prenota.setBackgroundResource(R.drawable.gradius_rifiutato);
                                         }
                                     }

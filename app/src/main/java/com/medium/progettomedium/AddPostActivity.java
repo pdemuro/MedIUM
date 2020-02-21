@@ -27,6 +27,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.medium.progettomedium.Fragment.ProfileFragment;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
@@ -58,6 +59,11 @@ public class AddPostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 uploadImage_10();
+                FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("publisherid", firebaseUser.getUid());
+                startActivity(intent);
             }
         });
         image_added.setOnClickListener(new View.OnClickListener() {
