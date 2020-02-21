@@ -38,8 +38,8 @@ public class AddPostActivity extends AppCompatActivity {
     StorageReference storageRef;
 
     ImageView  image_added;
-            ImageView close;
-    TextView post,pubblica;
+            ImageView close,image_profile;
+    TextView post,pubblica,username;
     EditText description;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

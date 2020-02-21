@@ -9,21 +9,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.medium.progettomedium.Adapter.AdaptAmm;
 import com.medium.progettomedium.Adapter.AdaptAmmAccettati;
+import com.medium.progettomedium.Fragment.AmmHomeFragment;
 import com.medium.progettomedium.Model.DatabaseUtente;
+import com.squareup.picasso.Picasso;
 import com.yalantis.ucrop.view.GestureCropImageView;
 
 import java.util.ArrayList;
@@ -31,7 +36,7 @@ import java.util.ArrayList;
 public class ActivityDettagliAmm extends AppCompatActivity {
 
      RecyclerView recyclerView,elencoAccettati;
-     Button accettati,prenotati;
+     Button accettati,prenotati,modifica,delete;
      AdaptAmm ammAdapter;
      AdaptAmmAccettati ammAdapter2;
      ArrayList<DatabaseUtente> utenti = new ArrayList<DatabaseUtente>();
@@ -39,8 +44,10 @@ public class ActivityDettagliAmm extends AppCompatActivity {
      DatabaseReference databaseReference;
      AdaptAmm.OnItemClickListener itemClickListener;
      AdaptAmmAccettati.OnItemClickListener itemClickListener2;
-     ImageView close;
+     ImageView close,immagine;
+     TextView titolo,luogo,data;
      private GestureDetectorCompat mGestureDetector;
+    private static final String TAG = "ActivityDettagliAmm";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -48,11 +55,11 @@ public class ActivityDettagliAmm extends AppCompatActivity {
         setContentView(R.layout.activity_dettagli_amm);
 
 
-        String title = getIntent().getStringExtra("title");
-        String place = getIntent().getStringExtra("description");
-        String description = getIntent().getStringExtra("descrizione");
-        String image = getIntent().getStringExtra("image");
-        String data1 = getIntent().getStringExtra("date");
+        final String title = getIntent().getStringExtra("titolo");
+        final String place = getIntent().getStringExtra("luogo");
+        final String description = getIntent().getStringExtra("descrizione");
+        final String image = getIntent().getStringExtra("immagine");
+        final String data1 = getIntent().getStringExtra("data");
         final String id = getIntent().getStringExtra("id");
 
         mGestureDetector= new GestureDetectorCompat(this, new GestureListener()) ;
@@ -61,6 +68,60 @@ public class ActivityDettagliAmm extends AppCompatActivity {
         accettati=findViewById(R.id.accettati);
         prenotati=findViewById(R.id.prenotati);
         close=findViewById(R.id.close);
+        immagine= findViewById(R.id.immagine);
+        delete=findViewById(R.id.delete);
+        modifica= findViewById(R.id.modifica);
+        titolo=findViewById(R.id.titolo);
+        luogo = findViewById(R.id.luogo);
+        data= findViewById(R.id.data);
+
+        titolo.setText(title);
+        Picasso.get().load(image).into(immagine);
+        luogo.setText(place);
+        data.setText(data1);
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                Query applesQuery = ref.child("Eventi").orderByChild("id").equalTo(id);
+
+                applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                            appleSnapshot.getRef().removeValue();
+                        }
+                        Toast.makeText(ActivityDettagliAmm.this,"Evento eliminiato",Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ActivityDettagliAmm.this, MainActivity.class));
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.e(TAG, "Cancellato", databaseError.toException());
+                    }
+                });
+            }
+
+        });
+
+        modifica.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                Intent intent = new Intent(ActivityDettagliAmm.this, ActivityModificaEvento.class);
+                intent.putExtra("titolo", title);
+                intent.putExtra("luogo", place);
+                intent.putExtra("descrizione", description);
+                intent.putExtra("immagine", image);
+                intent.putExtra("data", data1);
+                intent.putExtra("id", id);
+                startActivity(intent);
+
+
+            }
+        });
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

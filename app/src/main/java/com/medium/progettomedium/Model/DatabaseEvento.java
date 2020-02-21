@@ -14,12 +14,13 @@ public class DatabaseEvento {
     public String descrizione;
     public Double distanza;
     public String stato;
+    public String publisher;
     public DatabaseEvento(){
 
     }
 
     public static ArrayList<DatabaseEvento> date_collection_arr;
-    public DatabaseEvento( String id,String date, String titolo, Double latitude, Double longitude, String luogo, String immagine, String descrizione,Double distanza, String stato){
+    public DatabaseEvento( String id,String date, String titolo, Double latitude, Double longitude, String luogo, String immagine, String descrizione,Double distanza, String stato,String publisher){
         this.id=id;
         this.date=date;
         this.titolo=titolo;
@@ -30,6 +31,15 @@ public class DatabaseEvento {
         this.descrizione = descrizione;
         this.distanza = distanza;
         this.stato = stato;
+        this.publisher=publisher;
+    }
+
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
     }
 
     public String getStato() {

@@ -6,36 +6,43 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.medium.progettomedium.Adapter.AdaptAmmAccettati;
 import com.medium.progettomedium.Fragment.UtenteHomeFragment;
+import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.squareup.picasso.Picasso;
 
 public class ActivityDettagliEvento extends AppCompatActivity {
 
 
-    TextView titolo, luogo, descrizione,data;
-    ImageView foto;
+    TextView titolo, luogo, descrizione, data, username;
+    ImageView foto, image_profile;
     Button prenota;
     ImageView close;
 
     private DatabaseReference databaseReferenceutente;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,databaseReference2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +54,8 @@ public class ActivityDettagliEvento extends AppCompatActivity {
         data = findViewById(R.id.data_dettagli_evento);
         prenota = findViewById(R.id.button);
         close = findViewById(R.id.close);
-
+        image_profile = findViewById(R.id.image_profile);
+        username = findViewById(R.id.username);
 
 
         final String title = getIntent().getStringExtra("title");
@@ -57,6 +65,47 @@ public class ActivityDettagliEvento extends AppCompatActivity {
         String data1 = getIntent().getStringExtra("date");
         final String id = getIntent().getStringExtra("id");
 
+        databaseReference2 = FirebaseDatabase.getInstance().getReference();
+        databaseReference2.child("Eventi").child(id).child("publisher").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                databaseReference.child("UserID").child("Utenti").addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot2) {
+                        // get all of the children at this level.
+                        Iterable<DataSnapshot> children = dataSnapshot2.getChildren();
+                        // shake hands with each of them.'
+
+
+                        for (DataSnapshot child : children) {
+                            DatabaseUtente utente= child.getValue(DatabaseUtente.class);
+                            if (dataSnapshot.getValue().equals(utente.getId())) {
+                                Glide.with(getApplicationContext()).load(utente.getImageUrl()).into(image_profile);
+                                username.setText(utente.getNome() + " " + utente.getCognome());
+
+
+                            }
+                        }
+
+
+                    }
+
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         databaseReferenceutente = FirebaseDatabase.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReferenceutente.child("UserID").child("Utenti").addValueEventListener(new ValueEventListener() {
@@ -67,8 +116,8 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                 int var = 0;
                 for (final DataSnapshot child : children) {
                     final DatabaseUtente utente = child.getValue(DatabaseUtente.class);
-                    if(utente.getCategory().equals("Utente")) {
-                        databaseReference.child("UserID").child("Utenti").child(utente.nome+" "+utente.cognome).child("prenotazioni").addValueEventListener(new ValueEventListener() {
+                    if (utente.getCategory().equals("Utente")) {
+                        databaseReference.child("UserID").child("Utenti").child(utente.nome + " " + utente.cognome).child("prenotazioni").addValueEventListener(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -77,29 +126,29 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                                 // shake hands with each of them.'
 
 
-
                                 for (DataSnapshot child : children) {
-                                    if(id.equals(child.getKey())) {
+                                    if (id.equals(child.getKey())) {
 
                                         String stato = child.getValue().toString();
 
-                                        if(stato.equals("2")){
+                                        if (stato.equals("2")) {
                                             prenota.setText("In Attesa");
-                                           // prenota.setTextColor(Color.parseColor("#ffffbc00"));
+                                            // prenota.setTextColor(Color.parseColor("#ffffbc00"));
                                             prenota.setBackgroundResource(R.drawable.gradius_attesa);
-                                        }else if(stato.equals("3")){
+                                        } else if (stato.equals("3")) {
                                             prenota.setText("Prenotato");
-                                          //  prenota.setTextColor(Color.parseColor("#ffc6ff00"));
+                                            //  prenota.setTextColor(Color.parseColor("#ffc6ff00"));
                                             prenota.setBackgroundResource(R.drawable.gradius_prenotato);
-                                        }else if(stato.equals("4")){
+                                        } else if (stato.equals("4")) {
                                             prenota.setText("Rifiutato");
-                                          //  prenota.setTextColor(Color.parseColor("#ffff1744"));
+                                            //  prenota.setTextColor(Color.parseColor("#ffff1744"));
                                             prenota.setBackgroundResource(R.drawable.gradius_rifiutato);
                                         }
                                     }
 
 
                                 }
+
 
 
                             }
@@ -114,6 +163,7 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -133,11 +183,57 @@ public class ActivityDettagliEvento extends AppCompatActivity {
             }
         });
 
+        image_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseReference.child("UserID").child("Utenti").child(username.getText().toString()).addValueEventListener(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // get all of the children at this level.
+
+                            DatabaseUtente utente= dataSnapshot.getValue(DatabaseUtente.class);
+
+                                Glide.with(getApplicationContext()).load(utente.getImageUrl()).into(image_profile);
+                                username.setText(utente.getNome() + " " + utente.getCognome());
+                                final String mNome = utente.getNome()+" "+utente.getCognome();
+                                final String mMail = utente.getMail();
+                                final String mPhone = utente.getPhone();
+                                final String mId = utente.getId();
+                                final String mImage = utente.getImageUrl();
+                                final String mCategoria = utente.getCategory();
+                                Intent intent = new Intent(getApplicationContext(), ActivityVisualizzaAmm.class);
+                                intent.putExtra("nome", mNome);
+                                intent.putExtra("mail", mMail);
+                                intent.putExtra("phone", mPhone);
+                                intent.putExtra("id",mId);
+                                intent.putExtra("immagine",mImage);
+                                intent.putExtra("category",mCategoria);
+                                startActivity(intent);
+
+                            }
+
+
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+
+
+                });
+
+
+                    }
+
+
+                });
+
         prenota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-                final String nome1= firebaseUser.getDisplayName().replaceAll("%20" ," ");
+                final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                final String nome1 = firebaseUser.getDisplayName().replaceAll("%20", " ");
                 databaseReference.child("UserID").child("Utenti").child(nome1).child("prenotazioni").addValueEventListener(new ValueEventListener() {
 
                     /**
@@ -152,19 +248,18 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                         // shake hands with each of them.'
                         int var = 0;
                         for (DataSnapshot child : children) {
-                            String ciao=child.getKey();
-                            if(id.equals(ciao)) {
-                                var =1;
+                            String ciao = child.getKey();
+                            if (id.equals(ciao)) {
+                                var = 1;
                             }
                         }
-                        if(var == 1){
+                        if (var == 1) {
                             prenota.setEnabled(false);
 
-                        }
-                        else{
+                        } else {
 
-                            final FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-                            final String nome1= firebaseUser.getDisplayName().replaceAll("%20" ," ");
+                            final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                            final String nome1 = firebaseUser.getDisplayName().replaceAll("%20", " ");
                             AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDettagliEvento.this);
                             builder.setTitle("Conferma Prenotazione");
                             builder.setMessage("Vuoi confermare la prenotazione per questo evento?");
@@ -180,8 +275,9 @@ public class ActivityDettagliEvento extends AppCompatActivity {
 
                                     prenota.setText("In attesa");
                                     prenota.setTextColor(Color.parseColor("#ffffbc00"));
-                                    prenota .setBackgroundResource(R.drawable.gradius_attesa);
+                                    prenota.setBackgroundResource(R.drawable.gradius_attesa);
                                     startActivity(getIntent());
+                                    finish();
 
                                 }
                             });
@@ -216,10 +312,11 @@ public class ActivityDettagliEvento extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == android.R.id.home){
+        if (id == android.R.id.home) {
             this.finish();
         }
         return super.onOptionsItemSelected(item);

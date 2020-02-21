@@ -149,7 +149,7 @@ public class AmmHomeFragment extends Fragment{
                         String mData = item.getDate();
                         String mImage = item.getImmagine();
                         String mId = item.getId();
-                        String mDescription = item.getImmagine();
+                        String mDescription = item.getDescrizione();
                         Intent intent = new Intent(listaEventiView.getContext(), ActivityDettagliAmm.class);
                         intent.putExtra("titolo", mTitolo);
                         intent.putExtra("luogo", mLuogo);
