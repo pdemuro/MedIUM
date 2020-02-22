@@ -122,10 +122,12 @@
         app:layout_constraintTop_toBottomOf="@+id/vu_img_profilo">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/descrizione"
-            android:padding="8dp"></TextView>
+            android:padding="8dp">
+
+        </TextView>
 
     </androidx.cardview.widget.CardView>
 

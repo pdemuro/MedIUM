@@ -63,6 +63,36 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+
+        if(user != null){
+            FirebaseUser nome = firebaseAuth.getCurrentUser();
+            String nome1= nome.getDisplayName().replaceAll("%20" ," ");
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome1);
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (getApplicationContext() == null) {
+                        return;
+                    }
+                    DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
+                    if (user.category.equals("Utente")) {
+                        startActivity(new Intent(LoginActivity.this, UtenteHomeFragment.class));
+                    }
+                    else{
+                        startActivity(new Intent(LoginActivity.this, AmmHomeFragment.class));
+                    }
+                }
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+
+
         MyReceiver = new MyReceiver(LoginActivity.this);
 
         videoView = (VideoView) findViewById(R.id.videoView);
@@ -82,34 +112,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-
-        if(user != null){
-            FirebaseUser nome = firebaseAuth.getCurrentUser();
-            String nome1= nome.getDisplayName().replaceAll("%20" ," ");
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome1);
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (getApplicationContext() == null) {
-                        return;
-                    }
-                    DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
-                    if (user.category.equals("Utente")) {
-                        startActivity(new Intent(LoginActivity.this, UtenteHomeFragment.class));
-                    }
-                   else{
-                        startActivity(new Intent(LoginActivity.this, AmmHomeFragment.class));
-                    }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-        }
 
 
         editTextEmail =  findViewById(R.id.editTextEmail);

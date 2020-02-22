@@ -386,6 +386,7 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                                         String mId = item.getId();
                                         String mImage = item.getImageUrl();
                                         String mCategoria = item.getCategory();
+                                        String mDescrizione = item.getDescrizione();
                                         Intent intent = new Intent(getApplicationContext(), ActivityVisualizzaUtente.class);
                                         intent.putExtra("nome", mNome);
                                         intent.putExtra("mail", mMail);
@@ -393,6 +394,7 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                                         intent.putExtra("id",mId);
                                         intent.putExtra("immagine",mImage);
                                         intent.putExtra("category",mCategoria);
+                                        intent.putExtra("description",mDescrizione);
                                         startActivity(intent);
                                     }
 
