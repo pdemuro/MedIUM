@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -32,6 +33,7 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.medium.progettomedium.Fragment.AmmHomeFragment;
 import com.medium.progettomedium.Fragment.ProfileFragment;
+import com.medium.progettomedium.Fragment.UtenteHomeFragment;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.HashMap;
@@ -221,6 +223,11 @@ public class AddPostActivity extends AppCompatActivity {
             startActivity(new Intent(AddPostActivity.this, AddPostActivity.class));
             finish();
         }
+    }
+    public void onBackPressed() {
+
+        startActivity(new Intent(AddPostActivity.this, UtenteHomeFragment.class));
+
     }
 }
 

@@ -94,6 +94,7 @@ public class AdaptEventoUtente extends RecyclerView.Adapter<AdaptEventoUtente.Vi
             data = itemView.findViewById(R.id.data);
             immagine = itemView.findViewById(R.id.immagine);
             stato = itemView.findViewById(R.id.stato);
+            stato.setVisibility(View.VISIBLE);
             modifica = itemView.findViewById(R.id.modifica);
 
         }
@@ -166,7 +167,7 @@ public class AdaptEventoUtente extends RecyclerView.Adapter<AdaptEventoUtente.Vi
                                         stato.setBackgroundResource(R.drawable.gradius_rifiutato);
                                     }
                                     else{
-                                        stato.setText("Prenota Ora");
+                                        stato.setText("Prenotabile");
 
                                         stato.setTextColor(Color.parseColor("#000000"));
                                         stato.setBackgroundResource(R.drawable.gradius_image);

@@ -2,6 +2,7 @@ package com.medium.progettomedium;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -290,8 +291,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 }
                             });
                         }*/
-                        finish();
+                        Context context = getApplicationContext();
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        finish();
 
                     } else {
                         Toast.makeText(RegisterActivity.this, "Errore nella registrazione,Riprova", Toast.LENGTH_SHORT).show();

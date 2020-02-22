@@ -969,6 +969,7 @@ public class UtenteHomeFragment extends AppCompatActivity implements LocationLis
            switch (menuItem.getItemId()){
                case R.id.nav_home:
                    startActivity( new Intent(getApplicationContext(), UtenteHomeFragment.class));
+                   overridePendingTransition(0, 0);
                    break;
                case R.id.nav_addpost:
                    startActivity( new Intent(getApplicationContext(), AddPostActivity.class));
@@ -979,20 +980,8 @@ public class UtenteHomeFragment extends AppCompatActivity implements LocationLis
                    editor.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
                    editor.apply();
                    startActivity( new Intent(getApplicationContext(), ProfileFragment.class));
+                   overridePendingTransition(0, 0);
                    break;
-               case R.id.nav_profileAmm:
-                   SharedPreferences.Editor editor2 = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
-                   editor2.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                   editor2.apply();
-                   startActivity( new Intent(getApplicationContext(), AmmProfileFragment.class));
-                   break;
-               case R.id.nav_richieste:
-                   startActivity( new Intent(getApplicationContext(), AmmHomeFragment.class));
-                   break;
-               case R.id.nav_add:
-                   startActivity( new Intent(getApplicationContext(), AddEventoActivity.class));
-
-
            }
            return true;
        }
@@ -1034,9 +1023,8 @@ public class UtenteHomeFragment extends AppCompatActivity implements LocationLis
                 @Override
                 public void run() {
                     doubleTap = false;
-                    startActivity(new Intent(UtenteHomeFragment.this,UtenteHomeFragment.class));
                 }
-            }, 500);
+            }, 1000);
         }
     }
 }

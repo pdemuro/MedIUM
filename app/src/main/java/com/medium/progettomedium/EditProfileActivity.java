@@ -159,7 +159,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             //builder.setTitle("Internet non disponibile");
 
                             // Setting Dialog Message
-                            builder.setMessage("Sei sicuro di uscire dalla modificare del profilo?");
+                            builder.setMessage("Interrompere le modifiche del profilo?");
 
                             // On pressing the Settings button.
                             builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
@@ -191,7 +191,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             //builder.setTitle("Internet non disponibile");
 
                             // Setting Dialog Message
-                            builder.setMessage("Sei sicuro di uscire dalla modificare del profilo?");
+                            builder.setMessage("Interrompere le modifiche del profilo?");
 
                             // On pressing the Settings button.
                             builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
@@ -252,7 +252,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             //builder.setTitle("Internet non disponibile");
 
                             // Setting Dialog Message
-                            builder.setMessage("Sei sicuro di voler salvare le informazioni del profilo?");
+                            builder.setMessage("Salvare le informazioni del profilo?");
 
                             // On pressing the Settings button.
                             builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
@@ -287,7 +287,7 @@ public class EditProfileActivity extends AppCompatActivity {
                             //builder.setTitle("Internet non disponibile");
 
                             // Setting Dialog Message
-                            builder.setMessage("Sei sicuro di voler salvare le informazioni del profilo?");
+                            builder.setMessage("Salvare le informazioni del profilo?");
 
                             // On pressing the Settings button.
                             builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
@@ -403,106 +403,6 @@ public class EditProfileActivity extends AppCompatActivity {
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
-    private void uploadImage(){
-        FirebaseUser nome = firebaseAuth.getCurrentUser();
-        final String nome1= nome.getDisplayName().replaceAll("%20" ," ");
-
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Uploading");
-        pd.show();
-        if (mImageUri != null){
-            final StorageReference fileReference = storageRef.child(System.currentTimeMillis()
-                    + "." + getFileExtension(mImageUri));
-
-            uploadTask = fileReference.putFile(mImageUri);
-            uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw Objects.requireNonNull(task.getException());
-                    }
-                    return fileReference.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        assert downloadUri != null;
-                        String miUrlOk = downloadUri.toString();
-
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome1);
-                        HashMap<String, Object> map1 = new HashMap<>();
-                        map1.put("imageUrl", ""+miUrlOk);
-                        reference.updateChildren(map1);
-
-                        pd.dismiss();
-                        String id = reference.child("id").toString();
-                        Intent intent = new Intent(EditProfileActivity.this, EditProfileActivity.class);
-                        intent.putExtra("profileid",id);
-                        startActivity(intent);
-
-                    } else {
-                        Toast.makeText(EditProfileActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(EditProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        } else {
-            Toast.makeText(EditProfileActivity.this, "No image selected", Toast.LENGTH_SHORT).show();
-        }
-    }
-    private void saveInformation() {
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Uploading");
-        pd.show();
-
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null && image_url != null) {
-            UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder().setPhotoUri(Uri.parse(image_url)).build();
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                    .child("UserID").child("Utenti");
-
-            reference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        DatabaseUtente user = snapshot.getValue(DatabaseUtente.class);
-                        String nome = user.getNome() + " " + user.getCognome();
-
-                        FirebaseUser user2 = firebaseAuth.getCurrentUser();
-                        if (nome.equals(user2.getDisplayName())) {
-                            //user.setImageUrl(image_url);
-                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome).child("imageUrl");
-
-
-                            reference.setValue(image_url);
-
-                            //getContext().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            // new ProfileFragment()).commit();
-
-                            pd.dismiss();
-                            Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
-                            intent.putExtra("profileid",user.getId());
-                            startActivity(intent);
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-        }
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -555,4 +455,48 @@ public class EditProfileActivity extends AppCompatActivity {
 
         }
     }
+
+    private void saveInformation() {
+
+
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null && image_url != null) {
+            UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder().setPhotoUri(Uri.parse(image_url)).build();
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                    .child("UserID").child("Utenti");
+
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        DatabaseUtente user = snapshot.getValue(DatabaseUtente.class);
+                        String nome = user.getNome() + " " + user.getCognome();
+
+                        FirebaseUser user2 = firebaseAuth.getCurrentUser();
+                        if (nome.equals(user2.getDisplayName())) {
+                            //user.setImageUrl(image_url);
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome).child("imageUrl");
+
+
+                            reference.setValue(image_url);
+
+                            //getContext().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            // new ProfileFragment()).commit();
+
+                            Intent intent = new Intent(getApplicationContext(), EditProfileActivity.class);
+                            intent.putExtra("profileid",user.getId());
+                            startActivity(intent);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+    }
+
 }

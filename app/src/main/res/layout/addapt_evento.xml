@@ -113,7 +113,8 @@
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/gradius_image"
                 android:fontFamily="sans-serif"
-                android:text="Prenota"
+
+                android:visibility="gone"
                 android:textColor="#263238"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"

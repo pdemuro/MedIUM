@@ -273,6 +273,7 @@ public class ProfileFragment extends AppCompatActivity {
                     public void onClick(DialogInterface dialog,int which) {
                         FirebaseAuth.getInstance().signOut();
                         startActivity(new Intent(ProfileFragment.this, LoginActivity.class));
+                        finish();
                        // Toast.makeText(getContext(),"Modifica annullata",Toast.LENGTH_SHORT).show();
 
 
@@ -832,6 +833,7 @@ public class ProfileFragment extends AppCompatActivity {
             switch (menuItem.getItemId()){
                 case R.id.nav_home:
                     startActivity( new Intent(getApplicationContext(), UtenteHomeFragment.class));
+                    overridePendingTransition(0, 0);
                     break;
                 case R.id.nav_addpost:
                     startActivity( new Intent(getApplicationContext(), AddPostActivity.class));
@@ -842,65 +844,17 @@ public class ProfileFragment extends AppCompatActivity {
                     editor.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
                     editor.apply();
                     startActivity( new Intent(getApplicationContext(), ProfileFragment.class));
+                    overridePendingTransition(0, 0);
                     break;
-                case R.id.nav_profileAmm:
-                    SharedPreferences.Editor editor2 = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
-                    editor2.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    editor2.apply();
-                    startActivity( new Intent(getApplicationContext(), AmmProfileFragment.class));
-                    break;
-                case R.id.nav_richieste:
-                    startActivity( new Intent(getApplicationContext(), AmmHomeFragment.class));
-                    break;
-                case R.id.nav_add:
-                    startActivity( new Intent(getApplicationContext(), AddEventoActivity.class));
-
-
             }
             return true;
         }
     };
 
     public void onBackPressed() {
-        if (doubleTap) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(ProfileFragment.this);
-            builder.setTitle("");
-            builder.setMessage("Uscire dall'applicazione?");
-            builder.setCancelable(false);
 
-            builder.setPositiveButton("Esci", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+        startActivity(new Intent(ProfileFragment.this,UtenteHomeFragment.class));
 
-                    System.exit(0);
-                    finish();
-
-
-                }
-            });
-            builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-
-            AlertDialog dialog = builder.create();
-            dialog.show();
-
-            //startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        }
-        else{
-            doubleTap = true;
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    doubleTap = false;
-                   startActivity(new Intent(ProfileFragment.this,UtenteHomeFragment.class));
-                }
-            }, 500);
-        }
     }
 
 

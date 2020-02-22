@@ -203,27 +203,17 @@ public class AmmHomeFragment extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
             switch (menuItem.getItemId()){
-                case R.id.nav_home:
-                    startActivity( new Intent(getApplicationContext(), UtenteHomeFragment.class));
-                    break;
-                case R.id.nav_addpost:
-                    startActivity( new Intent(getApplicationContext(), AddPostActivity.class));
-                    break;
 
-                case R.id.nav_profile:
-                    SharedPreferences.Editor editor = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
-                    editor.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                    editor.apply();
-                    startActivity( new Intent(getApplicationContext(), ProfileFragment.class));
-                    break;
                 case R.id.nav_profileAmm:
                     SharedPreferences.Editor editor2 = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
                     editor2.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
                     editor2.apply();
                     startActivity( new Intent(getApplicationContext(), AmmProfileFragment.class));
+                    overridePendingTransition(0, 0);
                     break;
                 case R.id.nav_richieste:
                     startActivity( new Intent(getApplicationContext(), AmmHomeFragment.class));
+                    overridePendingTransition(0, 0);
                     break;
                 case R.id.nav_add:
                     startActivity( new Intent(getApplicationContext(), AddEventoActivity.class));
@@ -270,9 +260,9 @@ public class AmmHomeFragment extends AppCompatActivity {
                 @Override
                 public void run() {
                     doubleTap = false;
-                    startActivity(new Intent(AmmHomeFragment.this,UtenteHomeFragment.class));
+
                 }
-            }, 500);
+            }, 1000);
         }
     }
 
