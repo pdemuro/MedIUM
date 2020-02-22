@@ -94,7 +94,7 @@ public class AddEventoActivity2 extends AppCompatActivity {
                 //builder.setTitle("Internet non disponibile");
 
                 // Setting Dialog Message
-                builder.setMessage("Sei sicuro di voler uscire dalla creazione dell'evento? I dati inseriti andranno persi");
+                builder.setMessage("Uscire dalla creazione dell'evento? I dati inseriti andranno persi");
 
                 // On pressing the Settings button.
                 builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {

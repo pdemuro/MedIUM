@@ -69,13 +69,13 @@ public class AddPostActivity extends AppCompatActivity {
                 //builder.setTitle("Internet non disponibile");
 
                 // Setting Dialog Message
-                builder.setMessage("Sei sicuro di voler pubblicare il post?");
+                builder.setMessage("Pubblicare il post?");
 
                 // On pressing the Settings button.
                 builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int which) {
 
-                        Toast.makeText(AddPostActivity.this,"Creazione evento annullata",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddPostActivity.this,"Post Creato",Toast.LENGTH_SHORT).show();
                         uploadImage_10();
                         FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
 
@@ -116,7 +116,7 @@ public class AddPostActivity extends AppCompatActivity {
                 //builder.setTitle("Internet non disponibile");
 
                 // Setting Dialog Message
-                builder.setMessage("Sei sicuro di voler annullare la creazione del post? I dati non verranno salvati");
+                builder.setMessage("Annullare la creazione del post? I dati non verranno salvati");
 
                 // On pressing the Settings button.
                 builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
