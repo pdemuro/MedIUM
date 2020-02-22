@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.medium.progettomedium.Fragment.UtenteHomeFragment;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -110,7 +111,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnInfoWin
             @Override
             public void onClick(View view) {
                 finish();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), UtenteHomeFragment.class));
 
             }
         });
@@ -149,7 +150,7 @@ public class MapActivity extends FragmentActivity implements GoogleMap.OnInfoWin
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        startActivity(new Intent(getApplicationContext(), UtenteHomeFragment.class));
 
     }
 

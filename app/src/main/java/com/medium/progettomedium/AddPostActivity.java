@@ -30,6 +30,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.medium.progettomedium.Fragment.AmmHomeFragment;
 import com.medium.progettomedium.Fragment.ProfileFragment;
 import com.theartofdev.edmodo.cropper.CropImage;
 
@@ -79,7 +80,7 @@ public class AddPostActivity extends AppCompatActivity {
                        /* Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.putExtra("publisherid", firebaseUser.getUid());
                         startActivity(intent);*/
-                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        startActivity(new Intent(AddPostActivity.this, AmmHomeFragment.class));
                         finish();
                     }
                 });
@@ -147,9 +148,7 @@ public class AddPostActivity extends AppCompatActivity {
     }
 
     private void uploadImage_10(){
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Posting");
-        pd.show();
+
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser user = firebaseAuth.getCurrentUser();
         final String nome1= user.getDisplayName().replaceAll("%20" ," ");
@@ -187,9 +186,8 @@ public class AddPostActivity extends AppCompatActivity {
 
                         reference.child(postid).setValue(hashMap);
 
-                        pd.dismiss();
 
-                        startActivity(new Intent(AddPostActivity.this, MainActivity.class));
+                        startActivity(new Intent(AddPostActivity.this, ProfileFragment.class));
                         finish();
 
                     } else {
@@ -220,7 +218,7 @@ public class AddPostActivity extends AppCompatActivity {
             image_added.setImageURI(mImageUri);
         } else {
             Toast.makeText(this, "Qualcosa è andato storto!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(AddPostActivity.this, MainActivity.class));
+            startActivity(new Intent(AddPostActivity.this, AddPostActivity.class));
             finish();
         }
     }

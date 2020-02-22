@@ -8,6 +8,32 @@ android:layout_height="match_parent"
 android:backgroundTint="@color/colorWhite"
 tools:context=".Fragment.ProfileFragment">
 
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/gradius_image2"
+            android:visibility="visible"
+            app:itemIconSize="22dp"
+            app:itemIconTint="@color/selector"
+
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/bottom_navigation"
+            app:elevation="16dp"/>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar"
         android:layout_width="match_parent"
@@ -196,11 +222,18 @@ tools:context=".Fragment.ProfileFragment">
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
                 <TextView
                     android:id="@+id/textView16"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="55dp"
+
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:text="I miei post"
@@ -216,6 +249,8 @@ tools:context=".Fragment.ProfileFragment">
                     android:src="@drawable/gallery"
                     app:layout_constraintBottom_toBottomOf="@+id/textView16"
                     app:layout_constraintStart_toEndOf="@+id/textView16" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
@@ -228,21 +263,28 @@ tools:context=".Fragment.ProfileFragment">
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/divider2">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
                     android:id="@+id/iMieiEventiText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="55dp"
+
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:text="I miei eventi"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                />
 
                 <ImageView
                     android:id="@+id/imageView14"
@@ -252,6 +294,8 @@ tools:context=".Fragment.ProfileFragment">
                     android:src="@drawable/survey"
                     app:layout_constraintBottom_toBottomOf="@+id/iMieiEventiText"
                     app:layout_constraintStart_toEndOf="@+id/iMieiEventiText" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

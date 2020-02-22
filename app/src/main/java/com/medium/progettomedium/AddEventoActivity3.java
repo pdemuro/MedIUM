@@ -47,7 +47,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.medium.progettomedium.EditProfileActivity;
 import com.medium.progettomedium.Fragment.AmmHomeFragment;
-import com.medium.progettomedium.MainActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.medium.progettomedium.R;
@@ -128,7 +127,7 @@ public class AddEventoActivity3 extends AppCompatActivity {
                 builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int which) {
 
-                        startActivity(new Intent(AddEventoActivity3.this,MainActivity.class));
+                        startActivity(new Intent(AddEventoActivity3.this,AmmHomeFragment.class));
                         finish();
 
                     }
@@ -191,7 +190,7 @@ public class AddEventoActivity3 extends AppCompatActivity {
                     builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,int which) {
                             admin();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), AmmHomeFragment.class);
                             startActivity(intent);
                             finish();
 

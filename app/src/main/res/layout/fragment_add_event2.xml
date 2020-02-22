@@ -197,7 +197,7 @@
                 android:layout_marginEnd="50dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/gradius_image"
-                android:text="Scegli Posizione"
+                android:hint="Scegli Posizione"
                 android:textColor="@color/button_material_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

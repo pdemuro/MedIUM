@@ -31,7 +31,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.medium.progettomedium.ActivityPostDetail;
 import com.medium.progettomedium.ActivityVisualizzaUtente;
-import com.medium.progettomedium.MainActivity;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.medium.progettomedium.Model.Post;
 import com.medium.progettomedium.R;

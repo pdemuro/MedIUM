@@ -4,16 +4,19 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.FloatMath;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
@@ -38,10 +42,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.medium.progettomedium.ActivityDettagliEvento;
 import com.medium.progettomedium.Adapter.AdaptCalendario;
 import com.medium.progettomedium.Adapter.AdaptEventoUtente;
 import com.medium.progettomedium.Adapter.UserAdapter;
+import com.medium.progettomedium.AddEventoActivity;
+import com.medium.progettomedium.AddPostActivity;
 import com.medium.progettomedium.GPSTracker;
 import com.medium.progettomedium.MapActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
@@ -72,10 +79,12 @@ import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
-public class UtenteHomeFragment extends Fragment implements LocationListener {
+public class UtenteHomeFragment extends AppCompatActivity implements LocationListener {
 
+    private BottomNavigationView bottomNavigationView;
     private RecyclerView recyclerView, recyclerView2;
     private Toolbar toolbar;
+    boolean doubleTap = false;
     private ConstraintLayout icone, iconeFiltro;
     private AdaptEventoUtente eventAdapter;
     private List<DatabaseEvento> eventList;
@@ -113,40 +122,44 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
     private DatabaseReference getDatabaseReferencevento;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_search);
 
-        recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        bottomNavigationView.getMenu().getItem(0).setChecked(true);
 
-        recyclerView2 = view.findViewById(R.id.recycler_view2);
-         recyclerView2.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(UtenteHomeFragment.this));
 
-        search_bar = view.findViewById(R.id.search_bar);
-        iconeFiltro = view.findViewById(R.id.IconsFiltro);
-        close = view.findViewById(R.id.close);
-        nomeFiltro = view.findViewById(R.id.nomeFiltro);
-        icoSearch = view.findViewById(R.id.icoSearch);
-        cRicerca = view.findViewById(R.id.cRicerca);
+        recyclerView2 =findViewById(R.id.recycler_view2);
+         recyclerView2.setLayoutManager(new LinearLayoutManager(UtenteHomeFragment.this));
+
+        search_bar = findViewById(R.id.search_bar);
+        iconeFiltro = findViewById(R.id.IconsFiltro);
+        close = findViewById(R.id.close);
+        nomeFiltro = findViewById(R.id.nomeFiltro);
+        icoSearch = findViewById(R.id.icoSearch);
+        cRicerca = findViewById(R.id.cRicerca);
 
         userList = new ArrayList<>();
         recyclerView.setAdapter(eventAdapter);
         recyclerView2.setAdapter(eventAdapter);
 
-        menoDistante = view.findViewById(R.id.buttonMenoDistante);
-        questaSettimana = view.findViewById(R.id.buttonQuestaSettimana);
-        calendario = view.findViewById(R.id.buttonCalendario);
-        mappa = view.findViewById(R.id.buttonMap);
-        icone = view.findViewById(R.id.IconsId);
+        menoDistante = findViewById(R.id.buttonMenoDistante);
+        questaSettimana = findViewById(R.id.buttonQuestaSettimana);
+        calendario = findViewById(R.id.buttonCalendario);
+        mappa = findViewById(R.id.buttonMap);
+        icone = findViewById(R.id.IconsId);
         //filtroAttivo=view.findViewById(R.id.filtroAttivo);
         //testoFiltroAttivo=view.findViewById(R.id.textFiltroAttivo);
-        testo_mese = view.findViewById(R.id.tv_month);
-        previous = (ImageButton) view.findViewById(R.id.ib_prev);
-        layoutCalendario = view.findViewById(R.id.ll_calendar);
-        giorni = view.findViewById(R.id.giorni);
-        gridview = (GridView) view.findViewById(R.id.gv_calendar);
-        next = (ImageButton) view.findViewById(R.id.Ib_next);
+        testo_mese = findViewById(R.id.tv_month);
+        previous = (ImageButton) findViewById(R.id.ib_prev);
+        layoutCalendario = findViewById(R.id.ll_calendar);
+        giorni = findViewById(R.id.giorni);
+        gridview = (GridView) findViewById(R.id.gv_calendar);
+        next = (ImageButton)findViewById(R.id.Ib_next);
         //readUsers();
         // readEvent();
         DatabaseEvento.date_collection_arr = new ArrayList<DatabaseEvento>();
@@ -154,7 +167,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
         Event();
         recyclerView.setHasFixedSize(true);
         recyclerView2.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -227,7 +240,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
 
                     layoutCalendario.setVisibility(View.GONE);
                     giorni.setVisibility(View.GONE);
-                    startActivity(new Intent(getContext(), MapActivity.class));
+                    startActivity(new Intent(getApplicationContext(), MapActivity.class));
                 }
 
             }
@@ -263,7 +276,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
             public void onClick(View v) {
 
                 // Create class object
-                gps = new GPSTracker(getContext());
+                gps = new GPSTracker(UtenteHomeFragment.this);
 
                 // Check if GPS enabled
                 if (gps.canGetLocation()) {
@@ -287,7 +300,6 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
             }
         });
 
-        return view;
     }
 
     private void Event(){
@@ -348,11 +360,11 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
                         }
                     }
                 }
-                adapter = new AdaptEventoUtente(getContext(), eventi, itemClickListener);
+                adapter = new AdaptEventoUtente(getApplicationContext(), eventi, itemClickListener);
 
                 //listaEventiView.setAdapter(adapter);
                 recyclerView2.setVisibility(View.GONE);
-                recyclerView.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
+                recyclerView.setAdapter(new AdaptEventoUtente(getApplicationContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
                     @Override
                     public void onItemClick(DatabaseEvento item) {
 
@@ -363,7 +375,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
                         String mImage = item.getImmagine();
                         String mData = item.getDate();
                         String mId = item.getId();
-                        Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
+                        Intent intent = new Intent(getApplicationContext(), ActivityDettagliEvento.class);
                         intent.putExtra("title", mTitolo);
                         intent.putExtra("description", mLuogo);
                         intent.putExtra("descrizione", mDescrizione);
@@ -460,10 +472,10 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
             DatabaseEvento.date_collection_arr.add(eve);
             eventi.add(doc);
         }
-        adapter = new AdaptEventoUtente(getContext(), eventi, itemClickListener);
+        adapter = new AdaptEventoUtente(getApplicationContext(), eventi, itemClickListener);
 
         //listaEventiView.setAdapter(adapter);
-        recyclerView.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
+        recyclerView.setAdapter(new AdaptEventoUtente(getApplicationContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
             @Override
             public void onItemClick(DatabaseEvento item) {
 
@@ -474,7 +486,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
                 String mImage = item.getImmagine();
                 String mData = item.getDate();
                 String mId = item.getId();
-                Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
+                Intent intent = new Intent(getApplicationContext(), ActivityDettagliEvento.class);
                 intent.putExtra("title", mTitolo);
                 intent.putExtra("description", mLuogo);
                 intent.putExtra("descrizione", mDescrizione);
@@ -496,7 +508,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
         DatabaseEvento.date_collection_arr.remove(eve);
         eventi.remove(doc);
 
-        adapter = new AdaptEventoUtente(getContext(), eventi, itemClickListener);
+        adapter = new AdaptEventoUtente(getApplicationContext(), eventi, itemClickListener);
         recyclerView.setAdapter(adapter);
     }
    /* @Override
@@ -537,7 +549,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
     public void Calendario() {
         mese_calendario = (GregorianCalendar) GregorianCalendar.getInstance();
         //mese_calendario_copia = (GregorianCalendar) mese_calendario.clone();
-        adaptCalendario = new AdaptCalendario(getContext(), mese_calendario, DatabaseEvento.date_collection_arr);
+        adaptCalendario = new AdaptCalendario(getApplicationContext(), mese_calendario, DatabaseEvento.date_collection_arr);
 
         testo_mese.setText(android.text.format.DateFormat.format("MMMM yyyy", mese_calendario));
 
@@ -560,7 +572,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
 
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 String selectedGridDate = AdaptCalendario.day_string.get(position);
-                getPositionList(selectedGridDate, getContext());
+                getPositionList(selectedGridDate, getApplicationContext());
             }
 
         });
@@ -590,7 +602,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
 
     public void getLocation() {
         try {
-            locationManager = (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
+            locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 5, this);
 
         } catch (SecurityException e) {
@@ -599,10 +611,10 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
     }
 
     public boolean CheckPermission() {
-        if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext().getApplicationContext(), ACCESS_COARSE_LOCATION)
+        if (ContextCompat.checkSelfPermission(getApplicationContext().getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext().getApplicationContext(), ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, 101);
+            ActivityCompat.requestPermissions(UtenteHomeFragment.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION}, 101);
         } else {
             return true;
         }
@@ -706,8 +718,8 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
 
                 }
                 Collections.reverse(eventi);
-                adapter = new AdaptEventoUtente(getContext(), eventi, itemClickListener);
-                recyclerView.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
+                adapter = new AdaptEventoUtente(getApplicationContext(), eventi, itemClickListener);
+                recyclerView.setAdapter(new AdaptEventoUtente(getApplicationContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
                     @Override
                     public void onItemClick(DatabaseEvento item) {
 
@@ -718,7 +730,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
                         String mImage = item.getImmagine();
                         String mData = item.getDate();
                         String mId = item.getId();
-                        Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
+                        Intent intent = new Intent(getApplicationContext(), ActivityDettagliEvento.class);
                         intent.putExtra("title", mTitolo);
                         intent.putExtra("description", mLuogo);
                         intent.putExtra("descrizione", mDescrizione);
@@ -784,8 +796,8 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
 
                         }
                         Collections.reverse(eventi);
-                        adapter = new AdaptEventoUtente(getContext(), eventi, itemClickListener);
-                        recyclerView.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
+                        adapter = new AdaptEventoUtente(getApplicationContext(), eventi, itemClickListener);
+                        recyclerView.setAdapter(new AdaptEventoUtente(getApplicationContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
                             @Override
                             public void onItemClick(DatabaseEvento item) {
 
@@ -796,7 +808,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
                                 String mImage = item.getImmagine();
                                 String mData = item.getDate();
                                 String mId = item.getId();
-                                Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
+                                Intent intent = new Intent(getApplicationContext(), ActivityDettagliEvento.class);
                                 intent.putExtra("title", mTitolo);
                                 intent.putExtra("description", mLuogo);
                                 intent.putExtra("descrizione", mDescrizione);
@@ -860,10 +872,10 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
             }
         }
 
-        adapter = new AdaptEventoUtente(getContext(), eventi, itemClickListener);
+        adapter = new AdaptEventoUtente(getApplicationContext(), eventi, itemClickListener);
         recyclerView2.setVisibility(View.VISIBLE);
         //listaEventiView.setAdapter(adapter);
-        recyclerView2.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
+        recyclerView2.setAdapter(new AdaptEventoUtente(getApplicationContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
             @Override
             public void onItemClick(DatabaseEvento item) {
 
@@ -874,7 +886,7 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
                 String mImage = item.getImmagine();
                 String mData = item.getDate();
                 String mId = item.getId();
-                Intent intent = new Intent(getContext(), ActivityDettagliEvento.class);
+                Intent intent = new Intent(getApplicationContext(), ActivityDettagliEvento.class);
                 intent.putExtra("title", mTitolo);
                 intent.putExtra("description", mLuogo);
                 intent.putExtra("descrizione", mDescrizione);
@@ -950,4 +962,81 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
         }
     }
 */
+   private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener= new BottomNavigationView.OnNavigationItemSelectedListener() {
+       @Override
+       public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+           switch (menuItem.getItemId()){
+               case R.id.nav_home:
+                   startActivity( new Intent(getApplicationContext(), UtenteHomeFragment.class));
+                   break;
+               case R.id.nav_addpost:
+                   startActivity( new Intent(getApplicationContext(), AddPostActivity.class));
+                   break;
+
+               case R.id.nav_profile:
+                   SharedPreferences.Editor editor = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
+                   editor.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                   editor.apply();
+                   startActivity( new Intent(getApplicationContext(), ProfileFragment.class));
+                   break;
+               case R.id.nav_profileAmm:
+                   SharedPreferences.Editor editor2 = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
+                   editor2.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                   editor2.apply();
+                   startActivity( new Intent(getApplicationContext(), AmmProfileFragment.class));
+                   break;
+               case R.id.nav_richieste:
+                   startActivity( new Intent(getApplicationContext(), AmmHomeFragment.class));
+                   break;
+               case R.id.nav_add:
+                   startActivity( new Intent(getApplicationContext(), AddEventoActivity.class));
+
+
+           }
+           return true;
+       }
+   };
+
+    public void onBackPressed() {
+        if (doubleTap) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(UtenteHomeFragment.this);
+            builder.setTitle("");
+            builder.setMessage("Uscire dall'applicazione?");
+            builder.setCancelable(false);
+
+            builder.setPositiveButton("Esci", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    System.exit(0);
+                    finish();
+
+
+                }
+            });
+            builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            //startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
+        else{
+            doubleTap = true;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleTap = false;
+                    startActivity(new Intent(UtenteHomeFragment.this,UtenteHomeFragment.class));
+                }
+            }, 500);
+        }
+    }
 }

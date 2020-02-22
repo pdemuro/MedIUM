@@ -109,7 +109,7 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                                     appleSnapshot.getRef().removeValue();
                                 }
                                 Toast.makeText(ActivityDettagliAmm.this,"Evento eliminiato",Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(ActivityDettagliAmm.this, MainActivity.class));
+                                startActivity(new Intent(ActivityDettagliAmm.this, AmmHomeFragment.class));
                             }
 
                             @Override
@@ -248,10 +248,10 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                                 }
 
 
-                                ammAdapter2 = new AdaptAmmAccettati(getApplication(), utenti,id, itemClickListener2);
+                                ammAdapter2 = new AdaptAmmAccettati(ActivityDettagliAmm.this, utenti,id, itemClickListener2);
 
                                 //listaEventiView.setAdapter(adapter);
-                                elencoAccettati.setAdapter(new AdaptAmmAccettati(getApplication(), utenti,id, new AdaptAmmAccettati.OnItemClickListener() {
+                                elencoAccettati.setAdapter(new AdaptAmmAccettati(ActivityDettagliAmm.this, utenti,id, new AdaptAmmAccettati.OnItemClickListener() {
                                     @Override public void onItemClick(DatabaseUtente item) {
 
                                         String mNome = item.getNome()+" "+item.getCognome();
@@ -374,10 +374,10 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                                 }
 
 
-                                ammAdapter = new AdaptAmm(getApplication(), utenti,id, itemClickListener);
+                                ammAdapter = new AdaptAmm(ActivityDettagliAmm.this, utenti,id, itemClickListener);
 
                                 //listaEventiView.setAdapter(adapter);
-                                recyclerView.setAdapter(new AdaptAmm(getApplication(), utenti,id, new AdaptAmm.OnItemClickListener() {
+                                recyclerView.setAdapter(new AdaptAmm(ActivityDettagliAmm.this, utenti,id, new AdaptAmm.OnItemClickListener() {
                                     @Override public void onItemClick(DatabaseUtente item) {
 
                                         String mNome = item.getNome()+" "+item.getCognome();

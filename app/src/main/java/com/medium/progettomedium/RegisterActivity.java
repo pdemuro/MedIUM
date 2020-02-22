@@ -1,7 +1,10 @@
 package com.medium.progettomedium;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -30,11 +34,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Calendar;
+
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private Button buttonRegister;
     private TextInputLayout editTextEmail;
-    private TextInputLayout editTextData;
+    private Button editTextData;
     private TextInputLayout editTextLuogo;
     private TextInputLayout editTextResidenza;
     private TextInputLayout editTextIndirizzo;
@@ -53,6 +59,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private ImageView imageView;
     public String image_url;
     private UploadTask mUploadTask;
+    private String data2;
+    private String date;
+    private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +81,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         editTextName = findViewById(R.id.editTextName);
         editTextCognome = findViewById(R.id.editTextCognome);
         editTextEmail = findViewById(R.id.editTextEmail);
-        editTextData = findViewById(R.id.editTextData);
+        editTextData = (Button) findViewById(R.id.editTextData);
         editTextIndirizzo = findViewById(R.id.editTextIndirizzo);
         editTextCap =  findViewById(R.id.editTextCap);
         editTextPhone =  findViewById(R.id.editTextPhone);
@@ -96,6 +105,51 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         progressDialog = new ProgressDialog(this);
         buttonRegister.setOnClickListener(this);
         textViewSignIn.setOnClickListener(this);
+
+        editTextData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog = new DatePickerDialog(
+                        RegisterActivity.this,
+                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        mDateSetListener,
+                        year, month, day);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+                month = month + 1;
+                //Log.d(TAG, "onDateSet: dd/mm/yyyy: " + month + "-" + day + "-" + year);
+
+                if (month > 9 && day > 9) {
+                    date = day + "-" + month + "-" + year;
+                    data2 = date;
+                } else if (month > 9 && day < 10) {
+
+                    date = day + "-" + month + "-" + year;
+                    data2 = "0" + day + "-" + month + "-" + year;
+                } else if (month < 10 && day > 9) {
+                    date = day + "-" + month + "-" + year;
+                    data2 = day + "-" + "0" + month + "-" + year;
+                } else {
+                    date = day + "-" + month + "-" + year;
+                    data2 = "0" + day + "-" + "0" + month + "-" + year;
+                }
+
+                editTextData.setText(data2);
+
+
+            }
+        };
     }
 
     private void registerUser() {
@@ -106,7 +160,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String password = editTextPassword.getEditText().getText().toString().trim();
         String confPassword = editTextConfPassword.getEditText().getText().toString().trim();
         String telefono = editTextPhone.getEditText().getText().toString().trim();
-        String data = editTextData.getEditText().getText().toString().trim();
+        String data = editTextData.getText().toString().trim();
         String luogo = editTextLuogo.getEditText().getText().toString().trim();
         String indirizzo = editTextIndirizzo.getEditText().getText().toString().trim();
         String residenza = editTextResidenza.getEditText().getText().toString().trim();
@@ -284,7 +338,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String category = "Organizzatore";
             String mail = editTextEmail.getEditText().getText().toString().trim();
             String phone = editTextPhone.getEditText().getText().toString().trim();
-            String data = editTextData.getEditText().getText().toString().trim();
+            String data = editTextData.getText().toString().trim();
             String luogo = editTextLuogo.getEditText().getText().toString().trim();
             String indirizzo =  editTextIndirizzo.getEditText().getText().toString().trim();
             String cap =  editTextCap.getEditText().getText().toString().trim();

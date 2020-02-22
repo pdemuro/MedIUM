@@ -31,6 +31,16 @@ import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.medium.progettomedium.Fragment.AmmHomeFragment;
+import com.medium.progettomedium.Fragment.AmmProfileFragment;
+import com.medium.progettomedium.Fragment.ProfileFragment;
+import com.medium.progettomedium.Fragment.UtenteHomeFragment;
+import com.medium.progettomedium.Model.DatabaseUtente;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -77,15 +87,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
         if(user != null){
-         /* if(user.isEmailVerified()) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
-            }else{
-                Toast.makeText(this,"L'account non è verificato: controlla la mail",Toast.LENGTH_SHORT).show();
-            }*/
+            FirebaseUser nome = firebaseAuth.getCurrentUser();
+            String nome1= nome.getDisplayName().replaceAll("%20" ," ");
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome1);
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if (getApplicationContext() == null) {
+                        return;
+                    }
+                    DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
+                    if (user.category.equals("Utente")) {
+                        startActivity(new Intent(LoginActivity.this, UtenteHomeFragment.class));
+                    }
+                   else{
+                        startActivity(new Intent(LoginActivity.this, AmmHomeFragment.class));
+                    }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-            if(user.getDisplayName() != null) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            }
+                    }
+                });
         }
 
 
@@ -139,7 +162,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         progressDialog.show();
                         //Inizio attivita del profilo
                         finish();
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        FirebaseUser nome = firebaseAuth.getCurrentUser();
+                        String nome1= nome.getDisplayName().replaceAll("%20" ," ");
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome1);
+                        reference.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (getApplicationContext() == null) {
+                                    return;
+                                }
+                                DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
+                                if (user.category.equals("Utente")) {
+                                    startActivity(new Intent(LoginActivity.this, UtenteHomeFragment.class));
+                                }
+                                else{
+                                    startActivity(new Intent(LoginActivity.this, AmmHomeFragment.class));
+                                }
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -173,5 +217,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
             startActivity(new Intent(this, ProfileAdmin.class));
         }*/
+    }
+
+    public void onBackPressed() {
+
+        System.exit(0);
+        finish();
+
     }
 }

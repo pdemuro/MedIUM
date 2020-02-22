@@ -1,10 +1,14 @@
 package com.medium.progettomedium.Fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +16,22 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.common.internal.Constants;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ValueEventListener;
 import com.medium.progettomedium.ActivityDettagliAmm;
 import com.medium.progettomedium.Adapter.AdaptEventoAmm;
-import com.medium.progettomedium.MainActivity;
+import com.medium.progettomedium.AddEventoActivity;
+import com.medium.progettomedium.AddPostActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.R;
 import com.google.firebase.database.ChildEventListener;
@@ -36,7 +44,9 @@ import com.r0adkll.slidr.Slidr;
 
 import java.util.ArrayList;
 
-public class AmmHomeFragment extends Fragment{
+public class AmmHomeFragment extends AppCompatActivity {
+
+    private BottomNavigationView bottomNavigationView;
     boolean doubleTap = false;
     private ArrayList<DatabaseEvento> eventi = new ArrayList<DatabaseEvento>();
     private AdaptEventoAmm adapter;
@@ -51,15 +61,17 @@ public class AmmHomeFragment extends Fragment{
     private GestureDetectorCompat mGestureDetector;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        //mGestureDetector= new GestureDetectorCompat(getContext().getApplicationContext(), new GestureListener()) ;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_home);
 
-        View view =inflater.inflate(R.layout.fragment_home, container, false);
-        listaEventiView = (RecyclerView) view.findViewById(R.id.row_adda);
+        bottomNavigationView = findViewById(R.id.bottom_navigation_amm);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        bottomNavigationView.getMenu().getItem(0).setChecked(true);
+
+        listaEventiView = (RecyclerView) findViewById(R.id.row_adda);
         listaEventiView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         listaEventiView.setLayoutManager(linearLayoutManager);
@@ -99,8 +111,6 @@ public class AmmHomeFragment extends Fragment{
 
         });
 
-        return view;
-
     }
 
     public void loadData(DataSnapshot dataSnapshot) {
@@ -138,10 +148,10 @@ public class AmmHomeFragment extends Fragment{
                     }
 
                 }
-                adapter = new AdaptEventoAmm(getContext(), eventi, itemClickListener);
+                adapter = new AdaptEventoAmm(getApplication(), eventi, itemClickListener);
 
                 //listaEventiView.setAdapter(adapter);
-                listaEventiView.setAdapter(new AdaptEventoAmm(getContext(), eventi, new AdaptEventoAmm.OnItemClickListener() {
+                listaEventiView.setAdapter(new AdaptEventoAmm(getApplication(), eventi, new AdaptEventoAmm.OnItemClickListener() {
                     @Override public void onItemClick(DatabaseEvento item) {
 
                         String mTitolo = item.getTitolo();
@@ -184,8 +194,86 @@ public class AmmHomeFragment extends Fragment{
         DatabaseEvento.date_collection_arr.remove(eve);
         eventi.remove(doc);
 
-        adapter = new AdaptEventoAmm(getContext(), eventi, itemClickListener);
+        adapter = new AdaptEventoAmm(getApplication(), eventi, itemClickListener);
         listaEventiView.setAdapter(adapter);
+    }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener= new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+            switch (menuItem.getItemId()){
+                case R.id.nav_home:
+                    startActivity( new Intent(getApplicationContext(), UtenteHomeFragment.class));
+                    break;
+                case R.id.nav_addpost:
+                    startActivity( new Intent(getApplicationContext(), AddPostActivity.class));
+                    break;
+
+                case R.id.nav_profile:
+                    SharedPreferences.Editor editor = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
+                    editor.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    editor.apply();
+                    startActivity( new Intent(getApplicationContext(), ProfileFragment.class));
+                    break;
+                case R.id.nav_profileAmm:
+                    SharedPreferences.Editor editor2 = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
+                    editor2.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    editor2.apply();
+                    startActivity( new Intent(getApplicationContext(), AmmProfileFragment.class));
+                    break;
+                case R.id.nav_richieste:
+                    startActivity( new Intent(getApplicationContext(), AmmHomeFragment.class));
+                    break;
+                case R.id.nav_add:
+                    startActivity( new Intent(getApplicationContext(), AddEventoActivity.class));
+
+
+            }
+            return true;
+        }
+    };
+
+    public void onBackPressed() {
+        if (doubleTap) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(AmmHomeFragment.this);
+            builder.setTitle("");
+            builder.setMessage("Uscire dall'applicazione?");
+            builder.setCancelable(false);
+
+            builder.setPositiveButton("Esci", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    System.exit(0);
+                    finish();
+
+
+                }
+            });
+            builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            //startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
+        else{
+            doubleTap = true;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleTap = false;
+                    startActivity(new Intent(AmmHomeFragment.this,UtenteHomeFragment.class));
+                }
+            }, 500);
+        }
     }
 
 }

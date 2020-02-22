@@ -26,7 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Registazione Utente"
+            android:text="Registazione"
+            android:textSize="25sp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -63,11 +64,6 @@
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/spinner1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp" />
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -128,6 +124,12 @@
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,23 +148,21 @@
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+
+        <Button
+            android:id="@+id/editTextData"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="15dp"
+            android:background="@drawable/gradius_image"
+            android:hint="Scegli la data"
+            android:inputType="date"
+            android:textAllCaps="true"
+            android:textColor="@color/button_material_dark"
             app:errorEnabled="true"
             android:visibility="gone"
-            android:id="@+id/editTextData">
+            android:textSize="14sp" />
 
-            <com.google.android.material.textfield.TextInputEditText
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Data di Nascita"
-                android:inputType="date">
-
-            </com.google.android.material.textfield.TextInputEditText>
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

@@ -19,6 +19,7 @@ import androidx.core.view.GestureDetectorCompat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.medium.progettomedium.Fragment.AmmHomeFragment;
 
 public class AddEventoActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
@@ -75,7 +76,7 @@ public class AddEventoActivity extends AppCompatActivity {
                 builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int which) {
 
-                        startActivity(new Intent(AddEventoActivity.this,MainActivity.class));
+                        startActivity(new Intent(AddEventoActivity.this, AmmHomeFragment.class));
                         finish();
 
                     }

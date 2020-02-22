@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,6 +7,31 @@
     android:layout_height="match_parent"
     android:background="@color/background_material_light"
     tools:context=".Fragment.UtenteHomeFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        >
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/gradius_image2"
+            android:visibility="visible"
+            app:itemIconSize="22dp"
+            app:itemIconTint="@color/selector"
+
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/bottom_navigation"
+            app:elevation="16dp"/>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar"
@@ -24,66 +49,66 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/textEvento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="EventX"
+                <TextView
+                    android:id="@+id/textEvento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="EventX"
 
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/icoSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_search"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="20dp"/>
+                <ImageView
+                    android:id="@+id/icoSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_search"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="20dp"/>
 
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="24dp"
-                android:visibility="gone"
-                android:layout_marginStart="80dp"
-                android:layout_marginEnd="20dp"
-                android:id="@+id/cRicerca"
-                android:background="@drawable/gradius"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textEvento">
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp">
+                    android:layout_height="24dp"
+                    android:visibility="gone"
+                    android:layout_marginStart="80dp"
+                    android:layout_marginEnd="20dp"
+                    android:id="@+id/cRicerca"
+                    android:background="@drawable/gradius"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textEvento">
 
-                    <ImageView
-                        android:id="@+id/icoC"
-                        android:layout_width="wrap_content"
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/ic_search_light"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/search_bar"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_marginStart="10dp">
 
-                <EditText
-                    android:id="@+id/search_bar"
-                    android:layout_width="250dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:textSize="15dp"
-                    android:background="@color/colorWhite"
-                    android:hint="Cerca..."
-                    app:layout_constraintStart_toEndOf="@id/icoC"/>
+                        <ImageView
+                            android:id="@+id/icoC"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_search_light"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/search_bar"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <EditText
+                            android:id="@+id/search_bar"
+                            android:layout_width="230dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="1dp"
+                            android:layout_marginBottom="1dp"
+                            android:textSize="15dp"
+                            android:background="@color/colorWhite"
+                            android:hint="Cerca..."
+                            app:layout_constraintStart_toEndOf="@id/icoC"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.Toolbar>
@@ -92,7 +117,6 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-
         android:id="@+id/IconsFiltro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -191,7 +215,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
                 <TextView
                     android:id="@+id/textView"
                     android:layout_width="wrap_content"
@@ -278,7 +301,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
                 <TextView
                     android:id="@+id/textView5"
                     android:layout_width="wrap_content"
@@ -372,7 +394,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
-
                 <TextView
                     android:id="@+id/tv_month"
                     android:layout_width="wrap_content"
@@ -479,7 +500,6 @@
                 android:gravity="center"
                 android:text="D"
                 android:textColor="#4b4a4a" />
-
         </TableRow>
 
         <TextView
@@ -536,4 +556,4 @@
         android:visibility="gone" />
 
 
-    </RelativeLayout>
+</RelativeLayout>

@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.medium.progettomedium.Fragment.ProfileFragment;
-import com.medium.progettomedium.MainActivity;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.medium.progettomedium.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -77,18 +76,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ImageViewHolde
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isFragment) {
-                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", MODE_PRIVATE).edit();
-                    editor.putString("profileid", user.getId());
-                    editor.apply();
 
-                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            new ProfileFragment()).commit();
-                } else {
-                    Intent intent = new Intent(mContext, MainActivity.class);
+                    Intent intent = new Intent(mContext, ProfileFragment.class);
                     intent.putExtra("publisherid", user.getId());
                     mContext.startActivity(intent);
-                }
+
             }
         });
 

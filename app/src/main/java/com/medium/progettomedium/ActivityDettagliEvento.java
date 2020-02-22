@@ -178,7 +178,7 @@ public class ActivityDettagliEvento extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), UtenteHomeFragment.class));
 
             }
         });

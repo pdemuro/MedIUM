@@ -20,7 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.medium.progettomedium.AddEventoActivity2;
-import com.medium.progettomedium.MainActivity;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.medium.progettomedium.R;
 import com.squareup.picasso.Picasso;

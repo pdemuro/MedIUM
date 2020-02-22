@@ -44,6 +44,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.medium.progettomedium.Fragment.AmmHomeFragment;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.rengwuxian.materialedittext.MaterialEditText;
 import com.squareup.picasso.Picasso;
@@ -136,7 +137,7 @@ public class ActivityModificaEvento extends AppCompatActivity {
                         updateEvento(id, titoloE.getText().toString(),descrizione.getText().toString());
                         Toast.makeText(ActivityModificaEvento.this,"Evento modificato con successo",Toast.LENGTH_SHORT).show();
 
-                        startActivity(new Intent(ActivityModificaEvento.this,MainActivity.class));
+                        startActivity(new Intent(ActivityModificaEvento.this, AmmHomeFragment.class));
                         finish();
 
                     }
@@ -291,7 +292,7 @@ public class ActivityModificaEvento extends AppCompatActivity {
                         map.put("immagine",downloadUri.toString());
                         reference.updateChildren(map);
                         Toast.makeText(ActivityModificaEvento.this, "Informazioni Aggiornate!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), AmmHomeFragment.class);
                         //intent.putExtra("publisherid", firebaseUser.getUid());
                         startActivity(intent);
 
@@ -305,7 +306,7 @@ public class ActivityModificaEvento extends AppCompatActivity {
 
         reference.updateChildren(map);
         Toast.makeText(ActivityModificaEvento.this, "Informazioni Aggiornate!", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, AmmHomeFragment.class);
         //intent.putExtra("publisherid", firebaseUser.getUid());
         this.startActivity(intent);
 

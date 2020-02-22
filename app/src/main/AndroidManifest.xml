@@ -47,7 +47,10 @@
         <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".Fragment.AmmHomeFragment" />
+        <activity android:name=".Fragment.AmmProfileFragment" />
+        <activity android:name=".Fragment.ProfileFragment" />
+        <activity android:name=".Fragment.UtenteHomeFragment" />
         <activity android:name=".ActivityDettagliEvento" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".EditProfileActivity" />

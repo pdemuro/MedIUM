@@ -6,7 +6,9 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -28,6 +31,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.medium.progettomedium.ActivityDettagliAmm;
@@ -36,10 +40,11 @@ import com.medium.progettomedium.ActivityModificaEvento;
 import com.medium.progettomedium.Adapter.AdaptEventoModificabile;
 import com.medium.progettomedium.Adapter.AdaptEventoUtente;
 import com.medium.progettomedium.Adapter.MyFotosAdapter;
+import com.medium.progettomedium.AddEventoActivity;
 import com.medium.progettomedium.AddEventoActivity2;
+import com.medium.progettomedium.AddPostActivity;
 import com.medium.progettomedium.EditProfileActivity;
 import com.medium.progettomedium.LoginActivity;
-import com.medium.progettomedium.MainActivity;
 import com.medium.progettomedium.MapActivity;
 import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
@@ -75,8 +80,9 @@ import static android.content.Context.MODE_PRIVATE;
 //import com.eventisardegna.shardana.eventisardegna.FollowersActivity;
 //import com.eventisardegna.shardana.eventisardegna.OptionsActivity;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends AppCompatActivity {
 
+    private BottomNavigationView bottomNavigationView;
     ImageView image_profile, options;
     TextView posts, followers, following, fullname, category, username;
     Button edit_profile;
@@ -96,6 +102,7 @@ public class ProfileFragment extends Fragment {
     private String image_url;
     private FirebaseStorage mStorage;
     private UploadTask mUploadTask;
+    boolean doubleTap = false;
     FirebaseAuth firebaseAuth;
     private AdaptEventoModificabile.OnItemClickListener itemClickListener2;
     private AdaptEventoUtente.OnItemClickListener itemClickListenerutente;
@@ -114,50 +121,53 @@ public class ProfileFragment extends Fragment {
     private CardView informazioni;
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_profile, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_profile);
 
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+        bottomNavigationView.getMenu().getItem(2).setChecked(true);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         firebaseAuth=FirebaseAuth.getInstance();
-        SharedPreferences prefs = getContext().getSharedPreferences("PREFS", MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences("PREFS", MODE_PRIVATE);
         profileid = prefs.getString("UserID", "none");
 
-        image_profile = view.findViewById(R.id.image_profile);
+        image_profile = findViewById(R.id.image_profile);
         //posts = view.findViewById(R.id.posts);
         //followers = view.findViewById(R.id.followers);
         //following = view.findViewById(R.id.following);
-        fullname = view.findViewById(R.id.fullname);
-        category = view.findViewById(R.id.category);
-        edit_profile = view.findViewById(R.id.edit_profile);
+        fullname = findViewById(R.id.fullname);
+        category = findViewById(R.id.category);
+        edit_profile = findViewById(R.id.edit_profile);
         //username = view.findViewById(R.id.username);
      //   my_fotos = view.findViewById(R.id.my_fotos);
 
-        iMieiPost = view.findViewById(R.id.iMieiPost);
-        iMieiEventi = view.findViewById(R.id.iMieiEventi);
-        informazioni = view.findViewById(R.id.informazioni);
+        iMieiPost = findViewById(R.id.iMieiPost);
+        iMieiEventi = findViewById(R.id.iMieiEventi);
+        informazioni = findViewById(R.id.informazioni);
 
       //  saved_fotos = view.findViewById(R.id.saved_fotos);
-        logout=view.findViewById(R.id.buttonLogout);
+        logout=findViewById(R.id.buttonLogout);
 
 
-        divider = view.findViewById(R.id.divider);
-        divider2 = view.findViewById(R.id.divider2);
+        divider = findViewById(R.id.divider);
+        divider2 = findViewById(R.id.divider2);
 
-        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager = new GridLayoutManager(getContext(), 3);
+        LinearLayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
         recyclerView.setLayoutManager(mLayoutManager);
         postList = new ArrayList<>();
-        myFotosAdapter = new MyFotosAdapter(getContext(), postList);
+        myFotosAdapter = new MyFotosAdapter(getApplicationContext(), postList);
         recyclerView.setAdapter(myFotosAdapter);
         postList_saves = new ArrayList<>();
 
 
-        listaEventiView = (RecyclerView) view.findViewById(R.id.recycler_view_save);
+        listaEventiView = (RecyclerView) findViewById(R.id.recycler_view_save);
         listaEventiView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         listaEventiView.setLayoutManager(linearLayoutManager);
@@ -182,8 +192,8 @@ public class ProfileFragment extends Fragment {
                         public void onClick(View v) {
                             recyclerView.setVisibility(View.VISIBLE);
                             listaEventiView.setVisibility(View.GONE);
-                            iMieiPost.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.material_blue_grey_100)));
-                            iMieiEventi.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.colorWhite)));
+                            iMieiPost.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext()/*context*/, (R.color.material_blue_grey_100)));
+                            iMieiEventi.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext()/*context*/, (R.color.colorWhite)));
                             myFotos();
                         }
                     });
@@ -194,8 +204,8 @@ public class ProfileFragment extends Fragment {
                         public void onClick(View v) {
                             recyclerView.setVisibility(View.GONE);
                             listaEventiView.setVisibility(View.VISIBLE);
-                            iMieiEventi.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.material_blue_grey_100)));
-                            iMieiPost.setCardBackgroundColor(ContextCompat.getColor(getActivity()/*context*/, (R.color.colorWhite)));
+                            iMieiEventi.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext()/*context*/, (R.color.material_blue_grey_100)));
+                            iMieiPost.setCardBackgroundColor(ContextCompat.getColor(getApplicationContext()/*context*/, (R.color.colorWhite)));
                             postEvent();
                         }
                     });
@@ -238,7 +248,7 @@ public class ProfileFragment extends Fragment {
 
                 if (btn.equals("Modifica Profilo")){
 
-                    startActivity(new Intent(getContext(), EditProfileActivity.class));
+                    startActivity(new Intent(getApplicationContext(), EditProfileActivity.class));
 
                 }
             }
@@ -251,7 +261,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View arg0) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AlertDialogStyle);
+                AlertDialog.Builder builder = new AlertDialog.Builder(ProfileFragment.this, R.style.AlertDialogStyle);
                 // Setting Dialog Title
                 //builder.setTitle("Internet non disponibile");
 
@@ -262,7 +272,7 @@ public class ProfileFragment extends Fragment {
                 builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int which) {
                         FirebaseAuth.getInstance().signOut();
-                        startActivity(new Intent(getContext(), LoginActivity.class));
+                        startActivity(new Intent(ProfileFragment.this, LoginActivity.class));
                        // Toast.makeText(getContext(),"Modifica annullata",Toast.LENGTH_SHORT).show();
 
 
@@ -307,7 +317,6 @@ public class ProfileFragment extends Fragment {
             }
         });*/
 
-        return view;
     }
     private void myFotos(){
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -422,10 +431,10 @@ public class ProfileFragment extends Fragment {
                                 DatabaseEvento.date_collection_arr.add(eve);
                                 eventi.add(doc);
                             }
-                            adapterutente = new AdaptEventoUtente(getContext(), eventi, itemClickListenerutente);
+                            adapterutente = new AdaptEventoUtente(getApplicationContext(), eventi, itemClickListenerutente);
 
                             //listaEventiView.setAdapter(adapter);
-                            listaEventiView.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
+                            listaEventiView.setAdapter(new AdaptEventoUtente(getApplicationContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(DatabaseEvento item) {
 
@@ -483,10 +492,10 @@ public class ProfileFragment extends Fragment {
                                 DatabaseEvento.date_collection_arr.add(eve);
                                 eventi.add(doc);
                             }
-                            adaptEventoModificabile = new AdaptEventoModificabile(getContext(), eventi, itemClickListener2);
+                            adaptEventoModificabile = new AdaptEventoModificabile(getApplicationContext(), eventi, itemClickListener2);
 
                             //listaEventiView.setAdapter(adapter);
-                            listaEventiView.setAdapter(new AdaptEventoModificabile(getContext(), eventi, new AdaptEventoModificabile.OnItemClickListener() {
+                            listaEventiView.setAdapter(new AdaptEventoModificabile(getApplicationContext(), eventi, new AdaptEventoModificabile.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(DatabaseEvento item) {
 
@@ -537,7 +546,7 @@ public class ProfileFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (getContext() == null){
+                if (getApplicationContext() == null){
                     return;
                 }
                 DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
@@ -547,7 +556,7 @@ public class ProfileFragment extends Fragment {
                 }
                 FirebaseUser photoUser= firebaseAuth.getCurrentUser();
 
-                Glide.with(getContext()).load(user.getImageUrl()).into(image_profile);
+                Glide.with(getApplicationContext()).load(user.getImageUrl()).into(image_profile);
 
                 image_profile.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -556,7 +565,7 @@ public class ProfileFragment extends Fragment {
                         CropImage.activity()
                                 .setGuidelines(CropImageView.Guidelines.ON)
                                 .setAspectRatio(60, 60)
-                                .start(getContext(),ProfileFragment.this);
+                                .start(ProfileFragment.this);
 
 
                     }
@@ -652,7 +661,7 @@ public class ProfileFragment extends Fragment {
 
                             //getContext().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                                    // new ProfileFragment()).commit();
-                            Intent intent = new Intent(getContext(), MainActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), ProfileFragment.class);
                             intent.putExtra("profileid",user.getId());
                             startActivity(intent);
                         }
@@ -780,10 +789,10 @@ public class ProfileFragment extends Fragment {
 
                 }
 
-                adapterutente = new AdaptEventoUtente(getContext(), eventi, itemClickListenerutente);
+                adapterutente = new AdaptEventoUtente(getApplicationContext(), eventi, itemClickListenerutente);
 
                 //listaEventiView.setAdapter(adapter);
-                listaEventiView.setAdapter(new AdaptEventoUtente(getContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
+                listaEventiView.setAdapter(new AdaptEventoUtente(getApplicationContext(), eventi, new AdaptEventoUtente.OnItemClickListener() {
                     @Override public void onItemClick(DatabaseEvento item) {
 
                         String mTitolo = item.getTitolo();
@@ -815,6 +824,86 @@ public class ProfileFragment extends Fragment {
 
 
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener= new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+            switch (menuItem.getItemId()){
+                case R.id.nav_home:
+                    startActivity( new Intent(getApplicationContext(), UtenteHomeFragment.class));
+                    break;
+                case R.id.nav_addpost:
+                    startActivity( new Intent(getApplicationContext(), AddPostActivity.class));
+                    break;
+
+                case R.id.nav_profile:
+                    SharedPreferences.Editor editor = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
+                    editor.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    editor.apply();
+                    startActivity( new Intent(getApplicationContext(), ProfileFragment.class));
+                    break;
+                case R.id.nav_profileAmm:
+                    SharedPreferences.Editor editor2 = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
+                    editor2.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    editor2.apply();
+                    startActivity( new Intent(getApplicationContext(), AmmProfileFragment.class));
+                    break;
+                case R.id.nav_richieste:
+                    startActivity( new Intent(getApplicationContext(), AmmHomeFragment.class));
+                    break;
+                case R.id.nav_add:
+                    startActivity( new Intent(getApplicationContext(), AddEventoActivity.class));
+
+
+            }
+            return true;
+        }
+    };
+
+    public void onBackPressed() {
+        if (doubleTap) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ProfileFragment.this);
+            builder.setTitle("");
+            builder.setMessage("Uscire dall'applicazione?");
+            builder.setCancelable(false);
+
+            builder.setPositiveButton("Esci", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    System.exit(0);
+                    finish();
+
+
+                }
+            });
+            builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            //startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
+        else{
+            doubleTap = true;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    doubleTap = false;
+                   startActivity(new Intent(ProfileFragment.this,UtenteHomeFragment.class));
+                }
+            }, 500);
+        }
+    }
+
+
 
 
 }
