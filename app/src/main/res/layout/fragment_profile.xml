@@ -506,7 +506,6 @@ tools:context=".Fragment.ProfileFragment">
     android:id="@+id/recycler_view"
     android:layout_width="0dp"
     android:layout_height="0dp"
-    android:layout_marginBottom="8dp"
     android:visibility="visible"
     app:layout_constraintBottom_toTopOf="@+id/bottom"
     app:layout_constraintEnd_toEndOf="parent"

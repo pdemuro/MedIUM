@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bottom"
-        android:layout_alignParentBottom="true"
-        android:gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+
         >
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -28,7 +28,7 @@
 
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/bottom_navigation"
-            app:elevation="16dp"/>
+            app:elevation="16dp" />
 
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -37,7 +37,10 @@
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground">
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar2"
@@ -121,13 +124,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/IconsId"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        app:layout_constraintTop_toBottomOf="@+id/bar"
         android:layout_marginStart="1dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginBottom="0dp"
+        android:padding="10dp"
         android:orientation="horizontal"
         android:visibility="gone">
 
@@ -176,12 +175,13 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="55dp"
+
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
         android:orientation="horizontal"
         android:padding="10dp"
-        android:visibility="visible">
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/bar">
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="60dp"
@@ -365,7 +365,8 @@
         android:layout_margin="4dp"
         android:background="#343434"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/IconsId">
 
         <LinearLayout
             android:id="@+id/header"
@@ -539,12 +540,18 @@
     <androidx.recyclerview.widget.RecyclerView
 
         android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_below="@+id/IconsId"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
-        android:background="@drawable/shadow" />
+        android:background="@drawable/shadow"
+        app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IconsId"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view2"
         android:layout_width="match_parent"
@@ -553,7 +560,12 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
         android:background="#efefef"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/IconsId"/>
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
