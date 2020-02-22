@@ -292,7 +292,6 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
 
     private void Event(){
 
-        DatabaseEvento.date_collection_arr = new ArrayList<DatabaseEvento>();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("Eventi");
