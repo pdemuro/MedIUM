@@ -46,7 +46,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     ImageView close, image_profile;
     TextView save, tv_change;
-    MaterialEditText nomeU,cognome, email, bio;
+    MaterialEditText nomeU,cognome, email, bio,telefono,data,luogo,indirizzo,residenza,cap;
 
     FirebaseUser firebaseUser;
     FirebaseAuth firebaseAuth;
@@ -67,11 +67,17 @@ public class EditProfileActivity extends AppCompatActivity {
         cognome = findViewById(R.id.cognomeU);
         email = findViewById(R.id.email);
         bio = findViewById(R.id.bio);
+        telefono = findViewById(R.id.telefono);
+        data = findViewById(R.id.data);
+        luogo = findViewById(R.id.luogo);
+        indirizzo = findViewById(R.id.indirizzo);
+        residenza = findViewById(R.id.residenza);
+        cap = findViewById(R.id.cap);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         firebaseAuth=FirebaseAuth.getInstance();
 
-        storageRef = FirebaseStorage.getInstance().getReference("uploads");
+        storageRef = FirebaseStorage.getInstance().getReference("immaginiprofilo");
 
         FirebaseUser nome = firebaseAuth.getCurrentUser();
         String nome1= nome.getDisplayName().replaceAll("%20" ," ");
@@ -101,7 +107,16 @@ public class EditProfileActivity extends AppCompatActivity {
                     }
                 });
 
+                if(user.getCategory().equals("Organizzatore")){
+                    telefono.setText(user.getPhone());
+                    data.setText(user.getData());
+                    luogo.setText(user.getLuogo());
+                    indirizzo.setText(user.getIndirizzo());
+                    residenza.setText(user.getIndirizzo());
+                    cap.setText(user.getCap());
+                }
             }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -112,35 +127,95 @@ public class EditProfileActivity extends AppCompatActivity {
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                storageRef = FirebaseStorage.getInstance().getReference("immaginiprofilo");
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this, R.style.AlertDialogStyle);
-                // Setting Dialog Title
-                //builder.setTitle("Internet non disponibile");
+                FirebaseUser nome = firebaseAuth.getCurrentUser();
+                String nome1= nome.getDisplayName().replaceAll("%20" ," ");
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("UserID").child("Utenti").child(nome1);
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
+                        FirebaseUser photoUser= firebaseAuth.getCurrentUser();
+                        if( user.getCategory().equals("Utente" ) &&! user.getNome().equals(nomeU.getText().toString()) || ! user.getCognome().equals(cognome.getText().toString()) ||
+                                        ! user.getMail().equals(email.getText().toString()) ||! user.getDescrizione().equals(bio.getText().toString()) ) {
 
-                // Setting Dialog Message
-                builder.setMessage("Sei sicuro di voler modificare le informazioni del profilo?");
+                            AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this, R.style.AlertDialogStyle);
+                            // Setting Dialog Title
+                            //builder.setTitle("Internet non disponibile");
 
-                // On pressing the Settings button.
-                builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int which) {
-                        finish();
+                            // Setting Dialog Message
+                            builder.setMessage("Sei sicuro di uscire dalla modificare del profilo?");
 
+                            // On pressing the Settings button.
+                            builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+
+
+                                }
+                            });
+
+                            // On pressing the cancel button
+                            builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+
+                                }
+                            });
+
+                            // Showing Alert Message
+                            builder.show();
+
+                        }else if(user.getCategory().equals("Organizzatore" ) &&! user.getNome().equals(nomeU.getText().toString()) || ! user.getCognome().equals(cognome.getText().toString()) ||
+                                ! user.getMail().equals(email.getText().toString()) ||! user.getDescrizione().equals(bio.getText().toString()) ||
+                                ! user.getPhone().equals(telefono.getText().toString())||! user.getLuogo().equals(luogo.getText().toString()) ||
+                                ! user.getIndirizzo().equals(indirizzo.getText().toString()) ||! user.getCap().equals(cap.getText().toString())){
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this, R.style.AlertDialogStyle);
+                            // Setting Dialog Title
+                            //builder.setTitle("Internet non disponibile");
+
+                            // Setting Dialog Message
+                            builder.setMessage("Sei sicuro di uscire dalla modificare del profilo?");
+
+                            // On pressing the Settings button.
+                            builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+
+
+                                }
+                            });
+
+                            // On pressing the cancel button
+                            builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+
+                                }
+                            });
+
+                            // Showing Alert Message
+                            builder.show();
+                        }else{
+                            finish();
+                        }
+
+
+                    }
+
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
                     }
                 });
 
-                // On pressing the cancel button
-                builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
 
-                    }
-                });
+                }
 
-                // Showing Alert Message
-                builder.show();
 
-            }
         });
 
         save.setOnClickListener(new View.OnClickListener() {
