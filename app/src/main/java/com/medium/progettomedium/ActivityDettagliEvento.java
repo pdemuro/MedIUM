@@ -39,7 +39,8 @@ public class ActivityDettagliEvento extends AppCompatActivity {
     ImageView foto, image_profile;
     Button prenota;
     ImageView close;
-
+    FirebaseUser firebaseUser;
+    FirebaseAuth firebaseAuth;
     private DatabaseReference databaseReferenceutente;
     private DatabaseReference databaseReference,databaseReference2;
 
@@ -106,6 +107,10 @@ public class ActivityDettagliEvento extends AppCompatActivity {
 
             }
         });
+        firebaseAuth=FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        final String idUtente = user.getUid();
+        final String nome1= user.getDisplayName().replaceAll("%20" ," ");
         databaseReferenceutente = FirebaseDatabase.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReferenceutente.child("UserID").child("Utenti").addValueEventListener(new ValueEventListener() {
@@ -116,7 +121,7 @@ public class ActivityDettagliEvento extends AppCompatActivity {
                 int var = 0;
                 for (final DataSnapshot child : children) {
                     final DatabaseUtente utente = child.getValue(DatabaseUtente.class);
-                    if (utente.getCategory().equals("Utente")) {
+                    if (utente.getCategory().equals("Utente") && utente.getId().equals(idUtente)) {
                         databaseReference.child("UserID").child("Utenti").child(utente.nome + " " + utente.cognome).child("prenotazioni").addValueEventListener(new ValueEventListener() {
 
                             @Override
