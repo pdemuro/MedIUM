@@ -82,7 +82,7 @@ public class AddPostActivity extends AppCompatActivity {
                        /* Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         intent.putExtra("publisherid", firebaseUser.getUid());
                         startActivity(intent);*/
-                        startActivity(new Intent(AddPostActivity.this, AmmHomeFragment.class));
+                        startActivity(new Intent(AddPostActivity.this, ProfileFragment.class));
                         finish();
                     }
                 });
