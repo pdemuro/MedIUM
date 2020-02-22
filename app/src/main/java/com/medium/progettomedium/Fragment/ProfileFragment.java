@@ -140,7 +140,7 @@ public class ProfileFragment extends Fragment {
 
       //  saved_fotos = view.findViewById(R.id.saved_fotos);
         logout=view.findViewById(R.id.buttonLogout);
-        options = view.findViewById(R.id.options);
+
 
         divider = view.findViewById(R.id.divider);
         divider2 = view.findViewById(R.id.divider2);

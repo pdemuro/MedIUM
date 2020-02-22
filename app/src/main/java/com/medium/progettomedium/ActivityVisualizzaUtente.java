@@ -1,6 +1,7 @@
 package com.medium.progettomedium;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,11 +30,12 @@ import java.util.List;
 public class ActivityVisualizzaUtente extends AppCompatActivity {
 
     ImageView vu_img_profilo,close;
-    TextView vu_nome_utente, vu_categoria;
+    TextView vu_nome_utente, vu_categoria,descrizione;
     private RecyclerView vu_lista_foto;
     private List<Post> postList;
     private MyFotosAdapter myFotosAdapter;
     private List<DatabaseEvento> postList_saves;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class ActivityVisualizzaUtente extends AppCompatActivity {
         vu_nome_utente = findViewById(R.id.vu_nome_utente);
         vu_categoria = findViewById(R.id.vu_categoria);
        vu_lista_foto = findViewById(R.id.vu_lista_foto);
+       descrizione = findViewById(R.id.descrizione);
         vu_lista_foto.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 3);
        vu_lista_foto.setLayoutManager(mLayoutManager);
@@ -56,6 +59,7 @@ public class ActivityVisualizzaUtente extends AppCompatActivity {
         String nome = getIntent().getStringExtra("nome");
         String immagine = getIntent().getStringExtra("immagine");
         String categoria = getIntent().getStringExtra("category");
+        String description = getIntent().getStringExtra("description");
 
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,10 +70,12 @@ public class ActivityVisualizzaUtente extends AppCompatActivity {
 
         vu_nome_utente.setText(nome);
         vu_categoria.setText(categoria);
+        descrizione.setText(description);
         if (immagine != null) {
             Glide.with(ActivityVisualizzaUtente.this).load(immagine).into(vu_img_profilo);
 
         }
+
         myFotos(nome);
 
 

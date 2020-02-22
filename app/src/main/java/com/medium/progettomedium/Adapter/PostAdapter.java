@@ -90,10 +90,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ImageViewHolde
         holder.username.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", MODE_PRIVATE).edit();
-                editor.putString("profileid", post.getPublisher());
-                editor.apply();
-                mContext.startActivity(new Intent(mContext, MainActivity.class));
+                ((Activity)mContext).finish();
             }
         });
 

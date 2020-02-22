@@ -259,6 +259,7 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                                         String mPhone = item.getPhone();
                                         String mId = item.getId();
                                         String mImage = item.getImageUrl();
+                                        String mDescrizione = item.getDescrizione();
                                         String mCategoria = item.getCategory();
                                         Intent intent = new Intent(getApplicationContext(), ActivityVisualizzaUtente.class);
                                         intent.putExtra("nome", mNome);
@@ -267,6 +268,7 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                                         intent.putExtra("id",mId);
                                         intent.putExtra("immagine",mImage);
                                         intent.putExtra("category",mCategoria);
+                                        intent.putExtra("description",mDescrizione);
                                         startActivity(intent);
                                     }
 

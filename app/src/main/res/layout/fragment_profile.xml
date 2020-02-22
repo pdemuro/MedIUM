@@ -271,7 +271,7 @@ tools:context=".Fragment.ProfileFragment">
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.50121653" />
+            app:layout_constraintGuide_begin="206dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -322,7 +322,7 @@ tools:context=".Fragment.ProfileFragment">
             app:layout_constraintTop_toBottomOf="@+id/textView25" />
 
         <TextView
-            android:id="@+id/textView28"
+            android:id="@+id/cap"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -331,7 +331,7 @@ tools:context=".Fragment.ProfileFragment">
             app:layout_constraintStart_toEndOf="@+id/textView27" />
 
         <TextView
-            android:id="@+id/textView26"
+            android:id="@+id/residenza"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -360,7 +360,7 @@ tools:context=".Fragment.ProfileFragment">
             app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
         <TextView
-            android:id="@+id/textView24"
+            android:id="@+id/indirizzo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -378,7 +378,7 @@ tools:context=".Fragment.ProfileFragment">
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView19" />
         <TextView
-            android:id="@+id/textView22"
+            android:id="@+id/luogo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -397,7 +397,7 @@ tools:context=".Fragment.ProfileFragment">
             app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
         <TextView
-            android:id="@+id/textView20"
+            android:id="@+id/data"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -416,7 +416,7 @@ tools:context=".Fragment.ProfileFragment">
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/telefono"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -426,8 +426,8 @@ tools:context=".Fragment.ProfileFragment">
 
         <TextView
             android:id="@+id/textView13"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:text="La mia email:"
@@ -435,7 +435,7 @@ tools:context=".Fragment.ProfileFragment">
             app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
         <TextView
-            android:id="@+id/textView15"
+            android:id="@+id/email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

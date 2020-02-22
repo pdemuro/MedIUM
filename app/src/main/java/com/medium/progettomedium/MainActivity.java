@@ -158,6 +158,12 @@ public class MainActivity extends AppCompatActivity {
                     editor.apply();
                     selectedFragment= new ProfileFragment();
                     break;
+                    case R.id.nav_profileAmm:
+                    SharedPreferences.Editor editor2 = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
+                    editor2.putString("UserID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    editor2.apply();
+                    selectedFragment= new AmmProfileFragment();
+                    break;
                 case R.id.nav_richieste:
                     selectedFragment= new AmmHomeFragment();
                     break;

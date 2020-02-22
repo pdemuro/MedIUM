@@ -127,7 +127,6 @@ public class AddEventoActivity3 extends AppCompatActivity {
                 // On pressing the Settings button.
                 builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,int which) {
-                        Toast.makeText(AddEventoActivity3.this,"Pubblicazione avvenuta con successo",Toast.LENGTH_SHORT).show();
 
                         startActivity(new Intent(AddEventoActivity3.this,MainActivity.class));
                         finish();

@@ -65,7 +65,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class AmmProfileFragment extends Fragment {
 
     ImageView image_profile, options;
-    TextView posts, followers, following, fullname, category, username;
+    TextView posts, followers, following, fullname, category, username,email,telefono,data,luogo,indirizzo,cap,residenza;
     Button edit_profile;
 
     private List<String> mySaves;
@@ -116,6 +116,13 @@ public class AmmProfileFragment extends Fragment {
         fullname = view.findViewById(R.id.fullname3);
         category = view.findViewById(R.id.category3);
         edit_profile = view.findViewById(R.id.edit_profile4);
+        telefono = view.findViewById(R.id.telefono);
+        data = view.findViewById(R.id.data);
+        luogo = view.findViewById(R.id.luogo);
+        indirizzo = view.findViewById(R.id.indirizzo);
+        residenza = view.findViewById(R.id.residenza);
+        cap = view.findViewById(R.id.cap);
+        email = view.findViewById(R.id.email);
         //username = view.findViewById(R.id.username);
      //   my_fotos = view.findViewById(R.id.my_fotos);
 
@@ -191,7 +198,13 @@ public class AmmProfileFragment extends Fragment {
                 String nome = user.getNome()+" "+user.getCognome();
                 fullname.setText(nome);
                 category.setText(user.getCategory());
-
+                telefono.setText(user.getPhone());
+                data.setText(user.getData());
+                luogo.setText(user.getLuogo());
+                indirizzo.setText(user.getIndirizzo());
+                residenza.setText(user.getIndirizzo());
+                cap.setText(user.getCap());
+                email.setText(user.getMail());
 
             }
 
