@@ -118,7 +118,6 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
             final String nome = utente.getNome()+" "+utente.getCognome();
             nome_utente.setText(nome);
             mail.setText(utente.getMail());
-            telefono.setText(utente.getPhone());
             Picasso.get().load(utente.getImageUrl()).into(immagine);
 
             accetta.setOnClickListener(new View.OnClickListener() {

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
-    android:layout_height="150dp">
+    android:layout_height="120dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -31,10 +31,10 @@
 
                 <ImageView
                     android:id="@+id/immagine"
-                    android:layout_width="150dp"
-                    android:layout_height="0dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:background="#515d7fd3"
-                    android:scaleType="fitXY"
+
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -57,22 +57,6 @@
                     app:layout_constraintStart_toEndOf="@id/immagine"/>
 
                 <TextView
-                    android:id="@+id/telefono"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="5dp"
-                    android:autoSizeMaxTextSize="30sp"
-                    android:autoSizeMinTextSize="2sp"
-                    android:autoSizeStepGranularity="2sp"
-                    android:autoSizeTextType="uniform"
-                    android:text="Telefono"
-                    android:textColor="@color/secondary_text_material_light"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toBottomOf="@+id/mail"
-                    app:layout_constraintStart_toEndOf="@id/immagine"/>
-
-                <TextView
                     android:id="@+id/nome_utente"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -92,9 +76,9 @@
                         android:layout_height="25dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginBottom="16dp"
-                        android:background="@drawable/gradius_image"
+                        android:background="@drawable/gradius_prenotato"
                         android:text="Accetta"
-                        android:textColor="@color/material_blue_A200"
+                        android:textColor="@color/colorWhite"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/immagine"
@@ -104,12 +88,12 @@
                         android:id="@+id/rifiuta"
                         android:layout_width="0dp"
                         android:layout_height="25dp"
-                        android:layout_marginStart="42dp"
+                        android:layout_marginStart="30dp"
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
-                        android:background="@drawable/gradius_image"
+                        android:background="@drawable/gradius_accedi"
                         android:text="Rifiuta"
-                        android:textColor="@color/material_blue_A200"
+                        android:textColor="@color/colorWhite"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
