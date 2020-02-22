@@ -21,6 +21,9 @@
             android:background="?android:attr/windowBackground">
 
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/textEvento"
                 android:layout_width="wrap_content"
@@ -32,13 +35,26 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/icoSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_search"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="20dp"/>
+
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginStart="45dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
-                android:background="@drawable/gradius">
+                android:layout_height="24dp"
+                android:visibility="gone"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="20dp"
+                android:id="@+id/cRicerca"
+                android:background="@drawable/gradius"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textEvento">
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,6 +83,7 @@
                     android:hint="Cerca..."
                     app:layout_constraintStart_toEndOf="@id/icoC"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.appcompat.widget.Toolbar>

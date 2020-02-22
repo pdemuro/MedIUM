@@ -103,6 +103,8 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
     LocationManager locationManager;
     public int var = 0;
     Button btnShowLocation;
+    ImageView icoSearch;
+    ConstraintLayout cRicerca;
 
     // GPSTracker class
     GPSTracker gps;
@@ -125,7 +127,8 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
         iconeFiltro = view.findViewById(R.id.IconsFiltro);
         close = view.findViewById(R.id.close);
         nomeFiltro = view.findViewById(R.id.nomeFiltro);
-
+        icoSearch = view.findViewById(R.id.icoSearch);
+        cRicerca = view.findViewById(R.id.cRicerca);
 
         userList = new ArrayList<>();
         recyclerView.setAdapter(eventAdapter);
@@ -160,6 +163,13 @@ public class UtenteHomeFragment extends Fragment implements LocationListener {
 
         FirebaseMessaging.getInstance().subscribeToTopic("MyTopic");
 
+        icoSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             cRicerca.setVisibility(View.VISIBLE);
+             icoSearch.setVisibility(View.GONE);
+            }
+        });
         //POPOLAZIONE EVENTI DA DATABASE
         search_bar.setOnClickListener(new View.OnClickListener() {
             @Override
