@@ -162,31 +162,79 @@
                     app:layout_constraintTop_toBottomOf="@+id/luogo"
                     app:srcCompat="@drawable/calendar" />
 
-                <Button
-                    android:id="@+id/modifica"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="@drawable/pencil"
-                    android:fontFamily="sans-serif"
-                    android:textColor="#263238"
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gradius_prenotato"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/cModifica"
+                    app:layout_constraintTop_toBottomOf="@id/data"
+                    app:layout_constraintStart_toEndOf="@+id/immagine"
+                    >
+
+                    <TextView
+                        android:id="@+id/tMdofica"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:padding="5dp"
+                        android:text="MODIFICA"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/modifica"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/modifica"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginBottom="1dp"
+                        android:background="@drawable/pencil"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tMdofica"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gradius_accedi"
+                android:id="@+id/cElimina"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/cModifica"
+                app:layout_constraintTop_toTopOf="@+id/cModifica"
+                >
+
+                <TextView
+                    android:id="@+id/tElimina"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:padding="5dp"
+                    android:text="ELIMINA"
+                    android:textColor="@color/colorWhite"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/immagine" />
+                    app:layout_constraintEnd_toStartOf="@+id/delete"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/delete"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_marginEnd="32dp"
-                    android:layout_marginBottom="8dp"
                     android:background="@drawable/cancel"
-                    android:fontFamily="sans-serif"
-                    android:textColor="#263238"
-                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tElimina"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

@@ -292,7 +292,7 @@ public class ActivityModificaEvento extends AppCompatActivity {
                         reference.updateChildren(map);
                         Toast.makeText(ActivityModificaEvento.this, "Informazioni Aggiornate!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        intent.putExtra("publisherid", firebaseUser.getUid());
+                        //intent.putExtra("publisherid", firebaseUser.getUid());
                         startActivity(intent);
 
                     } else {
@@ -306,7 +306,7 @@ public class ActivityModificaEvento extends AppCompatActivity {
         reference.updateChildren(map);
         Toast.makeText(ActivityModificaEvento.this, "Informazioni Aggiornate!", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("publisherid", firebaseUser.getUid());
+        //intent.putExtra("publisherid", firebaseUser.getUid());
         this.startActivity(intent);
 
     }

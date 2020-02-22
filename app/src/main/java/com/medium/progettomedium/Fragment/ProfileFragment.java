@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -79,6 +80,7 @@ public class ProfileFragment extends Fragment {
     ImageView image_profile, options;
     TextView posts, followers, following, fullname, category, username;
     Button edit_profile;
+    View divider, divider2;
 
     private List<String> mySaves;
 
@@ -100,7 +102,7 @@ public class ProfileFragment extends Fragment {
     private List<Post> postList;
     ImageButton my_fotos, saved_fotos;
     CardView iMieiPost, iMieiEventi;
-    TextView logout;
+    ConstraintLayout logout;
     private DatabaseReference databaseReferenceutente;
     private DatabaseReference databaseReference;
     private DatabaseReference databaseReference2;
@@ -137,8 +139,11 @@ public class ProfileFragment extends Fragment {
         informazioni = view.findViewById(R.id.informazioni);
 
       //  saved_fotos = view.findViewById(R.id.saved_fotos);
-        logout=view.findViewById(R.id.logout);
+        logout=view.findViewById(R.id.buttonLogout);
         options = view.findViewById(R.id.options);
+
+        divider = view.findViewById(R.id.divider);
+        divider2 = view.findViewById(R.id.divider2);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -202,7 +207,8 @@ public class ProfileFragment extends Fragment {
                     iMieiEventi.setVisibility(View.GONE);
                     iMieiPost.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.GONE);
-
+                    divider.setVisibility(View.GONE);
+                    divider2.setVisibility(View.GONE);
                     informazioni.setVisibility(View.VISIBLE);
 
 

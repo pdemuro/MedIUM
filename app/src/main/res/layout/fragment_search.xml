@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,31 +8,71 @@
     android:background="@color/background_material_light"
     tools:context=".Fragment.UtenteHomeFragment">
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/bar"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginEnd="6dp"
-        android:background="@drawable/gradius">
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_search_light" />
-
-        <EditText
-            android:id="@+id/search_bar"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="@color/colorWhite"
-            android:hint="Cerca..." />
+            android:background="?android:attr/windowBackground">
 
-    </androidx.appcompat.widget.Toolbar>
+
+            <TextView
+                android:id="@+id/textEvento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="EventX"
+
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="45dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/gradius">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp">
+
+                    <ImageView
+                        android:id="@+id/icoC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_search_light"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/search_bar"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/search_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="1dp"
+                    android:textSize="15dp"
+                    android:background="@color/colorWhite"
+                    android:hint="Cerca..."
+                    app:layout_constraintStart_toEndOf="@id/icoC"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -100,9 +139,8 @@
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
         android:orientation="horizontal"
+        android:padding="10dp"
         android:visibility="visible">
-
-
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="60dp"
@@ -180,7 +218,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/buttonMenoDistante2" />
-
                 <ImageView
                     android:id="@+id/buttonMenoDistante2"
                     android:layout_width="35dp"
@@ -266,7 +303,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
                 <TextView
                     android:id="@+id/textView6"
                     android:layout_width="wrap_content"
@@ -364,7 +400,6 @@
             android:paddingTop="6dp"
             android:paddingRight="2dp"
             android:paddingBottom="5dp">
-
             <TextView
                 android:id="@+id/TextView06"
                 android:layout_width="wrap_content"
@@ -473,7 +508,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="0dp"
         android:background="@drawable/shadow" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view2"
         android:layout_width="match_parent"
@@ -485,4 +519,4 @@
         android:visibility="gone" />
 
 
-</RelativeLayout>
+    </RelativeLayout>

@@ -3,10 +3,12 @@ package com.medium.progettomedium;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -38,7 +40,8 @@ import java.util.ArrayList;
 public class ActivityDettagliAmm extends AppCompatActivity {
 
      RecyclerView recyclerView,elencoAccettati;
-     Button accettati,prenotati,modifica,delete;
+     Button accettati,prenotati;
+     ConstraintLayout modifica,delete;
      AdaptAmm ammAdapter;
      AdaptAmmAccettati ammAdapter2;
      ArrayList<DatabaseUtente> utenti = new ArrayList<DatabaseUtente>();
@@ -71,8 +74,8 @@ public class ActivityDettagliAmm extends AppCompatActivity {
         prenotati=findViewById(R.id.prenotati);
         close=findViewById(R.id.close);
         immagine= findViewById(R.id.immagine);
-        delete=findViewById(R.id.delete);
-        modifica= findViewById(R.id.modifica);
+        delete=findViewById(R.id.cElimina);
+        modifica= findViewById(R.id.cModifica);
         titolo=findViewById(R.id.titolo);
         luogo = findViewById(R.id.luogo);
         data= findViewById(R.id.data);
