@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.medium.progettomedium.Fragment.AmmHomeFragment;
+import com.medium.progettomedium.Fragment.UtenteHomeFragment;
 import com.theartofdev.edmodo.cropper.CropImage;
 
 import java.util.Calendar;
@@ -256,4 +257,37 @@ public class AddEventoActivity2 extends AppCompatActivity {
         }
 
     }
+
+    public void onBackPressed() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddEventoActivity2.this, R.style.AlertDialogStyle);
+        // Setting Dialog Title
+        //builder.setTitle("Internet non disponibile");
+
+        // Setting Dialog Message
+        builder.setMessage("Uscire dalla creazione dell'evento? I dati inseriti andranno persi");
+
+        // On pressing the Settings button.
+        builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which) {
+
+                startActivity(new Intent(AddEventoActivity2.this,AmmHomeFragment.class));
+                finish();
+
+            }
+        });
+
+        // On pressing the cancel button
+        builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+
+            }
+        });
+
+        // Showing Alert Message
+        builder.show();
+
+    }
+
 }

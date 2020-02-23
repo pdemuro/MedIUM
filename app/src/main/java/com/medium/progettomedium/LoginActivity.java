@@ -52,9 +52,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private FirebaseAuth firebaseAuth;
     private EditText pass;
-    private VideoView videoView;
-    MediaPlayer mediaPlayer;
-    int mCurrentVideoPosition;
 
     private BroadcastReceiver MyReceiver;
 
@@ -92,26 +89,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             });
         }*/
-
-
-        videoView = (VideoView) findViewById(R.id.videoView);
-        Uri uri = Uri.parse("android.resource://"
-                + getPackageName() + "/" + R.raw.video2);
-
-        videoView.setVideoURI(uri);
-        videoView.start();
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mediaPlayer = mp;
-                mediaPlayer.setLooping(true);
-                if(mCurrentVideoPosition != 0){
-                    mediaPlayer.seekTo(mCurrentVideoPosition);
-                    mediaPlayer.start();
-                }
-            }
-        });
-
 
         editTextEmail =  findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
