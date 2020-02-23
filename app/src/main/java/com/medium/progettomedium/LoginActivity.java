@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     MediaPlayer mediaPlayer;
     int mCurrentVideoPosition;
 
-    private BroadcastReceiver MyReceiver = null;
+    private BroadcastReceiver MyReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        MyReceiver = new MyReceiver(LoginActivity.this);
+       /* FirebaseUser user = firebaseAuth.getCurrentUser();
 
         if(user != null){
             FirebaseUser nome = firebaseAuth.getCurrentUser();
@@ -90,10 +91,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 }
             });
-        }
+        }*/
 
-
-        MyReceiver = new MyReceiver(LoginActivity.this);
 
         videoView = (VideoView) findViewById(R.id.videoView);
         Uri uri = Uri.parse("android.resource://"
@@ -120,8 +119,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
         //buttonAdmin = (Button) findViewById(R.id.buttonAdmin);
         textViewSignUp = (TextView) findViewById(R.id.textViewSignUp);
-
-        progressDialog = new ProgressDialog(this);
 
         buttonSignIn.setOnClickListener(this);
         // buttonAdmin.setOnClickListener(this);
@@ -153,17 +150,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if(var) {
 
-
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    progressDialog.dismiss();
 
                     if (task.isSuccessful()) {
-                        progressDialog.setMessage("Accesso in corso...");
-                        progressDialog.show();
                         //Inizio attivita del profilo
-                        finish();
+
                         FirebaseUser nome = firebaseAuth.getCurrentUser();
                         String nome1= nome.getDisplayName().replaceAll("%20" ," ");
                         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome1);
@@ -175,10 +168,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 }
                                 DatabaseUtente user = dataSnapshot.getValue(DatabaseUtente.class);
                                 if (user.category.equals("Utente")) {
-                                    startActivity(new Intent(LoginActivity.this, UtenteHomeFragment.class));
+                                    startActivity(new Intent(getApplicationContext(), UtenteHomeFragment.class));
                                 }
                                 else{
-                                    startActivity(new Intent(LoginActivity.this, AmmHomeFragment.class));
+                                    startActivity(new Intent(getApplicationContext(), AmmHomeFragment.class));
                                 }
                             }
                             @Override
@@ -207,7 +200,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if(view == buttonSignIn){
-
             registerReceiver(MyReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
             userLogin();
         }

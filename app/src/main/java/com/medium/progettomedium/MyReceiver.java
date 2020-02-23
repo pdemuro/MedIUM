@@ -29,7 +29,9 @@ public class MyReceiver extends BroadcastReceiver {
 
 
 
+
     }
+
 
     public void getConnectivityStatusString(Context context) {
         String status = null;

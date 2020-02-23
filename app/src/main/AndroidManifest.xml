@@ -29,7 +29,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityVisualizzaAmm"></activity>
+        <activity android:name=".ActivityVisualizzaAmm" />
         <activity android:name=".AddEventoActivity" />
         <activity android:name=".ActivityVisualizzaUtente" />
         <activity android:name=".ActivityModificaEvento" />
@@ -57,7 +57,8 @@
         <activity android:name=".ActivityPostDetail" />
         <activity android:name=".AddEventoActivity2" />
         <activity android:name=".AddEventoActivity3" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
