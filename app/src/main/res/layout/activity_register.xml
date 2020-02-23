@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Registazione"
+            android:text="Registrazione"
             android:textSize="25sp"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -242,7 +242,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:text="Registrati"
-            android:background="@color/rossoButton"
+            android:background="@drawable/gradius_accedi"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             app:fontFamily="Heebo"/>

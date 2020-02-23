@@ -23,6 +23,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.medium.progettomedium.Fragment.ProfileFragment;
+import com.medium.progettomedium.Fragment.UtenteHomeFragment;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -346,7 +348,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String cap =  editTextCap.getEditText().getText().toString().trim();
             String residenza = editTextResidenza.getEditText().getText().toString().trim();
             String userID = firebaseAuth.getUid();
-            DatabaseUtente databaseUtente = new DatabaseUtente(name, cognome, mail, userID,category, phone, data, luogo, residenza,indirizzo, cap,"https://firebasestorage.googleapis.com/v0/b/progettomedium-76d21.appspot.com/o/immaginiprofilo%2Fprofilo-png-2.png?alt=media&token=54d738cc-06f1-41c6-9f33-541b391b12ba");
+            DatabaseUtente databaseUtente = new DatabaseUtente(name, cognome, mail, userID,category, phone, data, luogo, residenza,indirizzo, cap,"https://firebasestorage.googleapis.com/v0/b/progettomedium-76d21.appspot.com/o/immaginiprofilo%2Fprofilo-png-2.png?alt=media&token=0e32a304-be2b-403e-8966-177642267d7f");
 
             FirebaseUser user = firebaseAuth.getCurrentUser();
             if (user != null) {
@@ -418,6 +420,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    public void onBackPressed() {
+
+        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
 
     }
 }

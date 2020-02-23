@@ -10,9 +10,10 @@
     android:background="@color/material_yellow_100">
 
     <ImageView
+        android:id="@+id/logo"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/eventx"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,12 +29,12 @@
         android:layout_height="wrap_content"
         android:paddingLeft="60dp"
         android:paddingRight="60dp"
-        android:layout_marginTop="420dp"
+        android:layout_marginTop="50dp"
         app:errorEnabled="true"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
 
         android:color="@android:color/background_dark"
         android:textColorHint="@color/colorBlack"
@@ -43,7 +44,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:padding="10dp"
@@ -108,21 +109,22 @@
         android:layout_marginLeft= "60dp"
         android:layout_marginRight="60dp"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
-        app:layout_constraintStart_toStartOf="@id/editTextPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
      />
 
     <TextView
         android:id="@+id/textViewSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:layout_marginLeft= "60dp"
         android:layout_marginRight="60dp"
+        android:layout_marginTop="30dp"
         android:text="@string/non_ti_sei_registrato_premi_qui"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         app:layout_constraintTop_toBottomOf="@+id/buttonSignIn"
-
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/buttonSignIn" />
 
 

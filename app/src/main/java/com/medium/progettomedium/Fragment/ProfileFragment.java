@@ -92,7 +92,6 @@ public class ProfileFragment extends AppCompatActivity {
 
     FirebaseUser firebaseUser;
     String profileid;
-
     private RecyclerView recyclerView;
     private MyFotosAdapter myFotosAdapter;
     private List<DatabaseEvento> eventi = new ArrayList<DatabaseEvento>();
@@ -142,13 +141,13 @@ public class ProfileFragment extends AppCompatActivity {
         category = findViewById(R.id.category);
         edit_profile = findViewById(R.id.edit_profile);
         //username = view.findViewById(R.id.username);
-     //   my_fotos = view.findViewById(R.id.my_fotos);
+        //   my_fotos = view.findViewById(R.id.my_fotos);
 
         iMieiPost = findViewById(R.id.iMieiPost);
         iMieiEventi = findViewById(R.id.iMieiEventi);
         informazioni = findViewById(R.id.informazioni);
 
-      //  saved_fotos = view.findViewById(R.id.saved_fotos);
+        //  saved_fotos = view.findViewById(R.id.saved_fotos);
         logout=findViewById(R.id.buttonLogout);
 
 
@@ -181,7 +180,6 @@ public class ProfileFragment extends AppCompatActivity {
         databaseReferenceutente.child("UserID").child("Utenti").child(nome1).child("category").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 if(dataSnapshot.getValue().equals("Utente")) {
                     myFotos();
                     postEvent();
@@ -274,7 +272,7 @@ public class ProfileFragment extends AppCompatActivity {
                         FirebaseAuth.getInstance().signOut();
                         startActivity(new Intent(ProfileFragment.this, LoginActivity.class));
                         finish();
-                       // Toast.makeText(getContext(),"Modifica annullata",Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(getContext(),"Modifica annullata",Toast.LENGTH_SHORT).show();
 
 
 
@@ -295,9 +293,6 @@ public class ProfileFragment extends AppCompatActivity {
 
             }
         });
-
-
-
 /*        followers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -394,12 +389,6 @@ public class ProfileFragment extends AppCompatActivity {
         databaseReference3 = FirebaseDatabase.getInstance().getReference();
 
         databaseReference.child("UserID").child("Utenti").child(nome1).addValueEventListener(new ValueEventListener() {
-
-            /**
-             * This method will be invoked any time the data on the database changes.
-             * Additionally, it will be invoked as soon as we connect the listener, so that we can get an initial snapshot of the data on the database.
-             * @param dataSnapshot
-             */
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // get all of the children at this level.
@@ -408,12 +397,6 @@ public class ProfileFragment extends AppCompatActivity {
                 if(tipo.equals("Utente")){
                     databaseReference2.child("UserID").child("Utenti").child(nome1).child("prenotazioni").addValueEventListener(new ValueEventListener() {
 
-                        /**
-                         * This method will be invoked any time the data on the database changes.
-                         * Additionally, it will be invoked as soon as we connect the listener, so that we can get an initial snapshot of the data on the database.
-                         *
-                         * @param dataSnapshot
-                         */
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             // get all of the children at this level.
@@ -467,7 +450,6 @@ public class ProfileFragment extends AppCompatActivity {
                     });
                 }else{
                     databaseReference3.child("UserID").child("Utenti").child(nome1).child("Eventi Creati").addValueEventListener(new ValueEventListener() {
-
                         /**
                          * This method will be invoked any time the data on the database changes.
                          * Additionally, it will be invoked as soon as we connect the listener, so that we can get an initial snapshot of the data on the database.
@@ -562,7 +544,6 @@ public class ProfileFragment extends AppCompatActivity {
                 image_profile.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         CropImage.activity()
                                 .setGuidelines(CropImageView.Guidelines.ON)
                                 .setAspectRatio(60, 60)
@@ -656,12 +637,10 @@ public class ProfileFragment extends AppCompatActivity {
                         if (nome.equals(user2.getDisplayName())) {
                             //user.setImageUrl(image_url);
                             DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("UserID").child("Utenti").child(nome).child("imageUrl");
-
-
                             reference.setValue(image_url);
 
                             //getContext().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                   // new ProfileFragment()).commit();
+                            // new ProfileFragment()).commit();
                             Intent intent = new Intent(getApplicationContext(), ProfileFragment.class);
                             intent.putExtra("profileid",user.getId());
                             startActivity(intent);
@@ -769,7 +748,6 @@ public class ProfileFragment extends AppCompatActivity {
             }
         });
     }
-
     private void readSaves(){
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Eventi");
         reference.addValueEventListener(new ValueEventListener() {

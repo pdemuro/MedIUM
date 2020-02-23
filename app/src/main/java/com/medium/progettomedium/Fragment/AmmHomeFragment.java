@@ -18,6 +18,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -59,6 +61,7 @@ public class AmmHomeFragment extends AppCompatActivity {
     private DatabaseReference databaseReferenceutente;
     private DatabaseReference getDatabaseReferencevento;
     private GestureDetectorCompat mGestureDetector;
+    private CardView nessunEve;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +79,9 @@ public class AmmHomeFragment extends AppCompatActivity {
         linearLayoutManager.setStackFromEnd(true);
         listaEventiView.setLayoutManager(linearLayoutManager);
         eventi = new ArrayList<DatabaseEvento>();
+
+        nessunEve = findViewById(R.id.nessunEve);
+        nessunEve.setVisibility(View.GONE);
 
         FirebaseMessaging.getInstance().subscribeToTopic("MyTopic");
 
@@ -148,6 +154,14 @@ public class AmmHomeFragment extends AppCompatActivity {
                     }
 
                 }
+                if(eventi.size() != 0){
+                    nessunEve.setVisibility(View.GONE);
+
+                }
+                else{
+                    nessunEve.setVisibility(View.VISIBLE);
+                }
+
                 adapter = new AdaptEventoAmm(getApplication(), eventi, itemClickListener);
 
                 //listaEventiView.setAdapter(adapter);

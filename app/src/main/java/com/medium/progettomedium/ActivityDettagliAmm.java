@@ -3,6 +3,7 @@ package com.medium.progettomedium;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GestureDetectorCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -52,6 +53,7 @@ public class ActivityDettagliAmm extends AppCompatActivity {
      ImageView close,immagine;
      TextView titolo,luogo,data;
      private GestureDetectorCompat mGestureDetector;
+     private CardView nessunPar, nessunAcc;
     private static final String TAG = "ActivityDettagliAmm";
 
     @Override
@@ -79,7 +81,10 @@ public class ActivityDettagliAmm extends AppCompatActivity {
         titolo=findViewById(R.id.titolo);
         luogo = findViewById(R.id.luogo);
         data= findViewById(R.id.data);
-
+        nessunPar = findViewById(R.id.nessunaPre);
+        nessunPar.setVisibility(View.GONE);
+        nessunAcc = findViewById(R.id.nessunaAcc);
+        nessunAcc.setVisibility(View.GONE);
         titolo.setText(title);
         Picasso.get().load(image).into(immagine);
         luogo.setText(place);
@@ -246,6 +251,14 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                                     }
 
                                 }
+                                if(utenti.size() != 0){
+                                    nessunPar.setVisibility(View.GONE);
+                                    nessunAcc.setVisibility(View.GONE);
+                                }else {
+                                    nessunPar.setVisibility(View.GONE);
+                                    nessunAcc.setVisibility(View.VISIBLE);
+
+                                }
 
 
                                 ammAdapter2 = new AdaptAmmAccettati(ActivityDettagliAmm.this, utenti,id, itemClickListener2);
@@ -371,6 +384,13 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                                         }
                                     }
 
+                                }
+                                if(utenti.size() != 0){
+                                    nessunPar.setVisibility(View.GONE);
+                                    nessunAcc.setVisibility(View.GONE);
+                                }else {
+                                    nessunPar.setVisibility(View.VISIBLE);
+                                    nessunAcc.setVisibility(View.GONE);
                                 }
 
 
