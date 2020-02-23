@@ -206,7 +206,7 @@ public class AddEventoActivity2 extends AppCompatActivity {
                 String descrizione = getIntent().getStringExtra("descrizione");
                 String c=boxData.getText().toString();
                 String d= getPlace.getText().toString();
-                if ( ! boxData.getText().toString().equals("") && ! getPlace.getText().toString().equals("Scegli Posizione")) {
+                if ( ! boxData.getText().toString().equals("") && ! getPlace.getText().toString().equals("")) {
                     Intent intent = new Intent(AddEventoActivity2.this, AddEventoActivity3.class);
                     intent.putExtra("titolo", titolo);
                     intent.putExtra("descrizione", descrizione);
@@ -216,14 +216,14 @@ public class AddEventoActivity2 extends AppCompatActivity {
                     intent.putExtra("luogo", luogo);
                     startActivity(intent);
                     finish();
-                } else if( getPlace.getText().toString().equals("Scegli Posizione") && boxData.getText().toString().equals("")){
+                } else if( getPlace.getText().toString().equals("") && boxData.getText().toString().equals("")){
                     boxData.setError("Non hai inserito la data");
                     getPlace.setError("Non hai inserito la posizione");
                 }else if(boxData.getText().toString().equals("")){
                     // Toast.makeText(AddEventoActivity.this,"Non hai inserito nessun titolo",Toast.LENGTH_SHORT).show();
                     boxData.setError("Non hai inserito la data");
 
-                } else if(getPlace.getText().toString().equals("Scegli Posizione")){
+                } else if(getPlace.getText().toString().equals("")){
                     getPlace.setError("Non hai inserito nessuna posizione");
                     //Toast.makeText(AddEventoActivity.this,"Non hai inserito nessuna descrizione",Toast.LENGTH_SHORT).show();
 

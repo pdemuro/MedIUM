@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toTopOf="@+id/evento"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -55,256 +56,201 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/evento"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        app:layout_constraintTop_toBottomOf="@id/bar">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView14"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:focusable="auto"
+            android:longClickable="false"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/titolo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="15dp"
+                    android:autoSizeMaxTextSize="20sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:autoSizeTextType="uniform"
+                    android:maxLines="1"
+                    android:text="Nome evento"
+                    android:textAllCaps="true"
+                    android:textColor="@color/primary_text_default_material_light"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/immagine"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/luogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:autoSizeMaxTextSize="30sp"
+                    android:autoSizeMinTextSize="2sp"
+                    android:autoSizeStepGranularity="2sp"
+                    android:autoSizeTextType="uniform"
+                    android:text="Luogo"
+                    android:textColor="@color/secondary_text_material_light"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@+id/immagine"
+                    app:layout_constraintTop_toBottomOf="@+id/titolo" />
+
+                <TextView
+                    android:id="@+id/data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Data"
+                    android:textColor="@color/material_red_300"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toEndOf="@+id/immagine"
+                    app:layout_constraintTop_toBottomOf="@+id/luogo" />
+
+                <ImageView
+                    android:id="@+id/immagine"
+                    android:layout_width="170dp"
+                    android:layout_height="0dp"
+                    android:background="#515d7fd3"
+                    android:scaleType="fitXY"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="15dp"
+                    android:layout_height="18dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toEndOf="@+id/luogo"
+                    app:layout_constraintTop_toBottomOf="@+id/titolo"
+                    app:srcCompat="@drawable/placeholder" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="13dp"
+                    android:layout_height="17dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toEndOf="@+id/data"
+                    app:layout_constraintTop_toBottomOf="@+id/luogo"
+                    app:srcCompat="@drawable/calendar" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gradius_prenotato"
+                    android:layout_marginTop="15dp"
+                    android:padding="5dp"
+                    android:id="@+id/cModifica"
+                    app:layout_constraintTop_toBottomOf="@id/data"
+                    app:layout_constraintStart_toEndOf="@+id/immagine"
+                    app:layout_constraintEnd_toStartOf="@+id/cElimina"
+                    >
+
+                    <TextView
+                        android:id="@+id/tMdofica"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+
+                        android:text="MODIFICA"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/modifica"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/modifica"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginBottom="1dp"
+                        android:background="@drawable/pencil"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tMdofica"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gradius_accedi"
+                    android:id="@+id/cElimina"
+                    android:padding="5dp"
+                    android:layout_marginTop="15dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/data"
+                    app:layout_constraintStart_toEndOf="@id/cModifica"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/tElimina"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="ELIMINA"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/delete"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/delete"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/cancel"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tElimina"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <View
         android:id="@+id/divider8"
         android:layout_width="409dp"
         android:layout_height="1dp"
-        android:layout_marginTop="137dp"
-        android:layout_marginBottom="1dp"
+        android:layout_marginTop="5dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/prenotati"
+        app:layout_constraintTop_toBottomOf="@+id/evento"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bar" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView14"
-        android:layout_width="0dp"
-        android:layout_height="137dp"
-
-        android:focusable="auto"
-        android:longClickable="false"
-        app:layout_constraintBottom_toTopOf="@+id/prenotati"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bar"
-        tools:visibility="visible">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/titolo"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="15dp"
-                android:autoSizeMaxTextSize="20sp"
-                android:autoSizeStepGranularity="2sp"
-                android:autoSizeTextType="uniform"
-                android:maxLines="1"
-                android:text="Nome evento"
-                android:textAllCaps="true"
-                android:textColor="@color/primary_text_default_material_light"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/immagine"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/luogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
-                android:autoSizeMaxTextSize="30sp"
-                android:autoSizeMinTextSize="2sp"
-                android:autoSizeStepGranularity="2sp"
-                android:autoSizeTextType="uniform"
-                android:text="Luogo"
-                android:textColor="@color/secondary_text_material_light"
-                android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@+id/immagine"
-                app:layout_constraintTop_toBottomOf="@+id/titolo" />
-
-            <TextView
-                android:id="@+id/data"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="sans-serif-medium"
-                android:text="Data"
-                android:textColor="@color/material_red_300"
-                android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@+id/immagine"
-                app:layout_constraintTop_toBottomOf="@+id/luogo" />
-
-            <ImageView
-                android:id="@+id/immagine"
-                android:layout_width="170dp"
-                android:layout_height="0dp"
-                android:background="#515d7fd3"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="15dp"
-                android:layout_height="18dp"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintStart_toEndOf="@+id/luogo"
-                app:layout_constraintTop_toBottomOf="@+id/titolo"
-                app:srcCompat="@drawable/placeholder" />
-
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="13dp"
-                android:layout_height="17dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="5dp"
-                app:layout_constraintStart_toEndOf="@+id/data"
-                app:layout_constraintTop_toBottomOf="@+id/luogo"
-                app:srcCompat="@drawable/calendar" />
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cModifica"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/gradius_prenotato"
-                android:padding="5dp"
-                app:layout_constraintEnd_toStartOf="@+id/cElimina"
-                app:layout_constraintStart_toEndOf="@+id/immagine"
-                app:layout_constraintTop_toBottomOf="@id/data">
-
-                <TextView
-                    android:id="@+id/tMdofica"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-
-                    android:text="MODIFICA"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/modifica"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/modifica"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginBottom="1dp"
-                    android:background="@drawable/pencil"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tMdofica"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cElimina"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/gradius_accedi"
-                android:padding="5dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/cModifica"
-                app:layout_constraintTop_toBottomOf="@id/data"
-
-                >
-
-                <TextView
-                    android:id="@+id/tElimina"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="ELIMINA"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/delete"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/delete"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/cancel"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tElimina"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/accettati"
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:layout_weight="1"
-        android:fontFamily="sans-serif"
-        android:hint="Accettati"
-        android:textColorHint="@color/button_material_dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@id/divider8" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView22"
-        android:layout_width="403dp"
-        android:layout_height="137dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="2dp"
-
-        android:layout_marginEnd="8dp"
-        android:focusable="auto"
-        android:longClickable="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bar"
-        tools:visibility="gone">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/immagine2"
-                android:layout_width="110dp"
-                android:layout_height="70dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="32dp"
-                android:background="@drawable/icons8_image_file_64"
-                android:scaleType="fitXY"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/textView10"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:text="Nessun evento ancora creato"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/prenotati"
@@ -317,9 +263,23 @@
         android:fontFamily="sans-serif"
         android:hint="Da Valutare"
         android:textColorHint="@color/button_material_dark"
-        app:layout_constraintBottom_toBottomOf="@+id/accettati"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider8" />
+
+    <Button
+        android:id="@+id/accettati"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:layout_weight="1"
+        android:fontFamily="sans-serif"
+        android:hint="Accettati"
+        android:textColorHint="@color/button_material_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/divider8" />
 
     <View
         android:id="@+id/divider7"
@@ -328,7 +288,7 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView22" />
+        app:layout_constraintTop_toBottomOf="@+id/prenotati" />
 
 
     <androidx.constraintlayout.widget.Guideline
