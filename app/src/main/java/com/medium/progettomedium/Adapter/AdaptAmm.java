@@ -17,9 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.medium.progettomedium.ActivityDettagliAmm;
 import com.medium.progettomedium.AddEventoActivity2;
+import com.medium.progettomedium.Model.DatabaseEvento;
 import com.medium.progettomedium.Model.DatabaseUtente;
 import com.medium.progettomedium.R;
 import com.squareup.picasso.Picasso;
@@ -103,11 +108,10 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
 
         }
 
-        public void bind(final DatabaseUtente utente,String idEvento, final OnItemClickListener listener) {
+        public void bind(final DatabaseUtente utente, final String idEvento, final OnItemClickListener listener) {
             final String eventoid = idEvento;
             final String id = utente.getId();
             firebaseAuth = FirebaseAuth.getInstance();
-
             final FirebaseUser user = firebaseAuth.getCurrentUser();
             final String nome1= user.getDisplayName().replaceAll("%20" ," ");
             databaseReferenceutente = FirebaseDatabase.getInstance().getReference();
@@ -119,6 +123,9 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
             mail.setText(utente.getMail());
             Picasso.get().load(utente.getImageUrl()).into(immagine);
 
+
+
+
             accetta.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -128,15 +135,32 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
                     //builder.setTitle("Internet non disponibile");
 
                     // Setting Dialog Message
-                    builder.setMessage("Sei sicuro di voler accettare questo utente? Hai visualizzato il suo profilo?");
+                    builder.setMessage("Accettare questo utente? Hai visualizzato il suo profilo?");
 
                     // On pressing the Settings button.
                     builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,int which) {
 
                             databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(3);
-                            Toast.makeText(c,"Operazione avvenuta con successo",Toast.LENGTH_SHORT).show();
+                            databaseReference2.child("Eventi").child(idEvento).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    DatabaseEvento databaseEvento = dataSnapshot.getValue(DatabaseEvento.class);
+                                    Intent intent = new Intent(c, ActivityDettagliAmm.class);
+                                    intent.putExtra("titolo", databaseEvento.getTitolo());
+                                    intent.putExtra("luogo", databaseEvento.getLuogo());
+                                    intent.putExtra("descrizione", databaseEvento.getDescrizione());
+                                    intent.putExtra("immagine",databaseEvento.getImmagine());
+                                    intent.putExtra("data",databaseEvento.getDate());
+                                    intent.putExtra("id",databaseEvento.getId());
+                                    c.startActivity(intent);
+                                }
 
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
 
                         }
                     });
@@ -168,7 +192,7 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
                     //builder.setTitle("Internet non disponibile");
 
                     // Setting Dialog Message
-                    builder.setMessage("Sei sicuro di voler rifiutare questo utente? Hai visualizzato il suo profilo?");
+                    builder.setMessage("Rifiutare questo utente? Hai visualizzato il suo profilo?");
 
                     // On pressing the Settings button.
                     builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
@@ -176,7 +200,25 @@ public class AdaptAmm extends RecyclerView.Adapter<AdaptAmm.ViewHolder>{
 
                             databaseReference.child("UserID").child("Utenti").child(nome).child("prenotazioni").child(eventoid).setValue(4);
                             Toast.makeText(c,"Operazione avvenuta con successo",Toast.LENGTH_SHORT).show();
+                            databaseReference2.child("Eventi").child(idEvento).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    DatabaseEvento databaseEvento = dataSnapshot.getValue(DatabaseEvento.class);
+                                    Intent intent = new Intent(c, ActivityDettagliAmm.class);
+                                    intent.putExtra("titolo", databaseEvento.getTitolo());
+                                    intent.putExtra("luogo", databaseEvento.getLuogo());
+                                    intent.putExtra("descrizione", databaseEvento.getDescrizione());
+                                    intent.putExtra("immagine",databaseEvento.getImmagine());
+                                    intent.putExtra("data",databaseEvento.getDate());
+                                    intent.putExtra("id",databaseEvento.getId());
+                                    c.startActivity(intent);
+                                }
 
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
 
                         }
                     });

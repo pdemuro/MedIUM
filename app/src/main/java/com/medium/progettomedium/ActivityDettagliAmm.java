@@ -93,7 +93,7 @@ public class ActivityDettagliAmm extends AppCompatActivity {
                 //builder.setTitle("Internet non disponibile");
 
                 // Setting Dialog Message
-                builder.setMessage("Sei sicuro di voler eliminare definitivamente l'evento? ");
+                builder.setMessage("Eliminare definitivamente l'evento? ");
 
                 // On pressing the Settings button.
                 builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
