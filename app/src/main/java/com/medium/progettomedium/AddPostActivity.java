@@ -226,7 +226,31 @@ public class AddPostActivity extends AppCompatActivity {
     }
     public void onBackPressed() {
 
-        startActivity(new Intent(AddPostActivity.this, UtenteHomeFragment.class));
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddPostActivity.this, R.style.AlertDialogStyle);
+        // Setting Dialog Title
+        //builder.setTitle("Internet non disponibile");
+
+        // Setting Dialog Message
+        builder.setMessage("Annullare la creazione del post? I dati non verranno salvati");
+
+        // On pressing the Settings button.
+        builder.setPositiveButton("Conferma", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which) {
+
+                Toast.makeText(AddPostActivity.this,"Creazione evento annullata",Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+        // On pressing the cancel button
+        builder.setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        // Showing Alert Message
+        builder.show();
 
     }
 }
