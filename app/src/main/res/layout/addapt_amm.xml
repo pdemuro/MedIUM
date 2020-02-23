@@ -2,9 +2,53 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
     android:layout_height="120dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="394dp"
+        android:layout_height="108dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="44dp"
+                android:layout_marginBottom="45dp"
+                android:text="Nessun utente si è prenotato"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView10"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="50dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/error" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -19,88 +63,87 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
 
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+            <ImageView
+                android:id="@+id/immagine"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="#515d7fd3"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="30dp"
+                android:autoSizeMaxTextSize="20sp"
+                android:autoSizeStepGranularity="2sp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="2"
+                android:text="Mail"
+                android:textAllCaps="true"
+                android:textColor="@color/primary_text_default_material_light"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@id/immagine"
+                app:layout_constraintTop_toTopOf="@+id/nome_utente" />
+
+            <TextView
+                android:id="@+id/nome_utente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Nome Utente"
+                android:textColor="@color/material_red_300"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@id/immagine"
+                app:layout_constraintTop_toBottomOf="@+id/telefono" />
+
+
+            <Button
+                android:id="@+id/accetta"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/gradius_prenotato"
+                android:text="Accetta"
+                android:textColor="@color/colorWhite"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/rifiuta"
+                app:layout_constraintStart_toEndOf="@id/immagine" />
+
+            <Button
+                android:id="@+id/rifiuta"
+                android:layout_width="0dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/gradius_accedi"
+                android:text="Rifiuta"
+                android:textColor="@color/colorWhite"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintStart_toEndOf="@+id/accetta" />
 
-                <ImageView
-                    android:id="@+id/immagine"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:background="#515d7fd3"
-
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/mail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="30dp"
-                    android:autoSizeMaxTextSize="20sp"
-                    android:autoSizeStepGranularity="2sp"
-                    android:autoSizeTextType="uniform"
-                    android:maxLines="2"
-                    android:text="Mail"
-                    android:textAllCaps="true"
-                    android:textColor="@color/primary_text_default_material_light"
-                    android:textSize="14sp"
-                    app:layout_constraintTop_toTopOf="@+id/nome_utente"
-                    app:layout_constraintStart_toEndOf="@id/immagine"/>
-
-                <TextView
-                    android:id="@+id/nome_utente"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:text="Nome Utente"
-                    android:textColor="@color/material_red_300"
-                    android:textSize="20sp"
-                    app:layout_constraintTop_toBottomOf="@+id/telefono"
-                    app:layout_constraintStart_toEndOf="@id/immagine"/>
-
-
-                    <Button
-                        android:id="@+id/accetta"
-                        android:layout_width="0dp"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/gradius_prenotato"
-                        android:text="Accetta"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/immagine"
-                        app:layout_constraintEnd_toStartOf="@id/rifiuta"/>
-
-                    <Button
-                        android:id="@+id/rifiuta"
-                        android:layout_width="0dp"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="16dp"
-                        android:background="@drawable/gradius_accedi"
-                        android:text="Rifiuta"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="12sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/accetta" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.cardview.widget.CardView>
